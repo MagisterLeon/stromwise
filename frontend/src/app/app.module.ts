@@ -6,11 +6,15 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppToolbarComponent } from './app-toolbar/app-toolbar.component';
 import {MatToolbarModule} from '@angular/material/toolbar';
+import { SkillTreeComponent } from './skill-tree/skill-tree.component';
+import {AppPageNotFoundComponent} from './app.page-not-found.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    AppToolbarComponent
+    AppPageNotFoundComponent,
+    AppToolbarComponent,
+    SkillTreeComponent
   ],
   imports: [
     BrowserModule,
