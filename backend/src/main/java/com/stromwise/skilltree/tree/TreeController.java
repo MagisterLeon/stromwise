@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/tree")
+@RequestMapping("/api/skill-tree/v1/tree")
 class TreeController {
 
     private final TreeService treeService;
