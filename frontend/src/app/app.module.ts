@@ -8,6 +8,7 @@ import { AppToolbarComponent } from './app-toolbar/app-toolbar.component';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import { SkillTreeComponent } from './skill-tree/skill-tree.component';
 import {AppPageNotFoundComponent} from './app.page-not-found.component';
+import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import {AppPageNotFoundComponent} from './app.page-not-found.component';
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     MatToolbarModule
