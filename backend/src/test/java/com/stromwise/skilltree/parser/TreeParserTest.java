@@ -2,6 +2,7 @@ package com.stromwise.skilltree.parser;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.stromwise.skilltree.tree.TreeNode;
+import com.stromwise.skilltree.tree.TreeParser;
 import org.junit.jupiter.api.Test;
 import org.springframework.util.ResourceUtils;
 

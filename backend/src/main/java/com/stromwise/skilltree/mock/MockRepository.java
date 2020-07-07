@@ -1,7 +1,7 @@
 package com.stromwise.skilltree.mock;
 
 import com.google.common.io.CharStreams;
-import com.stromwise.skilltree.parser.TreeParser;
+import com.stromwise.skilltree.tree.TreeParser;
 import com.stromwise.skilltree.tree.TreeNode;
 import com.stromwise.skilltree.tree.TreeRepository;
 import lombok.RequiredArgsConstructor;

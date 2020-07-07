@@ -14,7 +14,15 @@
     <properties>
         <java.version>11</java.version>
         <guava.version>28.2-jre</guava.version>
+        <google.api.search>v1-rev20200504-1.30.9</google.api.search>
     </properties>
+
+    <repositories>
+        <repository>
+            <id>google-api-services</id>
+            <url>http://google-api-client-libraries.appspot.com/mavenrepo</url>
+        </repository>
+    </repositories>
 
     <dependencies>
         <dependency>
@@ -31,6 +39,11 @@
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
             <version>${guava.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.apis</groupId>
+            <artifactId>google-api-services-customsearch</artifactId>
+            <version>${google.api.search}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
