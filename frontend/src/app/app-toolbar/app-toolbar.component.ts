@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'st-toolbar',
@@ -7,11 +7,13 @@ import { Component, OnInit } from '@angular/core';
       <span>StromWise</span>
     </mat-toolbar>
   `,
-  styleUrls: ['./app-toolbar.component.scss']
+  styleUrls: ['./app-toolbar.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppToolbarComponent implements OnInit {
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit(): void {
   }

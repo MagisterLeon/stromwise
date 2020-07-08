@@ -9,20 +9,27 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import { SkillTreeComponent } from './skill-tree/skill-tree.component';
 import {AppPageNotFoundComponent} from './app.page-not-found.component';
 import {HttpClientModule} from '@angular/common/http';
+import {MatListModule} from '@angular/material/list';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {GoogleSearchListComponent} from './google/search-list/google-search-list.component';
+import {GoogleSearchComponent} from './google/google-search.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AppPageNotFoundComponent,
     AppToolbarComponent,
-    SkillTreeComponent
+    SkillTreeComponent,
+    GoogleSearchListComponent,
+    GoogleSearchComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatListModule
   ],
   providers: [],
   bootstrap: [AppComponent]

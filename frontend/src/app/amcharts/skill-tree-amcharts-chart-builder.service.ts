@@ -11,7 +11,7 @@ import {SkillTreeNode} from '../skill-tree/skill-tree-node';
 })
 export class SkillTreeAmchartsChartBuilderService {
 
-  buildChart(nodeSelector: string, data: SkillTreeNode[]): am4charts.TreeMap {
+  buildChart(nodeSelector: string, data: SkillTreeNode[], hitConsumer?: (Object) => void): am4charts.TreeMap {
     am4core.useTheme(am4themes_dark);
     am4core.useTheme(am4themes_animated);
     const chart = am4core.create(nodeSelector, am4charts.TreeMap);
@@ -20,6 +20,14 @@ export class SkillTreeAmchartsChartBuilderService {
     chart.dataFields.name = 'name';
     chart.dataFields.children = 'children';
     chart.navigationBar = new am4charts.NavigationBar();
+
+    const series = chart.seriesTemplates.create('0');
+    if (hitConsumer) {
+      series.columns.template.events.on(
+        'hit',
+        ev => hitConsumer(ev.target.dataItem.dataContext)
+      );
+    }
     return chart;
   }
 }
