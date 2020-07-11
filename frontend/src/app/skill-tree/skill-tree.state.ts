@@ -1,11 +1,16 @@
 import {Injectable} from '@angular/core';
-import {SkillTreeNode} from './skill-tree-node';
-import {Subject} from 'rxjs';
+import {SkillTreeNodeModel} from './skill-tree-node.model';
+import {Observable, Subject} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SkillTreeState {
 
-  nodeSelected$: Subject<SkillTreeNode>;
+  public nodeSelected$: Subject<SkillTreeNodeModel> = new Subject<SkillTreeNodeModel>();
+
+  public nodeSelected(): Observable<SkillTreeNodeModel> {
+    return this.nodeSelected$.asObservable();
+  }
 }
+
