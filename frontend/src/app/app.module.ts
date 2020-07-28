@@ -10,9 +10,9 @@ import { SkillTreeComponent } from './skill-tree/skill-tree.component';
 import {AppPageNotFoundComponent} from './app.page-not-found.component';
 import {HttpClientModule} from '@angular/common/http';
 import {MatListModule} from '@angular/material/list';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {GoogleSearchListComponent} from './google/search-list/google-search-list.component';
 import {GoogleSearchComponent} from './google/google-search.component';
+import { LandingPageComponent } from './landing-page/landing-page.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +21,8 @@ import {GoogleSearchComponent} from './google/google-search.component';
     AppToolbarComponent,
     SkillTreeComponent,
     GoogleSearchListComponent,
-    GoogleSearchComponent
+    GoogleSearchComponent,
+    LandingPageComponent
   ],
   imports: [
     BrowserModule,
