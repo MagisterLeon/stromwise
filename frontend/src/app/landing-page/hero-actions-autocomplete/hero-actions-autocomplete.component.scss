@@ -1,0 +1,20 @@
+@import 'src/palette';
+
+:host {
+  flex: 1 1 auto;
+}
+
+::ng-deep {
+  .mat-form-field-underline {
+    background-color: map-get($md-primary, 500) !important;
+  }
+}
+
+.autocomplete-input {
+  width: 100%;
+
+  .autocomplete-icon {
+    pointer-events: none;
+  }
+}
+

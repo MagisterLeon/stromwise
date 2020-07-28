@@ -13,6 +13,12 @@ import {MatListModule} from '@angular/material/list';
 import {GoogleSearchListComponent} from './google/search-list/google-search-list.component';
 import {GoogleSearchComponent} from './google/google-search.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
+import {MatInputModule} from '@angular/material/input';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {MatIconModule} from '@angular/material/icon';
+import {MatButtonModule} from '@angular/material/button';
+import { HeroActionsAutocompleteComponent } from './landing-page/hero-actions-autocomplete/hero-actions-autocomplete.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +28,8 @@ import { LandingPageComponent } from './landing-page/landing-page.component';
     SkillTreeComponent,
     GoogleSearchListComponent,
     GoogleSearchComponent,
-    LandingPageComponent
+    LandingPageComponent,
+    HeroActionsAutocompleteComponent
   ],
   imports: [
     BrowserModule,
@@ -30,7 +37,13 @@ import { LandingPageComponent } from './landing-page/landing-page.component';
     AppRoutingModule,
     BrowserAnimationsModule,
     MatToolbarModule,
-    MatListModule
+    MatListModule,
+    MatInputModule,
+    MatAutocompleteModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatIconModule,
+    MatButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]
