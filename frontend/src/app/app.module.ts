@@ -12,13 +12,15 @@ import {HttpClientModule} from '@angular/common/http';
 import {MatListModule} from '@angular/material/list';
 import {GoogleSearchListComponent} from './google/search-list/google-search-list.component';
 import {GoogleSearchComponent} from './google/google-search.component';
-import { LandingPageComponent } from './landing-page/landing-page.component';
 import {MatInputModule} from '@angular/material/input';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
-import { HeroActionsAutocompleteComponent } from './landing-page/hero-actions-autocomplete/hero-actions-autocomplete.component';
+import { HeroActionsAutocompleteComponent } from './landing-page/top/hero-actions-autocomplete/hero-actions-autocomplete.component';
+import {LandingPageTopComponent} from './landing-page/top/landing-page-top.component';
+import {LandingPageComponent} from './landing-page/landing-page.component';
+import { AboutUsComponent } from './landing-page/about-us/about-us.component';
 
 @NgModule({
   declarations: [
@@ -28,8 +30,10 @@ import { HeroActionsAutocompleteComponent } from './landing-page/hero-actions-au
     SkillTreeComponent,
     GoogleSearchListComponent,
     GoogleSearchComponent,
+    LandingPageTopComponent,
+    HeroActionsAutocompleteComponent,
     LandingPageComponent,
-    HeroActionsAutocompleteComponent
+    AboutUsComponent
   ],
   imports: [
     BrowserModule,
