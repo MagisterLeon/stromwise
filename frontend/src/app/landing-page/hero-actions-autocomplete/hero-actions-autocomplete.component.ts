@@ -32,7 +32,7 @@ import {map, startWith} from 'rxjs/operators';
 export class HeroActionsAutocompleteComponent implements OnInit {
   skillsControl = new FormControl();
   autocompleteOpened: boolean;
-  skills: string[] = ['One', 'Two', 'Three'];
+  skills: string[] = ['Programming', 'Web design', 'Guitar', 'Filmmaking'];
   filteredSkills: Observable<string[]>;
 
   ngOnInit(): void {

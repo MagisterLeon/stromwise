@@ -10,8 +10,17 @@ import {Component} from '@angular/core';
           best learning pathway.
         </div>
         <div class="hero-actions">
-          <span class="hero-actions-prefix">I want to learn</span>
-          <st-hero-actions-autocomplete></st-hero-actions-autocomplete>
+          <div class="hero-actions-autocomplete">
+            <span class="hero-actions-autocomplete-description">I want to learn</span>
+            <st-hero-actions-autocomplete></st-hero-actions-autocomplete>
+          </div>
+          <div>
+            <span class="hero-actions-buttons-description">Popular:</span>
+            <button class="hero-action-button" mat-stroked-button color="custom-grey">Programming</button>
+            <button class="hero-action-button" mat-stroked-button color="custom-grey">Web design</button>
+            <button class="hero-action-button" mat-stroked-button color="custom-grey">Guitar</button>
+            <button class="hero-action-button" mat-stroked-button color="custom-grey">Filmmaking</button>
+          </div>
         </div>
       </div>
     </div>
