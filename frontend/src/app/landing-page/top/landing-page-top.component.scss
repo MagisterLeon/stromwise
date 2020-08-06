@@ -1,9 +1,9 @@
-@import 'src/palette';
+@import 'src/stromwise-palette';
 
 .landing-page {
   width: 100%;
   height: 775px;
-  background: url('/assets/landing_page_background-top.png') no-repeat right;
+  background: url('/assets/landing-page/background_top.png') no-repeat right;
 
   .hero-container {
     position: absolute;
