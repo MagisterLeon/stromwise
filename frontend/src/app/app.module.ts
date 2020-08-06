@@ -21,6 +21,7 @@ import { HeroActionsAutocompleteComponent } from './landing-page/top/hero-action
 import {LandingPageTopComponent} from './landing-page/top/landing-page-top.component';
 import {LandingPageComponent} from './landing-page/landing-page.component';
 import { AboutUsComponent } from './landing-page/about-us/about-us.component';
+import { AppFooterComponent } from './app-footer/app-footer.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { AboutUsComponent } from './landing-page/about-us/about-us.component';
     LandingPageTopComponent,
     HeroActionsAutocompleteComponent,
     LandingPageComponent,
-    AboutUsComponent
+    AboutUsComponent,
+    AppFooterComponent
   ],
   imports: [
     BrowserModule,

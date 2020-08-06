@@ -1,0 +1,15 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: auto;
+
+  .social-media-icon {
+    margin: 8px;
+  }
+
+  .all-rights-reserved {
+    color: grey;
+    margin-bottom: 8px;
+  }
+}
