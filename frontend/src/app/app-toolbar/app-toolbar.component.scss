@@ -1,9 +1,14 @@
+@import 'src/z-indexes';
+
 mat-toolbar {
   display: flex;
+  justify-content: space-between;
+  position: fixed;
+  top: 0;
+  z-index: map-get($z-indexes, header);
   height: 100px;
   padding: 0 48px;
-  background-color: #020211;
-  justify-content: space-between;
+  background: linear-gradient(#020211 10%, transparent);
 }
 
 .link {
@@ -29,8 +34,8 @@ mat-toolbar {
 }
 
 .divider {
-  background-color: #ffffff;
   width: 2px;
   height: 20px;
   margin: 0 16px;
+  background-color: #ffffff;
 }
