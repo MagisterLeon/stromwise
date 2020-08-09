@@ -7,6 +7,8 @@ import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.mockito.ArgumentMatchers.anyLong;
@@ -26,16 +28,17 @@ class TreeServiceTest {
     void shouldCountNodesLeaves() {
         // given
         when(treeRepository.findById(anyLong())).thenReturn(
-                TreeNode.builder()
-                        .child(TreeNode.builder()
+                Optional.of(
+                        TreeNode.builder()
+                                .child(TreeNode.builder()
+                                        .child(TreeNode.builder().build())
+                                        .child(TreeNode.builder().build())
+                                        .build())
+                                .child(TreeNode.builder()
+                                        .child(TreeNode.builder().build())
+                                        .build())
                                 .child(TreeNode.builder().build())
-                                .child(TreeNode.builder().build())
-                                .build())
-                        .child(TreeNode.builder()
-                                .child(TreeNode.builder().build())
-                                .build())
-                        .child(TreeNode.builder().build())
-                        .build());
+                                .build()));
 
         // when
         TreeNode tree = uut.tree();

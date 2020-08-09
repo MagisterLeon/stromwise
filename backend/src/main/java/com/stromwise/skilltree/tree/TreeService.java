@@ -3,6 +3,8 @@ package com.stromwise.skilltree.tree;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 class TreeService {
@@ -13,8 +15,8 @@ class TreeService {
     private final TreeNodeSetupVisitor treeNodeSetupVisitor;
 
     public TreeNode tree() {
-        TreeNode root = treeRepository.findById(ROOT_ID);
-        root.accept(treeNodeSetupVisitor);
-        return root;
+        Optional<TreeNode> root = treeRepository.findById(ROOT_ID);
+        root.ifPresent(r -> r.accept(treeNodeSetupVisitor));
+        return root.orElse(null);
     }
 }

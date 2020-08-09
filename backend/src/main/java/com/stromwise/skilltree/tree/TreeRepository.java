@@ -1,6 +1,9 @@
 package com.stromwise.skilltree.tree;
 
-public interface TreeRepository {
+import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
-    TreeNode findById(Long id);
+@Repository
+public interface TreeRepository extends MongoRepository<TreeNode, Long> {
 }

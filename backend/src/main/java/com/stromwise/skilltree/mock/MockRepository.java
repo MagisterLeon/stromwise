@@ -1,9 +1,8 @@
 package com.stromwise.skilltree.mock;
 
 import com.google.common.io.CharStreams;
-import com.stromwise.skilltree.tree.TreeParser;
 import com.stromwise.skilltree.tree.TreeNode;
-import com.stromwise.skilltree.tree.TreeRepository;
+import com.stromwise.skilltree.tree.TreeParser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
@@ -15,14 +14,13 @@ import java.io.Reader;
 
 @Component
 @RequiredArgsConstructor
-class MockRepository implements TreeRepository {
+class MockRepository {
 
     private final static String MOCK_TREE_FILE_NAME = "mockTree.json";
 
     private final TreeParser treeParser;
     private final ResourceLoader resourceLoader;
 
-    @Override
     public TreeNode findById(Long id) {
         TreeNode tree = treeParser.parse(treeJson());
         return tree.findById(id)
