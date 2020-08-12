@@ -3,6 +3,8 @@ import {FormControl} from '@angular/forms';
 import {combineLatest, Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import {TreeNodeNamesService} from './tree-node-names.service';
+import {MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
+import {Router} from '@angular/router';
 
 @Component({
   template: `
@@ -10,6 +12,7 @@ import {TreeNodeNamesService} from './tree-node-names.service';
       <mat-form-field class="autocomplete-input">
         <input type="text"
                matInput
+               #autocompleteInput
                [formControl]="skillsControl"
                [matAutocomplete]="auto">
         <mat-icon class="autocomplete-icon" *ngIf="autocompleteOpened" matSuffix color="primary">arrow_drop_up
@@ -18,6 +21,7 @@ import {TreeNodeNamesService} from './tree-node-names.service';
         </mat-icon>
         <mat-autocomplete autoActiveFirstOption
                           #auto="matAutocomplete"
+                          (optionSelected)="onSkillSelected($event, autocompleteInput)"
                           (opened)="onOpened()"
                           (closed)="onClosed()">
           <mat-option *ngFor="let option of filteredSkills | async" [value]="option">
@@ -35,7 +39,8 @@ export class HeroActionsAutocompleteComponent implements OnInit {
   autocompleteOpened: boolean;
   filteredSkills: Observable<string[]>;
 
-  constructor(private treeNodeNamesService: TreeNodeNamesService) {
+  constructor(private router: Router,
+              private treeNodeNamesService: TreeNodeNamesService) {
   }
 
   ngOnInit(): void {
@@ -60,5 +65,11 @@ export class HeroActionsAutocompleteComponent implements OnInit {
   private filter(names: string[], value: string): string[] {
     const filterValue = value.toLowerCase();
     return names.filter(option => option.toLowerCase().indexOf(filterValue) === 0);
+  }
+
+  onSkillSelected(event: MatAutocompleteSelectedEvent, autocompleteInput: HTMLInputElement): void {
+    autocompleteInput.value = '';
+    autocompleteInput.blur();
+    this.router.navigate(['skilltree', event.option.value])
   }
 }
