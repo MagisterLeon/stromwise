@@ -11,7 +11,7 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -27,7 +27,7 @@ class TreeServiceTest {
     @Test
     void shouldCountNodesLeaves() {
         // given
-        when(treeRepository.findById(anyLong())).thenReturn(
+        when(treeRepository.findByName(anyString())).thenReturn(
                 Optional.of(
                         TreeNode.builder()
                                 .child(TreeNode.builder()
@@ -41,7 +41,7 @@ class TreeServiceTest {
                                 .build()));
 
         // when
-        TreeNode tree = uut.tree();
+        TreeNode tree = uut.getByName("Programming");
 
         // then
         assertThat(tree.getValue()).isEqualTo(7);
