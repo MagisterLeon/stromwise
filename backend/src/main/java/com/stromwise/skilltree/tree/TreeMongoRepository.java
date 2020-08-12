@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface TreeRepository extends MongoRepository<TreeNode, String> {
+public interface TreeMongoRepository extends MongoRepository<TreeNode, String> {
 
     Optional<TreeNode> findByNameIgnoreCase(String name);
 }

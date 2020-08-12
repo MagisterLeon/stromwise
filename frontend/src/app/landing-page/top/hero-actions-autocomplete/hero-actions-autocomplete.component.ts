@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl} from '@angular/forms';
-import {Observable} from 'rxjs';
+import {combineLatest, Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
+import {TreeNodeNamesService} from './tree-node-names.service';
 
 @Component({
   template: `
@@ -32,14 +33,20 @@ import {map, startWith} from 'rxjs/operators';
 export class HeroActionsAutocompleteComponent implements OnInit {
   skillsControl = new FormControl();
   autocompleteOpened: boolean;
-  skills: string[] = ['Programming', 'Web design', 'Guitar', 'Filmmaking'];
   filteredSkills: Observable<string[]>;
 
+  constructor(private treeNodeNamesService: TreeNodeNamesService) {
+  }
+
   ngOnInit(): void {
-    this.filteredSkills = this.skillsControl.valueChanges.pipe(
-      startWith(''),
-      map(value => this.filter(value))
-    );
+    this.filteredSkills = combineLatest([
+      this.treeNodeNamesService.nodeNames(),
+      this.skillsControl.valueChanges.pipe(
+        startWith('')
+      )])
+      .pipe(
+        map(([names, value]) => this.filter(names, value))
+      );
   }
 
   onOpened(): void {
@@ -50,8 +57,8 @@ export class HeroActionsAutocompleteComponent implements OnInit {
     this.autocompleteOpened = false;
   }
 
-  private filter(value: string): string[] {
+  private filter(names: string[], value: string): string[] {
     const filterValue = value.toLowerCase();
-    return this.skills.filter(option => option.toLowerCase().indexOf(filterValue) === 0);
+    return names.filter(option => option.toLowerCase().indexOf(filterValue) === 0);
   }
 }
