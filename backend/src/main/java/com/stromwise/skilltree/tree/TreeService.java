@@ -2,7 +2,6 @@ package com.stromwise.skilltree.tree;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -14,7 +13,7 @@ class TreeService {
     private final TreeNodeSetupVisitor treeNodeSetupVisitor;
 
     public TreeNode getByName(final String name) {
-        Optional<TreeNode> root = treeRepository.findByName(name);
+        Optional<TreeNode> root = treeRepository.findByNameIgnoreCase(name);
         root.ifPresent(r -> r.accept(treeNodeSetupVisitor));
         return root.orElse(null);
     }
@@ -22,7 +21,7 @@ class TreeService {
     public void save(final TreeNode treeNode, final String parentName) {
         treeRepository.save(treeNode);
 
-        Optional<TreeNode> parentOptional = treeRepository.findByName(parentName);
+        Optional<TreeNode> parentOptional = treeRepository.findByNameIgnoreCase(parentName);
         parentOptional.ifPresent(parent -> {
             parent.getChildren().add(treeNode);
             treeRepository.save(parent);

@@ -8,5 +8,5 @@ import java.util.Optional;
 @Repository
 public interface TreeRepository extends MongoRepository<TreeNode, String> {
 
-    Optional<TreeNode> findByName(String name);
+    Optional<TreeNode> findByNameIgnoreCase(String name);
 }

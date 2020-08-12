@@ -27,7 +27,7 @@ class TreeServiceTest {
     @Test
     void shouldCountNodesLeaves() {
         // given
-        when(treeRepository.findByName(anyString())).thenReturn(
+        when(treeRepository.findByNameIgnoreCase(anyString())).thenReturn(
                 Optional.of(
                         TreeNode.builder()
                                 .child(TreeNode.builder()

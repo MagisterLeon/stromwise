@@ -1,7 +1,7 @@
 import {AfterViewInit, ChangeDetectionStrategy, Component, NgZone} from '@angular/core';
 import {SkillTreeAmchartsChartBuilderService} from '../amcharts/skill-tree-amcharts-chart-builder.service';
-import {SkillTreeService} from './skill-tree.service';
 import {SkillTreeState} from './skill-tree.state';
+import {ActivatedRoute} from '@angular/router';
 
 
 @Component({
@@ -17,19 +17,17 @@ export class SkillTreeComponent implements AfterViewInit {
 
   constructor(private zone: NgZone,
               private chartBuilder: SkillTreeAmchartsChartBuilderService,
-              private skillTreeService: SkillTreeService,
-              private skillTreeState: SkillTreeState) {
+              private skillTreeState: SkillTreeState,
+              private route: ActivatedRoute) {
   }
 
   ngAfterViewInit(): void {
     this.zone.runOutsideAngular(() => {
-      this.skillTreeService.tree().subscribe(skillTree => {
-        this.chartBuilder.buildChart(
-          'skill-tree',
-          skillTree.children,
-          node => this.skillTreeState.nodeSelected$.next(node)
-        );
-      });
+      this.chartBuilder.buildChart(
+        'skill-tree',
+        this.route.snapshot.data.skilltree.children,
+        node => this.skillTreeState.nodeSelected$.next(node)
+      );
     });
   }
 }
