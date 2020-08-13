@@ -1,3 +1,33 @@
+@import "src/mixins";
+
 .search-result {
-  background-color: blue;
+  mat-list-item {
+    margin-top: 12px;
+  }
+
+  .header {
+    color: white;
+    font-size: 40px;
+  }
+
+  .url {
+    color: white;
+    font-size: 13px;
+    font-style: italic;
+  }
+
+  .title {
+    color: #5076FF;
+    @include font(24, 37);
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .description {
+    color: grey;
+    font-size: 16px;
+  }
 }

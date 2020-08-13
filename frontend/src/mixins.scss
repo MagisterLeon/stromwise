@@ -1,0 +1,21 @@
+@mixin font($font-size, $line-height: normal, $letter-spacing: normal, $font-weight: normal) {
+  font-size: $font-size * 1px;
+
+  @if $line-height==normal {
+    line-height: normal;
+  } @else {
+    line-height: $line-height / $font-size;
+  }
+
+  @if $letter-spacing==normal {
+    letter-spacing: normal;
+  } @else {
+    letter-spacing: #{$letter-spacing / $font-size}em;
+  }
+
+  @if $font-weight==normal {
+    font-weight: normal;
+  } @else {
+    font-weight: $font-weight;
+  }
+}
