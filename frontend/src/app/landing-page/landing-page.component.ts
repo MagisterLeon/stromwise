@@ -1,4 +1,6 @@
 import {Component, OnInit} from '@angular/core';
+import {ToolbarSize} from '../app-toolbar/toolbar-size.enum';
+import {ToolbarApiService} from '../app-toolbar/toolbar-api.service';
 
 @Component({
   selector: 'st-landing-page.component.ts',
@@ -10,10 +12,10 @@ import {Component, OnInit} from '@angular/core';
 })
 export class LandingPageComponent implements OnInit {
 
-  constructor() {
+  constructor(private toolbarApi: ToolbarApiService) {
   }
 
   ngOnInit(): void {
+    this.toolbarApi.setToolbarSize(ToolbarSize.BIG);
   }
-
 }

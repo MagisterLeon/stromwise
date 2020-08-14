@@ -6,9 +6,50 @@ mat-toolbar {
   position: fixed;
   top: 0;
   z-index: map-get($z-indexes, header);
-  height: 100px;
-  padding: 0 48px;
-  background: linear-gradient(#020211 10%, transparent);
+  transition: 1s;
+
+  &.big {
+    height: 100px;
+    padding: 0 48px;
+    background: linear-gradient(#020211 10%, transparent);
+  }
+
+  &.compact {
+    height: 50px;
+    padding: 0 24px;
+    background: #020211;
+  }
+
+  .search-icon {
+    color: white;
+  }
+
+  .search-placeholder {
+    color: grey;
+  }
+
+  mat-form-field.mat-form-field {
+    width: 600px;
+    font-size: 14px;
+  }
+
+  ::ng-deep {
+    .mat-focused .mat-form-field-label {
+      color: grey !important;
+    }
+
+    input.mat-input-element {
+      color: white !important;
+    }
+
+    .mat-form-field-underline {
+      background-color: grey !important;
+    }
+
+    .mat-form-field-ripple {
+      background-color: grey !important;
+    }
+  }
 }
 
 .link {
@@ -27,6 +68,10 @@ mat-toolbar {
   width: 100px;
   cursor: pointer;
   outline: none;
+
+  &.compact {
+    width: 50px;
+  }
 }
 
 .navigation {

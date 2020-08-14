@@ -1,4 +1,5 @@
 @import "src/mixins";
+@import 'src/stromwise-palette';
 
 .search-result {
   mat-list-item {
@@ -17,7 +18,7 @@
   }
 
   .title {
-    color: #5076FF;
+    color: map-get($md-secondary, 200);
     @include font(24, 37);
     text-decoration: none;
 

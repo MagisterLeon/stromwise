@@ -8,7 +8,6 @@ import {switchMap} from 'rxjs/operators';
   selector: 'st-google-search-list',
   template: `
     <mat-list class="search-result">
-      <div mat-subheader class="header">Recommended Courses</div>
       <mat-list-item *ngFor="let result of googleSearchResult">
         <div mat-line class="url">{{result.url}}</div>
         <a [href]="result.url" target="_blank" mat-line class="title">{{result.title}}</a>

@@ -70,6 +70,6 @@ export class HeroActionsAutocompleteComponent implements OnInit {
   onSkillSelected(event: MatAutocompleteSelectedEvent, autocompleteInput: HTMLInputElement): void {
     autocompleteInput.value = '';
     autocompleteInput.blur();
-    this.router.navigate(['skilltree', event.option.value])
+    this.router.navigate(['skilltree', event.option.value]);
   }
 }
