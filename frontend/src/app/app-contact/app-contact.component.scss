@@ -1,31 +1,35 @@
-.contact {
+.form-container {
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.contact-left contact-right {
-  flex: 2;
+.contact-form {
+  display:flex;
 }
-.contact-from {
-  display: flex;
+mat-form-field {
+  width: 100%
 }
-.contact-left{
+.contact-left {
+  width: 25%;
   padding-right: 50px;
 }
-.contact-right{
+.contact-right {
+  width: 25%;
   padding-left: 50px;
 }
-label {
-  width: 100%;
-  display: block;
+#form-left {
+  padding-right: .5rem;
+}
+#form-right {
+  padding-left: .5rem;
+}
+mat-label {
   font-weight: 700;
   font-size: .6rem;
   text-transform: uppercase;
 }
 input {
-  padding: .5rem;
   text-rendering: auto;
-  color: -internal-light-dark(black, white);
   letter-spacing: normal;
   word-spacing: normal;
   text-transform: none;
@@ -34,6 +38,6 @@ input {
   display: inline-block;
   text-align: start;
 }
-.message contact-from {
-  flex-direction: column;
+.contact-message {
+  width: 100%;
 }

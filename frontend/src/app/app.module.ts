@@ -23,6 +23,7 @@ import {LandingPageComponent} from './landing-page/landing-page.component';
 import { AboutUsComponent } from './landing-page/about-us/about-us.component';
 import { AppFooterComponent } from './app-footer/app-footer.component';
 import { AppContactComponent } from './app-contact/app-contact.component';
+import {MatFormFieldModule} from "@angular/material/form-field";
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { AppContactComponent } from './app-contact/app-contact.component';
     BrowserAnimationsModule,
     MatToolbarModule,
     MatListModule,
+    MatFormFieldModule,
     MatInputModule,
     MatAutocompleteModule,
     FormsModule,
