@@ -24,6 +24,8 @@ import { AboutUsComponent } from './landing-page/about-us/about-us.component';
 import { AppFooterComponent } from './app-footer/app-footer.component';
 import { AppContactComponent } from './app-contact/app-contact.component';
 import {MatFormFieldModule} from "@angular/material/form-field";
+import { ContactMapComponent } from './app-contact/contact-map/contact-map.component';
+import { ContactFormComponent } from './app-contact/contact-form/contact-form.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +40,9 @@ import {MatFormFieldModule} from "@angular/material/form-field";
     LandingPageComponent,
     AboutUsComponent,
     AppFooterComponent,
-    AppContactComponent
+    AppContactComponent,
+    ContactMapComponent,
+    ContactFormComponent
   ],
   imports: [
     BrowserModule,

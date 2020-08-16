@@ -1,43 +1,7 @@
-.form-container {
+:host {
   display: flex;
   align-items: center;
   justify-content: center;
+  margin: 0 160px;
 }
-.contact-form {
-  display:flex;
-}
-mat-form-field {
-  width: 100%
-}
-.contact-left {
-  width: 25%;
-  padding-right: 50px;
-}
-.contact-right {
-  width: 25%;
-  padding-left: 50px;
-}
-#form-left {
-  padding-right: .5rem;
-}
-#form-right {
-  padding-left: .5rem;
-}
-mat-label {
-  font-weight: 700;
-  font-size: .6rem;
-  text-transform: uppercase;
-}
-input {
-  text-rendering: auto;
-  letter-spacing: normal;
-  word-spacing: normal;
-  text-transform: none;
-  text-indent: 0px;
-  text-shadow: none;
-  display: inline-block;
-  text-align: start;
-}
-.contact-message {
-  width: 100%;
-}
+
