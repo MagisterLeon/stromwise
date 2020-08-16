@@ -13,20 +13,20 @@ import {Component, OnInit} from '@angular/core';
           </mat-form-field>
           <mat-form-field appearance="outline">
             <mat-label>surname</mat-label>
-            <input matInput formControlName="phone" required>
+            <input matInput formControlName="surname" required>
           </mat-form-field>
         </div>
         <div class="contact-form-row">
           <mat-form-field appearance="outline">
             <mat-label>email</mat-label>
-            <input matInput formControlName="company" required>
+            <input matInput formControlName="email" required>
           </mat-form-field>
           <mat-form-field appearance="outline">
             <mat-label>phone</mat-label>
-            <input matInput formControlName="email" required>
+            <input matInput formControlName="phone" required>
           </mat-form-field>
         </div>
-        <mat-form-field appearance="outline">
+        <mat-form-field class="message" appearance="outline">
           <mat-label>message</mat-label>
           <textarea matInput formControlName="message" required></textarea>
         </mat-form-field>
