@@ -16,6 +16,7 @@
         <spring.data.version>5.1.0</spring.data.version>
         <guava.version>28.2-jre</guava.version>
         <google.api.search>v1-rev20200504-1.30.9</google.api.search>
+        <hibernate.alidator>6.1.5.Final</hibernate.alidator>
     </properties>
 
     <repositories>
@@ -33,6 +34,10 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-mongodb</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
         </dependency>
 <!--        <dependency>-->
 <!--            <groupId>org.springframework.boot</groupId>-->
@@ -53,6 +58,13 @@
             <artifactId>google-api-services-customsearch</artifactId>
             <version>${google.api.search}</version>
         </dependency>
+        <dependency>
+            <groupId>org.hibernate.validator</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>${hibernate.alidator}</version>
+        </dependency>
+
+        <!-- DEPENDENCIES FOR TESTS -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
