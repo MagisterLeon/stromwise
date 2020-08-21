@@ -70,7 +70,7 @@ export class ContactFormComponent implements OnInit {
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');
 
-    this.http.post('/api/skill-tree/v1/email/request', formData).subscribe((error) => console.log(error))
+    this.http.post('/api/skill-tree/v1/contact/request', formData).subscribe((error) => console.log(error))
   }
 
   public hasError = (controlName: string, errorName: string) =>{
