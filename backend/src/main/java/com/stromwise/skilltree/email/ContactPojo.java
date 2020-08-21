@@ -1,8 +1,5 @@
 package com.stromwise.skilltree.email;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import lombok.Value;
 
 import javax.validation.constraints.Email;
