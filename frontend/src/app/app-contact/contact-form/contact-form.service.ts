@@ -3,6 +3,7 @@ import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {HttpClient} from "@angular/common/http";
 
 const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+const PHONE_NUMBER_REGEX = /^\d+$/;
 
 @Injectable({
   providedIn: 'root'
@@ -13,11 +14,11 @@ export class ContactFormService {
 
   constructor(public formBuilder: FormBuilder, private http: HttpClient) {
     this.form = this.formBuilder.group({
-      name: new FormControl(''),
-      surname: new FormControl('', [Validators.required, Validators.email]),
-      email: new FormControl(''),
-      phone: new FormControl(''),
-      message: new FormControl('')
+      name: new FormControl('', Validators.required),
+      surname: new FormControl('', Validators.required),
+      email: new FormControl(null,[Validators.required, ContactFormService.emailValidator]),
+      phone: new FormControl(null,[Validators.required, ContactFormService.phoneNumberValidator]),
+      message: new FormControl('', Validators.required)
     })
   }
 
@@ -39,5 +40,25 @@ export class ContactFormService {
     return this.form.controls[controlName].hasError(errorName);
   }
 
+  static emailValidator(control: FormControl) {
+    if (control.value){
+      const inputEmailRegexMatches = control.value.match(EMAIL_REGEX);
+      return inputEmailRegexMatches ? null : { 'invalidFormat': true };
+    }
+    if (control.value)  {
+      const isInputNotEmpty = false;
+      return isInputNotEmpty ? null : { 'required': true };
+    }
+  }
 
+  static phoneNumberValidator(control: FormControl) {
+    if (control.value){
+      const inputPhoneNumberRegexMatches = control.value.match(PHONE_NUMBER_REGEX);
+      return inputPhoneNumberRegexMatches ? null : { 'invalidFormat': true };
+    }
+    if (control.value)  {
+      const isInputNotEmpty = false;
+      return isInputNotEmpty ? null : { 'required': true };
+    }
+  }
 }
