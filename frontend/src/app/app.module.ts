@@ -22,10 +22,7 @@ import {LandingPageTopComponent} from './landing-page/top/landing-page-top.compo
 import {LandingPageComponent} from './landing-page/landing-page.component';
 import {AboutUsComponent} from './landing-page/about-us/about-us.component';
 import {AppFooterComponent} from './app-footer/app-footer.component';
-import {AppContactComponent} from './app-contact/app-contact.component';
-import {MatFormFieldModule} from "@angular/material/form-field";
-import {ContactMapComponent} from './app-contact/contact-map/contact-map.component';
-import {ContactFormComponent} from './app-contact/contact-form/contact-form.component';
+import {HeroActionButtonsComponent} from './landing-page/top/hero-action-buttons/hero-action-buttons.component';
 
 @NgModule({
   declarations: [
@@ -40,9 +37,7 @@ import {ContactFormComponent} from './app-contact/contact-form/contact-form.comp
     LandingPageComponent,
     AboutUsComponent,
     AppFooterComponent,
-    AppContactComponent,
-    ContactMapComponent,
-    ContactFormComponent
+    HeroActionButtonsComponent
   ],
   imports: [
     BrowserModule,
@@ -51,7 +46,6 @@ import {ContactFormComponent} from './app-contact/contact-form/contact-form.comp
     BrowserAnimationsModule,
     MatToolbarModule,
     MatListModule,
-    MatFormFieldModule,
     MatInputModule,
     MatAutocompleteModule,
     FormsModule,
@@ -62,5 +56,4 @@ import {ContactFormComponent} from './app-contact/contact-form/contact-form.comp
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule {
-}
+export class AppModule { }

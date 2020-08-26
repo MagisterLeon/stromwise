@@ -11,8 +11,8 @@ export class SkillTreeService {
   constructor(private httpClient: HttpClient) {
   }
 
-  tree(): Observable<SkillTreeNodeModel> {
-    return this.httpClient.get<SkillTreeNodeModel>('/api/skill-tree/v1/tree');
+  tree(name: string): Observable<SkillTreeNodeModel> {
+    return this.httpClient.get<SkillTreeNodeModel>(`/api/skill-tree/v1/nodes/${name}`);
   }
 
 }

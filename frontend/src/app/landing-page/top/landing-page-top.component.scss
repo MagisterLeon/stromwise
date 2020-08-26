@@ -1,4 +1,5 @@
 @import 'src/stromwise-palette';
+@import "src/mixins";
 
 .landing-page {
   width: 100%;
@@ -11,13 +12,11 @@
     margin: 10% 0 0 10%;
 
     .hero-title {
-      font-size: 38px;
-      font-weight: bold;
+      @include font(38, $font-weight: bold);
     }
 
     .hero-text {
-      font-size: 20px;
-      font-weight: 400;
+      @include font(20, $font-weight: 400);
       padding: 16px 0 32px 0;
     }
 
@@ -30,29 +29,9 @@
         align-items: center;
 
         .hero-actions-autocomplete-description {
-          font-size: 30px;
-          font-weight: 500;
+          @include font(30, $font-weight: 500);
           padding-right: 8px;
           color: map-get($md-primary, 500);
-        }
-      }
-
-      .hero-actions-buttons-description {
-        margin-right: 16px;
-        font-size: 16px;
-        font-weight: bold;
-        color: grey;
-      }
-
-      .hero-action-button {
-        margin: 0 4px;
-        border-color: grey;
-        color: grey;
-        transition: 0.3s;
-
-        &:hover {
-          border-color: white;
-          color: white;
         }
       }
     }

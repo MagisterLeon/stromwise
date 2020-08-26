@@ -1,0 +1,19 @@
+@import "src/mixins";
+
+.hero-actions-buttons-description {
+  margin-right: 16px;
+  @include font(16, $font-weight: bold);
+  color: grey;
+}
+
+.hero-action-button {
+  margin: 0 4px;
+  border-color: grey;
+  color: grey;
+  transition: 0.3s;
+
+  &:hover {
+    border-color: white;
+    color: white;
+  }
+}

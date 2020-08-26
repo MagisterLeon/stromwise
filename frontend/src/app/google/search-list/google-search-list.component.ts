@@ -1,17 +1,17 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {GoogleSearchResultModel} from '../google-search-result.model';
 import {SkillTreeState} from '../../skill-tree/skill-tree.state';
-import {switchMap} from 'rxjs/operators';
 import {GoogleSearchService} from '../google-search.service';
+import {switchMap} from 'rxjs/operators';
 
 @Component({
   selector: 'st-google-search-list',
   template: `
     <mat-list class="search-result">
-      <div mat-subheader>searchQuery</div>
       <mat-list-item *ngFor="let result of googleSearchResult">
-        <div mat-line>{{result.title}}</div>
-        <div mat-line> {{result.snippet}} </div>
+        <div mat-line class="url">{{result.url}}</div>
+        <a [href]="result.url" target="_blank" mat-line class="title">{{result.title}}</a>
+        <div mat-line class="description"> {{result.snippet}} </div>
       </mat-list-item>
     </mat-list>
   `,
@@ -20,7 +20,7 @@ import {GoogleSearchService} from '../google-search.service';
 })
 export class GoogleSearchListComponent implements OnInit {
 
-  googleSearchResult: GoogleSearchResultModel[];
+  googleSearchResult: GoogleSearchResultModel[] = [];
 
   constructor(private ref: ChangeDetectorRef,
               private googleSearchService: GoogleSearchService,

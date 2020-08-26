@@ -1,20 +1,29 @@
 package com.stromwise.skilltree.tree;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/skill-tree/v1/tree")
+@RequestMapping("/api/skill-tree/v1/nodes")
 class TreeController {
 
     private final TreeService treeService;
 
-    @GetMapping
-    public TreeNode tree() {
-        return treeService.tree();
+    @GetMapping("/names")
+    public List<String> getAllNodeNames() {
+        return treeService.getAllNodeNames();
     }
 
+    @GetMapping("{name}")
+    public TreeNode getByName(@PathVariable String name) {
+        return treeService.getByName(name);
+    }
+
+    @PostMapping
+    public void save(@RequestBody TreeNodeSaveRequest request) {
+        treeService.save(request.getTreeNode(), request.getParentName());
+    }
 }

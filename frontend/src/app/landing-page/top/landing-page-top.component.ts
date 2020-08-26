@@ -14,13 +14,7 @@ import {Component} from '@angular/core';
             <span class="hero-actions-autocomplete-description">I want to learn</span>
             <st-hero-actions-autocomplete></st-hero-actions-autocomplete>
           </div>
-          <div>
-            <span class="hero-actions-buttons-description">Popular:</span>
-            <button class="hero-action-button" mat-stroked-button>Programming</button>
-            <button class="hero-action-button" mat-stroked-button>Web design</button>
-            <button class="hero-action-button" mat-stroked-button>Guitar</button>
-            <button class="hero-action-button" mat-stroked-button>Filmmaking</button>
-          </div>
+          <st-hero-action-buttons></st-hero-action-buttons>
         </div>
       </div>
     </div>
