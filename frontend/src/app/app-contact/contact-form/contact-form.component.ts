@@ -43,7 +43,7 @@ import {Validators} from "@angular/forms";
               matInput
               formControlName="phone"
               required>
-            <mat-error *ngIf="contactFormService.form.get('phone').hasError('invalidFormat')">Invalid format</mat-error>
+            <mat-error *ngIf="contactFormService.form.get('phone').hasError('invalidFormat')">Only digits</mat-error>
             <mat-error *ngIf="contactFormService.form.get('phone').hasError('required')">Phone is required</mat-error>
           </mat-form-field>
         </div>
