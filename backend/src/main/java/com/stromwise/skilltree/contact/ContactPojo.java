@@ -1,10 +1,12 @@
-package com.stromwise.skilltree.email;
+package com.stromwise.skilltree.contact;
 
+import lombok.Builder;
 import lombok.Value;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 
+@Builder
 @Value
 public class ContactPojo {
 

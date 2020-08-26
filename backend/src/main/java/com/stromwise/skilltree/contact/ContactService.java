@@ -1,4 +1,4 @@
-package com.stromwise.skilltree.email;
+package com.stromwise.skilltree.contact;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
