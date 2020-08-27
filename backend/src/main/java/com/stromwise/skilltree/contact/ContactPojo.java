@@ -18,7 +18,7 @@ public class ContactPojo {
     @Email(message = "Email should be valid.")
     String email;
     @NotNull(message = "Phone may not be empty.")
-    int phone;
+    Integer phone;
     @NotEmpty(message = "Message may not be empty.")
     String message;
 }
