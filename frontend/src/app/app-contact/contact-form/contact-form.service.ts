@@ -40,7 +40,7 @@ export class ContactFormService {
     return this.form.controls[controlName].hasError(errorName);
   }
 
-  static emailValidator(control: FormControl) {
+  private static emailValidator(control: FormControl) {
     if (control.value){
       const inputEmailRegexMatches = control.value.match(EMAIL_REGEX);
       return inputEmailRegexMatches ? null : { 'invalidFormat': true };
@@ -51,7 +51,7 @@ export class ContactFormService {
     }
   }
 
-  static phoneNumberValidator(control: FormControl) {
+  private static phoneNumberValidator(control: FormControl) {
     if (control.value){
       const inputPhoneNumberRegexMatches = control.value.match(PHONE_NUMBER_REGEX);
       return inputPhoneNumberRegexMatches ? null : { 'invalidFormat': true };
