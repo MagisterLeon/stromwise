@@ -17,7 +17,7 @@ import {Router} from '@angular/router';
            [ngClass]="size"
            src="assets/logo/StromWise.png"
            alt="image"
-           routerLink="/">
+           (click)="toolbarApi.scrollToToolbar()">
       <mat-form-field *ngIf="isCompact(size)" floatLabel="never">
         <input type="text"
                matInput
@@ -37,9 +37,9 @@ import {Router} from '@angular/router';
         </mat-autocomplete>
       </mat-form-field>
       <div class="navigation">
-        <span class="link" routerLink="/skilltree">Skilltree</span>
+        <span class="link">Skilltree</span>
         <div class="divider"></div>
-        <span class="link">Contact</span>
+        <span class="link" (click)="toolbarApi.scrollToContactForm()">Contact</span>
       </div>
     </mat-toolbar>
   `,
