@@ -40,7 +40,7 @@ public class ContactService {
                     companyNewRequestSubject,
                     contactEmail.getName(),
                     contactEmail.getSurname(),
-                    contactEmail.getPhone(),
+                    String.valueOf(contactEmail.getPhone()),
                     contactEmail.getEmail())
             );
 
