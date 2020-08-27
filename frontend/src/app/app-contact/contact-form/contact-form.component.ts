@@ -1,7 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {ContactFormService} from "./contact-form.service";
-import {Validators} from "@angular/forms";
-
 
 @Component({
   selector: 'st-contact-form',
