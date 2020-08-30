@@ -16,8 +16,8 @@ export class ContactFormService {
     this.form = this.formBuilder.group({
       name: new FormControl('', Validators.required),
       surname: new FormControl('', Validators.required),
-      email: new FormControl(null,[Validators.required, ContactFormService.emailValidator]),
-      phone: new FormControl(null,[Validators.required, ContactFormService.phoneNumberValidator]),
+      email: new FormControl('',[Validators.required, ContactFormService.emailValidator]),
+      phone: new FormControl('',[Validators.required, ContactFormService.phoneNumberValidator]),
       message: new FormControl('', Validators.required)
     })
   }
@@ -33,7 +33,9 @@ export class ContactFormService {
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');
 
-    this.http.post('/api/skill-tree/v1/contact/request', formData).subscribe((error) => console.log(error))
+    this.http
+      .post('/api/skill-tree/v1/contact/request', formData)
+      .subscribe((error) => console.log(error))
   }
 
   public hasError = (controlName: string, errorName: string) =>{
@@ -41,24 +43,18 @@ export class ContactFormService {
   }
 
   private static emailValidator(control: FormControl) {
-    if (control.value){
-      const inputEmailRegexMatches = control.value.match(EMAIL_REGEX);
-      return inputEmailRegexMatches ? null : { 'invalidFormat': true };
-    }
-    if (control.value)  {
-      const isInputNotEmpty = false;
-      return isInputNotEmpty ? null : { 'required': true };
-    }
+    if (!control.value)
+      return { 'required': true }
+
+    if (!control.value.match(EMAIL_REGEX))
+      return { 'invalidFormat': true };
   }
 
   private static phoneNumberValidator(control: FormControl) {
-    if (control.value){
-      const inputPhoneNumberRegexMatches = control.value.match(PHONE_NUMBER_REGEX);
-      return inputPhoneNumberRegexMatches ? null : { 'invalidFormat': true };
-    }
-    if (control.value)  {
-      const isInputNotEmpty = false;
-      return isInputNotEmpty ? null : { 'required': true };
-    }
+    if (!control.value)
+      return { 'required': true }
+
+    if (!control.value.match(PHONE_NUMBER_REGEX))
+      return { 'invalidFormat': true };
   }
 }

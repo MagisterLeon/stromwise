@@ -17,7 +17,7 @@ import {Router} from '@angular/router';
            [ngClass]="size"
            src="assets/logo/StromWise.png"
            alt="image"
-           (click)="toolbarApi.scrollToToolbar()">
+           routerLink="/">
       <mat-form-field *ngIf="isCompact(size)" floatLabel="never">
         <input type="text"
                matInput

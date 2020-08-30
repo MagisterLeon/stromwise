@@ -19,8 +19,4 @@ export class ToolbarApiService {
   scrollToContactForm() {
     document.querySelector('st-contact-form').scrollIntoView({ behavior: 'smooth', block: 'center' });
   }
-
-  scrollToToolbar() {
-    document.querySelector('st-toolbar').scrollIntoView({ behavior: 'smooth', block: 'center' });
-  }
 }
