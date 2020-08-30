@@ -37,9 +37,9 @@ import {Router} from '@angular/router';
         </mat-autocomplete>
       </mat-form-field>
       <div class="navigation">
-        <span class="link" routerLink="/skilltree">Skilltree</span>
+        <span class="link">Skilltree</span>
         <div class="divider"></div>
-        <span class="link">Contact</span>
+        <span class="link" (click)="toolbarApi.scrollToContactForm()">Contact</span>
       </div>
     </mat-toolbar>
   `,

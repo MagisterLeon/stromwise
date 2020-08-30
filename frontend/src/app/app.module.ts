@@ -23,6 +23,9 @@ import {LandingPageComponent} from './landing-page/landing-page.component';
 import {AboutUsComponent} from './landing-page/about-us/about-us.component';
 import {AppFooterComponent} from './app-footer/app-footer.component';
 import {HeroActionButtonsComponent} from './landing-page/top/hero-action-buttons/hero-action-buttons.component';
+import {AppContactComponent} from "./app-contact/app-contact.component";
+import {ContactFormComponent} from "./app-contact/contact-form/contact-form.component";
+import {ContactMapComponent} from "./app-contact/contact-map/contact-map.component";
 
 @NgModule({
   declarations: [
@@ -37,7 +40,10 @@ import {HeroActionButtonsComponent} from './landing-page/top/hero-action-buttons
     LandingPageComponent,
     AboutUsComponent,
     AppFooterComponent,
-    HeroActionButtonsComponent
+    HeroActionButtonsComponent,
+    AppContactComponent,
+    ContactMapComponent,
+    ContactFormComponent
   ],
   imports: [
     BrowserModule,

@@ -15,4 +15,8 @@ export class ToolbarApiService {
   getToolbarSize(): Observable<ToolbarSize> {
     return this.$toolbarSize.asObservable();
   }
+
+  scrollToContactForm() {
+    document.querySelector('st-contact-form').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
 }
