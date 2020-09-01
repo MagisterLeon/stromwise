@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import org.checkerframework.common.aliasing.qual.Unique;
 
 import javax.persistence.*;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.Email;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -24,6 +26,7 @@ public class ContactEntity {
     @Column(name = "surname")
     private String surname;
     @Column(name = "email")
+    @Email
     private String email;
     @Column(name = "phone")
     private Integer phone;
