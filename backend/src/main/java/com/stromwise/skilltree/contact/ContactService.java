@@ -14,6 +14,8 @@ import javax.mail.internet.MimeMessage;
 public class ContactService {
 
     private final JavaMailSender javaMailSender;
+    private final ContactRepository contactRepository;
+    private final ContactConverter contactConverter;
 
     @Value("${company.mail.address}")
     private String companyMailAddress;
@@ -21,10 +23,10 @@ public class ContactService {
     private String companyNewRequestSubject;
 
     public void sendEmail(ContactPojo contactEmail) {
+        saveContact(contactEmail);
+
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
-
         setMimeMessageHelper(mimeMessage, contactEmail);
-
         javaMailSender.send(mimeMessage);
     }
 
@@ -47,5 +49,14 @@ public class ContactService {
         } catch (MessagingException e) {
             e.printStackTrace();
         }
+    }
+
+    private void saveContact(ContactPojo contactEmail) {
+        ContactEntity contact = contactConverter.transform(contactEmail);
+
+        if (!contactRepository.findByEmail(contact.getEmail()))
+            contactRepository.save(contact);
+
+        // ToDo add info-logging there is user with the same email address
     }
 }
