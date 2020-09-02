@@ -1,6 +1,5 @@
 import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
-
+import {ErrorHandler, NgModule} from '@angular/core';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -8,7 +7,7 @@ import {AppToolbarComponent} from './app-toolbar/app-toolbar.component';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {SkillTreeComponent} from './skill-tree/skill-tree.component';
 import {AppPageNotFoundComponent} from './app.page-not-found.component';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {MatListModule} from '@angular/material/list';
 import {GoogleSearchListComponent} from './google/search-list/google-search-list.component';
 import {GoogleSearchComponent} from './google/google-search.component';
@@ -26,6 +25,11 @@ import {HeroActionButtonsComponent} from './landing-page/top/hero-action-buttons
 import {AppContactComponent} from "./app-contact/app-contact.component";
 import {ContactFormComponent} from "./app-contact/contact-form/contact-form.component";
 import {ContactMapComponent} from "./app-contact/contact-map/contact-map.component";
+import {NotificationComponent} from './utils/notification/notification.component';
+import {MatSnackBarModule} from "@angular/material/snack-bar";
+import {MatCardModule} from "@angular/material/card";
+import {GlobalErrorHandler} from "./utils/errors/globalErrorHandler";
+import {ServerErrorInterceptor} from "./utils/errors/serverErrorInterceptor";
 
 @NgModule({
   declarations: [
@@ -43,7 +47,8 @@ import {ContactMapComponent} from "./app-contact/contact-map/contact-map.compone
     HeroActionButtonsComponent,
     AppContactComponent,
     ContactMapComponent,
-    ContactFormComponent
+    ContactFormComponent,
+    NotificationComponent
   ],
   imports: [
     BrowserModule,
@@ -57,9 +62,14 @@ import {ContactMapComponent} from "./app-contact/contact-map/contact-map.compone
     FormsModule,
     ReactiveFormsModule,
     MatIconModule,
-    MatButtonModule
+    MatButtonModule,
+    MatSnackBarModule,
+    MatCardModule
   ],
-  providers: [],
+  providers: [
+    { provide: ErrorHandler, useClass: GlobalErrorHandler },
+    { provide: HTTP_INTERCEPTORS, useClass: ServerErrorInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

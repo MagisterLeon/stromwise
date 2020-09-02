@@ -57,6 +57,9 @@ import {ContactFormService} from "./contact-form.service";
           mat-button
           [disabled]="!contactFormService.form.valid">Send
         </button>
+        <div>
+          <st-snack-bar></st-snack-bar>
+        </div>
       </form>
     </div>
   `,

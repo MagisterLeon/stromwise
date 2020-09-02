@@ -35,7 +35,11 @@ export class ContactFormService {
 
     this.http
       .post('/api/skill-tree/v1/contact/request', formData)
-      .subscribe((error) => console.log(error))
+      .subscribe(
+        (error) => {
+          console.log(error)
+        }
+      )
   }
 
   public hasError = (controlName: string, errorName: string) =>{
