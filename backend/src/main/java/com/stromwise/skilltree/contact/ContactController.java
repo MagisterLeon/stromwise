@@ -19,8 +19,8 @@ public class ContactController {
 
     private final ContactService contactService;
 
-    @ApiOperation(value = "Send email to company's address")
-    @ApiResponse(code = 200, message = "Successful sending email")
+  //  @ApiOperation(value = "Send email to company's address")
+   // @ApiResponse(code = 200, message = "Successful sending email")
     @PostMapping(value = "/request")
     public void sendEmailContactRequest(@Valid ContactPojo email) {
         contactService.sendEmail(email);

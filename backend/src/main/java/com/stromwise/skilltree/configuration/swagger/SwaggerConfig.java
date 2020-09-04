@@ -20,13 +20,13 @@ import java.time.LocalDate;
 public class SwaggerConfig {
 
     @Bean
-    public Docket api() {
+    public Docket postsApi() {
         return new Docket(DocumentationType.SWAGGER_2)
-                //.groupName("swagger2")
+                .groupName("Stormwise")
                 .apiInfo(apiInfo())
                 .select()
-                //.apis(RequestHandlerSelectors.any())
-                //.paths(PathSelectors.any())
+                .apis(RequestHandlerSelectors.any())
+                .paths(PathSelectors.regex("/api.*"))
                 .build();
     }
 
