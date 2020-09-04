@@ -58,7 +58,6 @@ import {ContactFormService} from "./contact-form.service";
           [disabled]="!contactFormService.form.valid">Send
         </button>
         <div>
-          <st-snack-bar></st-snack-bar>
         </div>
       </form>
     </div>

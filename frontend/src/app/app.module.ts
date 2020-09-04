@@ -29,7 +29,6 @@ import {NotificationComponent} from './utils/notification/notification.component
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {MatCardModule} from "@angular/material/card";
 import {GlobalErrorHandler} from "./utils/errors/globalErrorHandler";
-import {ServerErrorInterceptor} from "./utils/errors/serverErrorInterceptor";
 
 @NgModule({
   declarations: [
@@ -67,8 +66,7 @@ import {ServerErrorInterceptor} from "./utils/errors/serverErrorInterceptor";
     MatCardModule
   ],
   providers: [
-    { provide: ErrorHandler, useClass: GlobalErrorHandler },
-    { provide: HTTP_INTERCEPTORS, useClass: ServerErrorInterceptor, multi: true }
+    { provide: ErrorHandler, useClass: GlobalErrorHandler }
   ],
   bootstrap: [AppComponent]
 })

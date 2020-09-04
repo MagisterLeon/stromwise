@@ -1,21 +1,33 @@
-import { Injectable } from '@angular/core';
-import {MatSnackBar, MatSnackBarConfig, MatSnackBarRef} from "@angular/material/snack-bar";
+import {Injectable, NgZone} from '@angular/core';
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Injectable({
   providedIn: 'root'
 })
 export class NotificationService {
 
-  snackBarConfig: MatSnackBarConfig;
-  snackBarRef: MatSnackBarRef<any>;
+  constructor(
+    public snackBar: MatSnackBar, private zone: NgZone) { }
 
-  constructor(private snackBar: MatSnackBar) {}
+  showSuccess(message: string): void {
+    this.zone.run(() => {
+      this.snackBar.open(message, '(ʘ‿ʘ)', {
+        panelClass: ['notification-success'],
+        duration: 10000,
+        verticalPosition: 'top',
+        horizontalPosition: 'right'
+      });
+    });
+  }
 
-  openSnackBar(message: string, action: string) {
-    this.snackBar.open(message, action, {
-      duration: 5000,
-      verticalPosition: 'top',
-      horizontalPosition: 'right'
+  showError(message: string): void {
+    this.zone.run(() => {
+      this.snackBar.open(message, '¯\\_(ツ)_/¯', {
+        panelClass: 'notification-error',
+        duration: 10000,
+        verticalPosition: 'top',
+        horizontalPosition: 'right',
+      });
     });
   }
 }
