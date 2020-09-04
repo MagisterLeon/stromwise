@@ -1,4 +1,4 @@
-package com.stromwise.skilltree.configuration;
+package com.stromwise.skilltree.configuration.mongo;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

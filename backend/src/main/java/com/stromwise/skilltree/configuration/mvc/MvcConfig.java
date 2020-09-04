@@ -1,4 +1,4 @@
-package com.stromwise.skilltree.configuration;
+package com.stromwise.skilltree.configuration.mvc;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
