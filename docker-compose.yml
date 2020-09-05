@@ -1,0 +1,26 @@
+version: '3.1'
+services:
+  database:
+    image: postgres:latest
+    hostname: postgres
+    ports:
+      - "5432:5432"                               # http://127.0.0.1:5555/browser/ -> server -> create -> server -> connection -> port -> 5432
+    environment:
+      POSTGRES_USER: postgres                     # http://127.0.0.1:5555/browser/ -> server -> create -> server -> connection -> username
+      POSTGRES_PASSWORD: pass                     # http://127.0.0.1:5555/browser/ -> server -> create -> server -> connection -> password
+      POSTGRES_DB: stormwise
+    restart: unless-stopped
+
+  pgadmin:
+    image: dpage/pgadmin4
+    ports:
+      - "5555:80"
+    environment:
+      DB_HOST: host.docker.internal               # http://127.0.0.1:5555/browser/ -> server -> create -> server -> connection -> host name/address
+      PGADMIN_DEFAULT_EMAIL: pgadmin4@pgadmin.org # http://127.0.0.1:5555/browser/ -> email
+      PGADMIN_DEFAULT_PASSWORD: admin             # http://127.0.0.1:5555/browser/ -> password
+    links:
+      - "database:pgsql-server"
+    restart: unless-stopped
+
+

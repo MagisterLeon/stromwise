@@ -68,10 +68,18 @@ mat-toolbar {
   width: 100px;
   cursor: pointer;
   outline: none;
+  -webkit-transition: -webkit-transform 10.8s ease-in-out;
+  transition: transform 10.8s ease-in-out;
 
   &.compact {
     width: 50px;
   }
+}
+.logo:hover {
+  -webkit-transform: rotate(360deg);
+  transform: rotate(360deg);
+  position: relative;
+
 }
 
 .navigation {

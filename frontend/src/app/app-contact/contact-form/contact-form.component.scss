@@ -1,0 +1,49 @@
+.contact-form {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+
+  .contact-form-row {
+    display: flex;
+
+    mat-form-field:first-child {
+      padding-right: 12px;
+    }
+  }
+
+  .message {
+    width: 100%;
+  }
+}
+
+mat-label {
+  font-weight: 700;
+  font-size: .6rem;
+  text-transform: uppercase;
+}
+
+::ng-deep {
+  .mat-form-field-appearance-outline .mat-form-field-outline {
+    color: grey !important;
+  }
+
+  .mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
+    color: grey !important;
+  }
+
+  .mat-input-element {
+    caret-color: grey !important;
+  }
+
+  .mat-form-field-label {
+    color: grey !important;
+  }
+
+  .mat-form-field.mat-focused .mat-form-field-label {
+    color: white !important;
+  }
+
+  .mat-form-field.mat-form-field-invalid .mat-form-field-label {
+    color: grey !important;
+  }
+}
