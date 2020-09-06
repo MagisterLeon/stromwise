@@ -39,11 +39,10 @@ export class ContactFormService {
       .post('/api/skill-tree/v1/contact/request', formData)
       .subscribe(
         () => {
-          this.notificationService.showSuccess("Thanks for email dude!");
+          this.notificationService.showSuccess("Thanks for your email :)");
         },
         err => {
-          console.log(err);
-          this.notificationService.showError("There is problem with sending your email :(");
+          this.notificationService.showError("There is a problem with sending your email");
         }
       );
   }

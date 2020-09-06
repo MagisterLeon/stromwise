@@ -7,7 +7,7 @@ import {AppToolbarComponent} from './app-toolbar/app-toolbar.component';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {SkillTreeComponent} from './skill-tree/skill-tree.component';
 import {AppPageNotFoundComponent} from './app.page-not-found.component';
-import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import {HttpClientModule} from '@angular/common/http';
 import {MatListModule} from '@angular/material/list';
 import {GoogleSearchListComponent} from './google/search-list/google-search-list.component';
 import {GoogleSearchComponent} from './google/google-search.component';
@@ -25,10 +25,9 @@ import {HeroActionButtonsComponent} from './landing-page/top/hero-action-buttons
 import {AppContactComponent} from "./app-contact/app-contact.component";
 import {ContactFormComponent} from "./app-contact/contact-form/contact-form.component";
 import {ContactMapComponent} from "./app-contact/contact-map/contact-map.component";
-import {NotificationComponent} from './utils/notification/notification.component';
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {MatCardModule} from "@angular/material/card";
-import {GlobalErrorHandler} from "./utils/errors/globalErrorHandler";
+import {GlobalErrorHandler} from "./utils/errors/global-error-handler";
 
 @NgModule({
   declarations: [
@@ -47,7 +46,6 @@ import {GlobalErrorHandler} from "./utils/errors/globalErrorHandler";
     AppContactComponent,
     ContactMapComponent,
     ContactFormComponent,
-    NotificationComponent
   ],
   imports: [
     BrowserModule,

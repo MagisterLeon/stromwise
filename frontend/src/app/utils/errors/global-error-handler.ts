@@ -1,7 +1,6 @@
 import {ErrorHandler, Injectable, Injector} from '@angular/core';
 import {HttpErrorResponse} from "@angular/common/http";
 import {ErrorService} from "./error.service";
-import {ConsoleLoggingService} from "../logging/consoleLogging.service";
 import {NotificationService} from "../notification/notification.service";
 
 @Injectable()
@@ -12,7 +11,6 @@ export class GlobalErrorHandler implements ErrorHandler {
   handleError(error: Error | HttpErrorResponse) {
 
     const errorService = this.injector.get(ErrorService);
-    const logger = this.injector.get(ConsoleLoggingService);
     const notifier = this.injector.get(NotificationService);
 
     let message;
@@ -25,7 +23,6 @@ export class GlobalErrorHandler implements ErrorHandler {
       notifier.showError(message);
     }
 
-    logger.logError(message);
     console.error(error);
   }
 }
