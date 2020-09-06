@@ -24,9 +24,6 @@ public class TreeNode {
 
     private String description;
 
-    @ManyToOne
-    private TreeNode parent;
-
     @Transient
     private long value;
 
