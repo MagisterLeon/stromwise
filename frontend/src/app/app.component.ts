@@ -5,7 +5,6 @@ import { Component } from '@angular/core';
   template: `
     <st-toolbar></st-toolbar>
     <router-outlet></router-outlet>
-    <st-contact></st-contact>
     <st-footer></st-footer>
   `,
   styleUrls: ['./app.component.scss']

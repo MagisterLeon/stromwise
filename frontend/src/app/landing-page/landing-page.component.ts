@@ -7,6 +7,7 @@ import {ToolbarApiService} from '../app-toolbar/toolbar-api.service';
   template: `
     <st-landing-page-top></st-landing-page-top>
     <st-about-us></st-about-us>
+    <st-contact></st-contact>
   `,
   styleUrls: ['./landing-page.component.scss']
 })
