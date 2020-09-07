@@ -11,28 +11,28 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 class TreeService {
 
-    private final TreeMongoRepository treeMongoRepository;
+    private final TreeRepository treeRepository;
     private final TreeNodeSetupVisitor treeNodeSetupVisitor;
 
     public TreeNode getByName(final String name) {
-        Optional<TreeNode> root = treeMongoRepository.findByNameIgnoreCase(name);
+        Optional<TreeNode> root = treeRepository.findByNameIgnoreCase(name);
         root.ifPresent(r -> r.accept(treeNodeSetupVisitor));
         return root.orElse(null);
     }
 
     public List<String> getAllNodeNames() {
-        return treeMongoRepository.findAll().stream()
+        return treeRepository.findAll().stream()
                 .map(TreeNode::getName)
                 .collect(Collectors.toList());
     }
 
     public void save(final TreeNode treeNode, final String parentName) {
-        treeMongoRepository.save(treeNode);
+        treeRepository.save(treeNode);
 
-        Optional<TreeNode> parentOptional = treeMongoRepository.findByNameIgnoreCase(parentName);
+        Optional<TreeNode> parentOptional = treeRepository.findByNameIgnoreCase(parentName);
         parentOptional.ifPresent(parent -> {
             parent.getChildren().add(treeNode);
-            treeMongoRepository.save(parent);
+            treeRepository.save(parent);
         });
     }
 }
