@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {HttpClient} from "@angular/common/http";
+import {MatSnackBar} from "@angular/material/snack-bar";
+import {NotificationService} from "../../utils/notification/notification.service";
 
 const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 const PHONE_NUMBER_REGEX = /^\d+$/;
@@ -12,7 +14,7 @@ export class ContactFormService {
 
   form: FormGroup;
 
-  constructor(public formBuilder: FormBuilder, private http: HttpClient) {
+  constructor(public formBuilder: FormBuilder, private http: HttpClient, private snackBar: MatSnackBar, private notificationService: NotificationService) {
     this.form = this.formBuilder.group({
       name: new FormControl('', Validators.required),
       surname: new FormControl('', Validators.required),
@@ -35,7 +37,14 @@ export class ContactFormService {
 
     this.http
       .post('/api/skill-tree/v1/contact/request', formData)
-      .subscribe((error) => console.log(error))
+      .subscribe(
+        () => {
+          this.notificationService.showSuccess("Thanks for your email :)");
+        },
+        err => {
+          this.notificationService.showError("There is a problem with sending your email");
+        }
+      );
   }
 
   public hasError = (controlName: string, errorName: string) =>{
