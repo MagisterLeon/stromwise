@@ -18,7 +18,7 @@ import static org.mockito.Mockito.when;
 class TreeServiceTest {
 
     @Mock
-    private TreeMongoRepository treeMongoRepository;
+    private TreeRepository treeRepository;
     @Spy
     private TreeNodeSetupVisitor treeNodeSetupVisitor;
     @InjectMocks
@@ -27,7 +27,7 @@ class TreeServiceTest {
     @Test
     void shouldCountNodesLeaves() {
         // given
-        when(treeMongoRepository.findByNameIgnoreCase(anyString())).thenReturn(
+        when(treeRepository.findByNameIgnoreCase(anyString())).thenReturn(
                 Optional.of(
                         TreeNode.builder()
                                 .child(TreeNode.builder()

@@ -2,28 +2,24 @@ package com.stromwise.skilltree.tree;
 
 import com.stromwise.skilltree.course.Course;
 import lombok.*;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.Transient;
-import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.DBRef;
-import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
 @Data
+@Entity
+@Table(name = "tree_node")
 @Builder
-@Document(value = "nodes")
 @AllArgsConstructor
 @NoArgsConstructor
 public class TreeNode {
 
     @Id
-    private String id;
+    private Long id;
 
     @NotNull(message = "Node name must not be null")
-    @Indexed(unique = true)
     private String name;
 
     private String description;
@@ -32,10 +28,11 @@ public class TreeNode {
     private long value;
 
     @Singular
+    @OneToMany
     private List<Course> courses = new ArrayList<>();
 
-    @DBRef
     @Singular
+    @OneToMany
     private List<TreeNode> children = new ArrayList<>();
 
     public void accept(Visitor visitor) {
