@@ -1,0 +1,28 @@
+databaseChangeLog:
+  - changeSet:
+      id: 3
+      author: michal
+      changes:
+      - createTable:
+          tableName: contact
+          columns:
+            - column:
+                autoIncrement: true
+                constraints:
+                  nullable: false
+                  primaryKey: true
+                  primaryKeyName: contact_pkey
+                name: id
+                type: BIGINT
+            - column:
+                name: name
+                type: VARCHAR(255)
+            - column:
+                name: surname
+                type: VARCHAR(255)
+            - column:
+                name: email
+                type: VARCHAR(255)
+            - column:
+                name: phone
+                type: BIGINT
