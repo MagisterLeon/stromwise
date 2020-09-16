@@ -1,4 +1,4 @@
-import {BrowserModule} from '@angular/platform-browser';
+import {BrowserModule, DomSanitizer} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 
 import {AppRoutingModule} from './app-routing.module';
@@ -15,7 +15,7 @@ import {GoogleSearchComponent} from './google/google-search.component';
 import {MatInputModule} from '@angular/material/input';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {MatIconModule} from '@angular/material/icon';
+import {MatIconModule, MatIconRegistry} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import {HeroActionsAutocompleteComponent} from './landing-page/top/hero-actions-autocomplete/hero-actions-autocomplete.component';
 import {LandingPageTopComponent} from './landing-page/top/landing-page-top.component';
@@ -26,6 +26,8 @@ import {HeroActionButtonsComponent} from './landing-page/top/hero-action-buttons
 import {AppContactComponent} from "./app-contact/app-contact.component";
 import {ContactFormComponent} from "./app-contact/contact-form/contact-form.component";
 import {ContactMapComponent} from "./app-contact/contact-map/contact-map.component";
+import {MatGridListModule} from "@angular/material/grid-list";
+import {MatTabsModule} from "@angular/material/tabs";
 
 @NgModule({
   declarations: [
@@ -57,9 +59,19 @@ import {ContactMapComponent} from "./app-contact/contact-map/contact-map.compone
     FormsModule,
     ReactiveFormsModule,
     MatIconModule,
-    MatButtonModule
+    MatButtonModule,
+    MatGridListModule,
+    MatTabsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+  constructor(private matIconRegistry: MatIconRegistry,
+              private domSanitizer: DomSanitizer) {
+    this.matIconRegistry.addSvgIcon(
+      'google',
+      this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/social-media/google.svg')
+    );
+  }
+}
