@@ -1,3 +1,5 @@
+import {BrowserModule} from '@angular/platform-browser';
+import {ErrorHandler, NgModule} from '@angular/core';
 import {BrowserModule, DomSanitizer} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 
@@ -26,6 +28,9 @@ import {HeroActionButtonsComponent} from './landing-page/top/hero-action-buttons
 import {AppContactComponent} from "./app-contact/app-contact.component";
 import {ContactFormComponent} from "./app-contact/contact-form/contact-form.component";
 import {ContactMapComponent} from "./app-contact/contact-map/contact-map.component";
+import {MatSnackBarModule} from "@angular/material/snack-bar";
+import {MatCardModule} from "@angular/material/card";
+import {GlobalErrorHandler} from "./utils/errors/global-error-handler";
 import {MatGridListModule} from "@angular/material/grid-list";
 import {MatTabsModule} from "@angular/material/tabs";
 
@@ -45,7 +50,7 @@ import {MatTabsModule} from "@angular/material/tabs";
     HeroActionButtonsComponent,
     AppContactComponent,
     ContactMapComponent,
-    ContactFormComponent
+    ContactFormComponent,
   ],
   imports: [
     BrowserModule,
@@ -60,10 +65,15 @@ import {MatTabsModule} from "@angular/material/tabs";
     ReactiveFormsModule,
     MatIconModule,
     MatButtonModule,
+    MatSnackBarModule,
+    MatCardModule
+    MatButtonModule,
     MatGridListModule,
     MatTabsModule
   ],
-  providers: [],
+  providers: [
+    { provide: ErrorHandler, useClass: GlobalErrorHandler }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
