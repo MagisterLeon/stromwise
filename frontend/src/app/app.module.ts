@@ -1,7 +1,5 @@
-import {BrowserModule} from '@angular/platform-browser';
-import {ErrorHandler, NgModule} from '@angular/core';
 import {BrowserModule, DomSanitizer} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
+import {ErrorHandler, NgModule} from '@angular/core';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
@@ -25,14 +23,14 @@ import {LandingPageComponent} from './landing-page/landing-page.component';
 import {AboutUsComponent} from './landing-page/about-us/about-us.component';
 import {AppFooterComponent} from './app-footer/app-footer.component';
 import {HeroActionButtonsComponent} from './landing-page/top/hero-action-buttons/hero-action-buttons.component';
-import {AppContactComponent} from "./app-contact/app-contact.component";
-import {ContactFormComponent} from "./app-contact/contact-form/contact-form.component";
-import {ContactMapComponent} from "./app-contact/contact-map/contact-map.component";
-import {MatSnackBarModule} from "@angular/material/snack-bar";
-import {MatCardModule} from "@angular/material/card";
-import {GlobalErrorHandler} from "./utils/errors/global-error-handler";
-import {MatGridListModule} from "@angular/material/grid-list";
-import {MatTabsModule} from "@angular/material/tabs";
+import {AppContactComponent} from './app-contact/app-contact.component';
+import {ContactFormComponent} from './app-contact/contact-form/contact-form.component';
+import {ContactMapComponent} from './app-contact/contact-map/contact-map.component';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatCardModule} from '@angular/material/card';
+import {GlobalErrorHandler} from './utils/errors/global-error-handler';
+import {MatGridListModule} from '@angular/material/grid-list';
+import {MatTabsModule} from '@angular/material/tabs';
 
 @NgModule({
   declarations: [
@@ -66,7 +64,7 @@ import {MatTabsModule} from "@angular/material/tabs";
     MatIconModule,
     MatButtonModule,
     MatSnackBarModule,
-    MatCardModule
+    MatCardModule,
     MatButtonModule,
     MatGridListModule,
     MatTabsModule
