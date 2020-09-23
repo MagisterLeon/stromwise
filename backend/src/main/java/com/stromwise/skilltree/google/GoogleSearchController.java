@@ -9,14 +9,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@RestController
-@RequiredArgsConstructor
 @RequestMapping("/api/skill-tree/v1/google")
+@RequiredArgsConstructor
+@RestController
 class GoogleSearchController {
 
     private final GoogleSearchService googleSearchService;
 
-  //  @ApiOperation(value = "Get courses from google")
+    @ApiOperation(value = "Get courses from google")
     @GetMapping("/{query}")
     public List<GoogleSearchResultModel> get(@PathVariable final String query) {
         return googleSearchService.getSearchResult(query);
