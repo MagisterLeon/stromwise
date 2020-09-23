@@ -1,0 +1,97 @@
+databaseChangeLog:
+  - changeSet:
+      id: 2
+      author: leon
+      changes:
+        - insert:
+            columns:
+              - column:
+                  name: name
+                  value: Programming
+            schemaName: public
+            tableName: tree_node
+        - insert:
+            columns:
+              - column:
+                  name: name
+                  value: Craftmanship
+            schemaName: public
+            tableName: tree_node
+        - insert:
+            columns:
+              - column:
+                  name: name
+                  value: Backend
+            schemaName: public
+            tableName: tree_node
+        - insert:
+            columns:
+              - column:
+                  name: name
+                  value: Frontend
+            schemaName: public
+            tableName: tree_node
+        - insert:
+            columns:
+              - column:
+                  name: name
+                  value: DevOps
+            schemaName: public
+            tableName: tree_node
+        - insert:
+            columns:
+              - column:
+                  name: name
+                  value: Storage
+            schemaName: public
+            tableName: tree_node
+        - insert:
+            columns:
+              - column:
+                  name: tree_node_id
+                  value: 1
+              - column:
+                  name: children_id
+                  value: 2
+            schemaName: public
+            tableName: tree_node_children
+        - insert:
+            columns:
+              - column:
+                  name: tree_node_id
+                  value: 1
+              - column:
+                  name: children_id
+                  value: 3
+            schemaName: public
+            tableName: tree_node_children
+        - insert:
+            columns:
+              - column:
+                  name: tree_node_id
+                  value: 1
+              - column:
+                  name: children_id
+                  value: 4
+            schemaName: public
+            tableName: tree_node_children
+        - insert:
+            columns:
+              - column:
+                  name: tree_node_id
+                  value: 1
+              - column:
+                  name: children_id
+                  value: 5
+            schemaName: public
+            tableName: tree_node_children
+        - insert:
+            columns:
+              - column:
+                  name: tree_node_id
+                  value: 1
+              - column:
+                  name: children_id
+                  value: 6
+            schemaName: public
+            tableName: tree_node_children
