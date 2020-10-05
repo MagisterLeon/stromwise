@@ -25,6 +25,8 @@ databaseChangeLog:
               - column:
                   name: value
                   type: BIGINT
+                  constraints:
+                    nullable: false
         - createTable:
             tableName: category
             columns:
