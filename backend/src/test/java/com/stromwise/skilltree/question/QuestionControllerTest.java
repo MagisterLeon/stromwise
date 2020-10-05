@@ -63,13 +63,13 @@ public class QuestionControllerTest extends UnitTest {
         mockMvc.perform(
                 MockMvcRequestBuilders.post("/v1/questions")
                         .content(asJsonString(AddQuestionRequest.builder()
-                                .question("question")
-                                .answer("answer")
                                 .categories(List.of())
                         .build()))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.code", is("01002")))
-                .andExpect(jsonPath("$.message", is("Bad request")));
+                .andExpect(jsonPath("$.message", is("Bad request")))
+                .andExpect(jsonPath("$.details",
+                        is("[categories: categories cannot be empty, question: question cannot be blank]")));
     }
 }

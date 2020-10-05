@@ -15,13 +15,12 @@ import java.util.List;
 @NoArgsConstructor
 public class AddQuestionRequest {
 
-    @NotBlank
+    @NotBlank(message = "question cannot be blank")
     private String question;
 
-    @NotBlank
     private String answer;
 
-    @NotEmpty
+    @NotEmpty(message = "categories cannot be empty")
     private List<String> categories;
 
 }
