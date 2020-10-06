@@ -16,7 +16,7 @@ class GoogleSearchController {
 
     private final GoogleSearchService googleSearchService;
 
-    @ApiOperation(value = "Get courses from google")
+    @ApiOperation(value = "Get results from google to given query")
     @GetMapping("/{query}")
     public List<GoogleSearchResultModel> get(@PathVariable final String query) {
         return googleSearchService.getSearchResult(query);

@@ -1,4 +1,4 @@
-package com.stromwise.skilltree.configuration.swagger;
+package com.stromwise.skilltree.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
