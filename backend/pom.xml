@@ -17,6 +17,8 @@
         <guava.version>28.2-jre</guava.version>
         <google.api.search.version>v1-rev20200504-1.30.9</google.api.search.version>
         <hibernate.validator.version>6.1.5.Final</hibernate.validator.version>
+        <swagger2.version>2.9.2</swagger2.version>
+        <swagger2.ui.version>2.9.2</swagger2.ui.version>
     </properties>
 
     <repositories>
@@ -41,13 +43,13 @@
             <scope>runtime</scope>
         </dependency>
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-validator</artifactId>
             <version>${hibernate.validator.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-mail</artifactId>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -69,6 +71,19 @@
             <artifactId>google-api-services-customsearch</artifactId>
             <version>${google.api.search.version}</version>
         </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>${swagger2.version}</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+            <version>${swagger2.ui.version}</version>
+            <scope>compile</scope>
+        </dependency>
+
 
         <!-- DEPENDENCIES FOR TESTS -->
         <dependency>
