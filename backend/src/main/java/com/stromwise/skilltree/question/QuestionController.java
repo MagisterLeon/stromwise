@@ -3,6 +3,7 @@ package com.stromwise.skilltree.question;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,11 +16,18 @@ import javax.validation.Valid;
 @RequiredArgsConstructor
 public class QuestionController {
 
-    private final QuestionService questionService;
+    private final AddQuestionService addQuestionService;
+    private final UpdateQuestionService updateQuestionService;
 
     @PostMapping
-    public ResponseEntity<Void> add(@RequestBody @Valid AddQuestionRequest addQuestionRequest) {
-        questionService.add(addQuestionRequest);
+    public ResponseEntity<Void> add(@RequestBody @Valid AddQuestionRequest request) {
+        addQuestionService.add(request);
         return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @PatchMapping("/weights")
+    public ResponseEntity<Void> updateQuestionWeights(@RequestBody @Valid UpdateQuestionWeightsRequest request) {
+        updateQuestionService.updateWeights(request);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

@@ -13,7 +13,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-public class QuestionServiceIntegrationTest extends IntegrationTest {
+public class AddQuestionServiceIntegrationTest extends IntegrationTest {
 
     @Autowired
     private CategoryRepository categoryRepository;
@@ -22,7 +22,7 @@ public class QuestionServiceIntegrationTest extends IntegrationTest {
     private QuestionRepository questionRepository;
 
     @Autowired
-    private QuestionService questionService;
+    private AddQuestionService addQuestionService;
 
     private AddQuestionRequest request;
 
@@ -40,7 +40,7 @@ public class QuestionServiceIntegrationTest extends IntegrationTest {
         Category category2 = categoryRepository.save(new Category("category 2"));
 
         // when
-        questionService.add(request);
+        addQuestionService.add(request);
 
         // then
         assertQuestion();
@@ -51,7 +51,7 @@ public class QuestionServiceIntegrationTest extends IntegrationTest {
     @Transactional
     public void should_add_question_with_new_categories() {
         // when
-        questionService.add(request);
+        addQuestionService.add(request);
 
         // then
         assertQuestion();
@@ -66,7 +66,7 @@ public class QuestionServiceIntegrationTest extends IntegrationTest {
         Category category = categoryRepository.save(new Category("category 1"));
 
         // when
-        questionService.add(request);
+        addQuestionService.add(request);
 
         // then
         assertQuestion();

@@ -15,6 +15,12 @@ databaseChangeLog:
                   name: id
                   type: BIGINT
               - column:
+                  name: public_id
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
                   name: question
                   type: VARCHAR(255)
                   constraints:
