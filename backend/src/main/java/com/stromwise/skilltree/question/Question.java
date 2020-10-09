@@ -17,6 +17,7 @@ import javax.persistence.ManyToMany;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 @Data
 @Entity
@@ -29,6 +30,7 @@ public class Question {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String publicId;
     private String question;
     private String answer;
     private long value;
@@ -42,6 +44,7 @@ public class Question {
     private Set<Category> categories = new HashSet<>();
 
     public Question(String question, String answer) {
+        this.publicId = UUID.randomUUID().toString();
         this.question = question;
         this.answer = answer;
     }
