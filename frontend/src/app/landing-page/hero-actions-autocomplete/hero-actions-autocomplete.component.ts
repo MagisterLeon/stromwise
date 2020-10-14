@@ -2,9 +2,10 @@ import {Component, OnInit} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {combineLatest, Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
-import {TreeNodeNamesService} from './tree-node-names.service';
+import {CategoryNamesService} from './category-names.service';
 import {MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
 import {Router} from '@angular/router';
+import {Category} from './category';
 
 @Component({
   template: `
@@ -13,7 +14,7 @@ import {Router} from '@angular/router';
         <input type="text"
                matInput
                #autocompleteInput
-               [formControl]="skillsControl"
+               [formControl]="categoryControl"
                [matAutocomplete]="auto">
         <mat-icon class="autocomplete-icon" *ngIf="autocompleteOpened" matSuffix color="primary">arrow_drop_up
         </mat-icon>
@@ -21,11 +22,11 @@ import {Router} from '@angular/router';
         </mat-icon>
         <mat-autocomplete autoActiveFirstOption
                           #auto="matAutocomplete"
-                          (optionSelected)="onSkillSelected($event, autocompleteInput)"
+                          (optionSelected)="onCategorySelected($event, autocompleteInput)"
                           (opened)="onOpened()"
                           (closed)="onClosed()">
-          <mat-option *ngFor="let option of filteredSkills | async" [value]="option">
-            {{option}}
+          <mat-option *ngFor="let option of filteredCategories | async" [value]="option.path">
+            {{option.name}}
           </mat-option>
         </mat-autocomplete>
       </mat-form-field>
@@ -35,22 +36,22 @@ import {Router} from '@angular/router';
   styleUrls: ['./hero-actions-autocomplete.component.scss']
 })
 export class HeroActionsAutocompleteComponent implements OnInit {
-  skillsControl = new FormControl();
+  categoryControl = new FormControl();
   autocompleteOpened: boolean;
-  filteredSkills: Observable<string[]>;
+  filteredCategories: Observable<Category[]>;
 
   constructor(private router: Router,
-              private treeNodeNamesService: TreeNodeNamesService) {
+              private treeNodeNamesService: CategoryNamesService) {
   }
 
   ngOnInit(): void {
-    this.filteredSkills = combineLatest([
-      this.treeNodeNamesService.nodeNames(),
-      this.skillsControl.valueChanges.pipe(
+    this.filteredCategories = combineLatest([
+      this.treeNodeNamesService.getCategories(),
+      this.categoryControl.valueChanges.pipe(
         startWith('')
       )])
       .pipe(
-        map(([names, value]) => this.filter(names, value))
+        map(([categories, value]) => this.filter(categories, value))
       );
   }
 
@@ -62,14 +63,16 @@ export class HeroActionsAutocompleteComponent implements OnInit {
     this.autocompleteOpened = false;
   }
 
-  private filter(names: string[], value: string): string[] {
+  private filter(categories: Category[], value: string): Category[] {
     const filterValue = value.toLowerCase();
-    return names.filter(option => option.toLowerCase().indexOf(filterValue) === 0);
+    const filteredCategories = categories.filter(option => option.name.toLowerCase().indexOf(filterValue) === 0);
+    filteredCategories.push({name: 'Not found your category? Add it!', path: 'add/category'});
+    return filteredCategories;
   }
 
-  onSkillSelected(event: MatAutocompleteSelectedEvent, autocompleteInput: HTMLInputElement): void {
+  onCategorySelected(event: MatAutocompleteSelectedEvent, autocompleteInput: HTMLInputElement): void {
     autocompleteInput.value = '';
     autocompleteInput.blur();
-    this.router.navigate(['skilltree', event.option.value]);
+    this.router.navigateByUrl(event.option.value);
   }
 }

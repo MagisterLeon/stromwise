@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/v1/questions")
+@RequestMapping("/api/v1/questions")
 @RequiredArgsConstructor
 public class QuestionController {
 

@@ -4,7 +4,6 @@ import {Component, OnInit} from '@angular/core';
   selector: 'st-hero-action-buttons',
   template: `
     <div>
-      <span class="hero-actions-buttons-description">Popular:</span>
       <a routerLink="/skilltree/Programming">
         <button class="hero-action-button" mat-stroked-button>Programming</button>
       </a>
@@ -13,9 +12,6 @@ import {Component, OnInit} from '@angular/core';
       </a>
       <a routerLink="/skilltree/Guitar">
         <button class="hero-action-button" mat-stroked-button>Guitar</button>
-      </a>
-      <a routerLink="/skilltree/Filmmaking">
-        <button class="hero-action-button" mat-stroked-button>Filmmaking</button>
       </a>
     </div>
   `,

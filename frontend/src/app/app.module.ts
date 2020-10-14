@@ -5,7 +5,6 @@ import {AppComponent} from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {AppToolbarComponent} from './app-toolbar/app-toolbar.component';
 import {MatToolbarModule} from '@angular/material/toolbar';
-import {SkillTreeComponent} from './skill-tree/skill-tree.component';
 import {AppPageNotFoundComponent} from './app.page-not-found.component';
 import {HttpClientModule} from '@angular/common/http';
 import {MatListModule} from '@angular/material/list';
@@ -16,31 +15,26 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
-import {HeroActionsAutocompleteComponent} from './landing-page/top/hero-actions-autocomplete/hero-actions-autocomplete.component';
-import {LandingPageTopComponent} from './landing-page/top/landing-page-top.component';
+import {HeroActionsAutocompleteComponent} from './landing-page/hero-actions-autocomplete/hero-actions-autocomplete.component';
 import {LandingPageComponent} from './landing-page/landing-page.component';
-import {AboutUsComponent} from './landing-page/about-us/about-us.component';
 import {AppFooterComponent} from './app-footer/app-footer.component';
-import {HeroActionButtonsComponent} from './landing-page/top/hero-action-buttons/hero-action-buttons.component';
-import {AppContactComponent} from "./app-contact/app-contact.component";
-import {ContactFormComponent} from "./app-contact/contact-form/contact-form.component";
-import {ContactMapComponent} from "./app-contact/contact-map/contact-map.component";
-import {MatSnackBarModule} from "@angular/material/snack-bar";
-import {MatCardModule} from "@angular/material/card";
-import {GlobalErrorHandler} from "./utils/errors/global-error-handler";
+import {HeroActionButtonsComponent} from './landing-page/hero-action-buttons/hero-action-buttons.component';
+import {ContactMapComponent} from './app-contact/contact-map/contact-map.component';
+import {AppContactComponent} from './app-contact/app-contact.component';
+import {ContactFormComponent} from './app-contact/contact-form/contact-form.component';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatCardModule} from '@angular/material/card';
+import {GlobalErrorHandler} from './utils/errors/global-error-handler';
 
 @NgModule({
   declarations: [
     AppComponent,
     AppPageNotFoundComponent,
     AppToolbarComponent,
-    SkillTreeComponent,
     GoogleSearchListComponent,
     GoogleSearchComponent,
-    LandingPageTopComponent,
     HeroActionsAutocompleteComponent,
     LandingPageComponent,
-    AboutUsComponent,
     AppFooterComponent,
     HeroActionButtonsComponent,
     AppContactComponent,
@@ -64,8 +58,9 @@ import {GlobalErrorHandler} from "./utils/errors/global-error-handler";
     MatCardModule
   ],
   providers: [
-    { provide: ErrorHandler, useClass: GlobalErrorHandler }
+    {provide: ErrorHandler, useClass: GlobalErrorHandler}
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}
