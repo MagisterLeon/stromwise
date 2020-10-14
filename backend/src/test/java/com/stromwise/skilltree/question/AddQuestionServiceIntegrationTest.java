@@ -92,14 +92,14 @@ public class AddQuestionServiceIntegrationTest extends IntegrationTest {
         List<Category> categories = categoryRepository.findAll();
 
         assertThat(categories).hasSize(2);
-            assertThat(categories)
-                    .extracting("name")
-                    .containsExactlyInAnyOrder("category 1", "category 2");
+        assertThat(categories)
+                .extracting("name")
+                .containsExactlyInAnyOrder("category 1", "category 2");
 
-            if (ids.length > 0) {
-                assertThat(categories)
-                        .extracting("id")
-                        .contains(ids);
-            }
+        if (ids.length > 0) {
+            assertThat(categories)
+                    .extracting("id")
+                    .contains(ids);
+        }
     }
 }

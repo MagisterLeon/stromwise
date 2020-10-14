@@ -47,32 +47,32 @@ class UpdateQuestionServiceTest extends UnitTest {
     @Test
     public void should_split_points_between_two_question() {
         // given
-        Question question = new Question();
+        Question question1 = new Question();
         Question question2 = new Question();
-        UpdateQuestionWeightsRequest request = new UpdateQuestionWeightsRequest(List.of("id", "id2"));
-        when(questionRepository.findByPublicId("id")).thenReturn(Optional.of(question));
+        UpdateQuestionWeightsRequest request = new UpdateQuestionWeightsRequest(List.of("id1", "id2"));
+        when(questionRepository.findByPublicId("id1")).thenReturn(Optional.of(question1));
         when(questionRepository.findByPublicId("id2")).thenReturn(Optional.of(question2));
 
         // when
         uut.updateWeights(request);
 
         // then
-        assertThat(question.getValue()).isEqualTo(333);
+        assertThat(question1.getValue()).isEqualTo(333);
         assertThat(question2.getValue()).isEqualTo(666);
     }
 
     @Test
     public void should_split_points_between_five_question() {
         // given
-        Question question = new Question();
+        Question question1 = new Question();
         Question question2 = new Question();
         Question question3 = new Question();
         Question question4 = new Question();
         Question question5 = new Question();
 
         UpdateQuestionWeightsRequest request = new UpdateQuestionWeightsRequest(
-                List.of("id", "id2", "id3", "id4", "id5"));
-        when(questionRepository.findByPublicId("id")).thenReturn(Optional.of(question));
+                List.of("id1", "id2", "id3", "id4", "id5"));
+        when(questionRepository.findByPublicId("id1")).thenReturn(Optional.of(question1));
         when(questionRepository.findByPublicId("id2")).thenReturn(Optional.of(question2));
         when(questionRepository.findByPublicId("id3")).thenReturn(Optional.of(question3));
         when(questionRepository.findByPublicId("id4")).thenReturn(Optional.of(question4));
@@ -82,7 +82,7 @@ class UpdateQuestionServiceTest extends UnitTest {
         uut.updateWeights(request);
 
         // then
-        assertThat(question.getValue()).isEqualTo(67);
+        assertThat(question1.getValue()).isEqualTo(67);
         assertThat(question2.getValue()).isEqualTo(134);
         assertThat(question3.getValue()).isEqualTo(201);
         assertThat(question4.getValue()).isEqualTo(268);
