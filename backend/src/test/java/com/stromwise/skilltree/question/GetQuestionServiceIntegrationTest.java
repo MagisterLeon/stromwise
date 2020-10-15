@@ -9,11 +9,12 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import static com.stromwise.skilltree.utils.TestDataFactory.prepareCategories;
+import static com.stromwise.skilltree.utils.TestDataFactory.prepareQuestions;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
@@ -26,7 +27,6 @@ public class GetQuestionServiceIntegrationTest extends IntegrationTest {
 
     @Autowired
     private GetQuestionService getQuestionService;
-
 
     @BeforeEach
     public void clearData() {
@@ -105,26 +105,5 @@ public class GetQuestionServiceIntegrationTest extends IntegrationTest {
 
         assertThat(categoryRepository.findAll().size()).isEqualTo(categoriesAmount);
         assertThat(questionRepository.findAll().size()).isEqualTo(questionsAmount);
-    }
-
-    List<Category> prepareCategories(int categoriesAmount) {
-        List<Category> categoryList = new ArrayList<>();
-        for (int i = 1; i < categoriesAmount + 1; i++) {
-            categoryList.add(new Category("category " + i));
-        }
-
-        return categoryList;
-    }
-
-    List<Question> prepareQuestions(int questionsAmount, List<Category> categoryList) {
-        List<Question> questionList = new ArrayList<>();
-        for (int i = 1; i < questionsAmount + 1; i++) {
-            Question question = new Question("question " + i, "answer " + i);
-            question.addCategories(categoryList);
-
-            questionList.add(question);
-        }
-
-        return questionList;
     }
 }

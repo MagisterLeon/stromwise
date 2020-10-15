@@ -7,10 +7,9 @@ import com.stromwise.skilltree.infastructure.rest.RestExceptionHandler;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
@@ -22,14 +21,12 @@ import java.util.Set;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-//@SpringBootTest
-public class QuestionControllerTest extends UnitTest {
 
-    private MockMvc mockMvc;
+public class QuestionControllerTest extends UnitTest {
 
     @Mock
     private QuestionRepository questionRepository;
@@ -37,6 +34,13 @@ public class QuestionControllerTest extends UnitTest {
     private CategoryRepository categoryRepository;
     @Mock
     private SkilltreeProperties skilltreeProperties;
+
+    private final String URL = "/v1/questions";
+
+    @Value("${questions.result.limit}")
+    private String questionsResultLimit;
+
+    private MockMvc mockMvc;
 
     @BeforeEach
     public void setup() {
@@ -53,7 +57,7 @@ public class QuestionControllerTest extends UnitTest {
     @Test
     void should_save_question() throws Exception {
         mockMvc.perform(
-                MockMvcRequestBuilders.post("/v1/questions")
+                MockMvcRequestBuilders.post(URL)
                         .content(asJsonString(AddQuestionRequest.builder()
                                 .question("question")
                                 .answer("answer")
@@ -66,7 +70,7 @@ public class QuestionControllerTest extends UnitTest {
     @Test
     void should_throw_bad_request_on_invalid_content_when_add_question() throws Exception {
         mockMvc.perform(
-                MockMvcRequestBuilders.post("/v1/questions")
+                MockMvcRequestBuilders.post(URL)
                         .content(asJsonString(AddQuestionRequest.builder()
                                 .categories(List.of())
                                 .build()))
@@ -81,7 +85,7 @@ public class QuestionControllerTest extends UnitTest {
     @Test
     void should_update_question_weights() throws Exception {
         mockMvc.perform(
-                MockMvcRequestBuilders.patch("/v1/questions/weights")
+                MockMvcRequestBuilders.patch(URL + "/weights")
                         .content(asJsonString(new UpdateQuestionWeightsRequest(List.of("id"))))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
@@ -90,7 +94,7 @@ public class QuestionControllerTest extends UnitTest {
     @Test
     void should_throw_bad_request_on_invalid_content_when_update_weights() throws Exception {
         mockMvc.perform(
-                MockMvcRequestBuilders.patch("/v1/questions/weights")
+                MockMvcRequestBuilders.patch(URL + "/weights")
                         .content(asJsonString(new UpdateQuestionWeightsRequest(
                                 (List.of(
                                         "id1",
@@ -116,13 +120,13 @@ public class QuestionControllerTest extends UnitTest {
     void should_return_questions_belong_to_specific_category() throws Exception {
         Set<Question> questionSet = new HashSet<>(Arrays.asList(
                 new Question("question 1", "answer 1"),
-                new Question("question 2", "answer 2"),
-                new Question("question 3", "answer 3")));
-        when(questionRepository.findRandomQuestionsBelongToSpecificCategory("programming")).thenReturn(questionSet);
-        assertThat(questionRepository.findRandomQuestionsBelongToSpecificCategory("programming").size()).isEqualTo(questionSet.size());
+                new Question("question 2", "answer 2")));
+
+        when(questionRepository.findRandomQuestionsBelongToSpecificCategory("programming", questionsResultLimit)).thenReturn(questionSet);
+        assertThat(questionRepository.findRandomQuestionsBelongToSpecificCategory("programming", questionsResultLimit).size()).isEqualTo(questionSet.size());
 
         mockMvc.perform(
-                MockMvcRequestBuilders.get("/v1/questions/programming")
+                MockMvcRequestBuilders.get(URL + "/programming")
                         .param("categoryName", "programming")
                         .accept("application/json")
                         .content((asJsonString(
@@ -130,7 +134,7 @@ public class QuestionControllerTest extends UnitTest {
                                         questionSet
                                 )))))
                         .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
-
+                .andExpect(jsonPath("$", hasSize(2)))
+                .andExpect(status().isOk()).andReturn();
     }
 }

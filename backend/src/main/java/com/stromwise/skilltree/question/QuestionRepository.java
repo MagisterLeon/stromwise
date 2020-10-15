@@ -7,6 +7,7 @@ import java.util.Optional;
 import java.util.Set;
 
 public interface QuestionRepository extends JpaRepository<Question, Long> {
+
     Optional<Question> findByPublicId(String publicId);
 
     @Query(value = "" +
@@ -16,7 +17,7 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
             "join category c on c.id = qc.category_id " +
             "where c.name = ?1 " +
             "order by random() " +
-            "LIMIT 10 ",
+            "LIMIT ?2 ",
             nativeQuery = true)
-    Set<Question> findRandomQuestionsBelongToSpecificCategory(String categoryName);
+    Set<Question> findRandomQuestionsBelongToSpecificCategory(String categoryName, String questionsResultLimit);
 }
