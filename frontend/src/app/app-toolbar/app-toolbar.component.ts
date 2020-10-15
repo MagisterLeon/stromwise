@@ -4,7 +4,7 @@ import {ToolbarSize} from './toolbar-size.enum';
 import {combineLatest, Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import {FormControl} from '@angular/forms';
-import {TreeNodeNamesService} from '../landing-page/top/hero-actions-autocomplete/tree-node-names.service';
+import {CategoryNamesService} from '../landing-page/hero-actions-autocomplete/category-names.service';
 import {MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
 import {Router} from '@angular/router';
 
@@ -52,14 +52,14 @@ export class AppToolbarComponent implements OnInit {
   autocompleteOpened: boolean;
   filteredSkills: Observable<string[]>;
 
-  constructor(private treeNodeNamesService: TreeNodeNamesService,
+  constructor(private treeNodeNamesService: CategoryNamesService,
               private router: Router,
               public toolbarApi: ToolbarApiService) {
   }
 
   ngOnInit(): void {
     this.filteredSkills = combineLatest([
-      this.treeNodeNamesService.nodeNames(),
+      this.treeNodeNamesService.getCategories(),
       this.skillsControl.valueChanges.pipe(
         startWith('')
       )])

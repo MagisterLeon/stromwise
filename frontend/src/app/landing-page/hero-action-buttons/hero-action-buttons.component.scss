@@ -2,12 +2,13 @@
 
 .hero-actions-buttons-description {
   margin-right: 16px;
-  @include font(16, $font-weight: bold);
+  @include font(14, $font-weight: bold);
   color: grey;
 }
 
 .hero-action-button {
-  margin: 0 4px;
+  font-size: small;
+  margin: 4px;
   border-color: grey;
   color: grey;
   transition: 0.3s;

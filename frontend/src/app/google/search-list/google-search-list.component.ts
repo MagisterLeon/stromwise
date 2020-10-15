@@ -1,8 +1,5 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {GoogleSearchResultModel} from '../google-search-result.model';
-import {SkillTreeState} from '../../skill-tree/skill-tree.state';
-import {GoogleSearchService} from '../google-search.service';
-import {switchMap} from 'rxjs/operators';
 
 @Component({
   selector: 'st-google-search-list',
@@ -22,17 +19,9 @@ export class GoogleSearchListComponent implements OnInit {
 
   googleSearchResult: GoogleSearchResultModel[] = [];
 
-  constructor(private ref: ChangeDetectorRef,
-              private googleSearchService: GoogleSearchService,
-              private skillTreeState: SkillTreeState) {
+  constructor() {
   }
 
   ngOnInit(): void {
-    this.skillTreeState.nodeSelected().pipe(
-      switchMap(o => this.googleSearchService.get(o.name))
-    ).subscribe(searchResult => {
-      this.googleSearchResult = searchResult;
-      this.ref.detectChanges();
-    });
   }
 }
