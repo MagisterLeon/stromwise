@@ -4,8 +4,10 @@ import com.stromwise.skilltree.UnitTest;
 import com.stromwise.skilltree.category.CategoryRepository;
 import com.stromwise.skilltree.configuration.SkilltreeProperties;
 import com.stromwise.skilltree.infastructure.rest.RestExceptionHandler;
+import com.stromwise.skilltree.utils.QuestionConverter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
@@ -13,12 +15,12 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static com.stromwise.skilltree.utils.TestDataFactory.prepareCategories;
+import static com.stromwise.skilltree.utils.TestDataFactory.prepareQuestions;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
@@ -34,6 +36,8 @@ public class QuestionControllerTest extends UnitTest {
     private CategoryRepository categoryRepository;
     @Mock
     private SkilltreeProperties skilltreeProperties;
+    @InjectMocks
+    private QuestionConverter questionConverter;
 
     private final String URL = "/v1/questions";
 
@@ -46,7 +50,7 @@ public class QuestionControllerTest extends UnitTest {
     public void setup() {
         var addQuestionService = new AddQuestionService(questionRepository, categoryRepository);
         var updateQuestionService = new UpdateQuestionService(questionRepository, skilltreeProperties);
-        var getQuestionService = new GetQuestionService(questionRepository);
+        var getQuestionService = new GetQuestionService(questionConverter, questionRepository);
 
         this.mockMvc = MockMvcBuilders
                 .standaloneSetup(new QuestionController(addQuestionService, updateQuestionService, getQuestionService))
@@ -118,23 +122,23 @@ public class QuestionControllerTest extends UnitTest {
 
     @Test
     void should_return_questions_belong_to_specific_category() throws Exception {
-        Set<Question> questionSet = new HashSet<>(Arrays.asList(
-                new Question("question 1", "answer 1"),
-                new Question("question 2", "answer 2")));
+        int questionSize = 5;
 
-        when(questionRepository.findRandomQuestionsBelongToSpecificCategory("programming", questionsResultLimit)).thenReturn(questionSet);
-        assertThat(questionRepository.findRandomQuestionsBelongToSpecificCategory("programming", questionsResultLimit).size()).isEqualTo(questionSet.size());
+        Set<Question> questionSet = new HashSet<>(prepareQuestions(questionSize, prepareCategories(2)));
+
+        when(questionRepository.findRandomByCategoryName("programming", questionsResultLimit)).thenReturn(questionSet);
+        Set<QuestionPayload> questionPayloadSet = questionConverter.transform(questionSet);
+
 
         mockMvc.perform(
                 MockMvcRequestBuilders.get(URL + "/programming")
-                        .param("categoryName", "programming")
                         .accept("application/json")
                         .content((asJsonString(
                                 (List.of(
-                                        questionSet
+                                        questionPayloadSet
                                 )))))
                         .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$", hasSize(2)))
-                .andExpect(status().isOk()).andReturn();
+                .andExpect(jsonPath("$", hasSize(questionSize)))
+                .andExpect(status().isOk());
     }
 }

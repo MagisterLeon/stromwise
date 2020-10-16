@@ -1,6 +1,5 @@
 package com.stromwise.skilltree.question;
 
-import com.google.common.collect.Ordering;
 import com.stromwise.skilltree.IntegrationTest;
 import com.stromwise.skilltree.category.Category;
 import com.stromwise.skilltree.category.CategoryRepository;
@@ -11,12 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import static com.stromwise.skilltree.utils.TestDataFactory.prepareCategories;
 import static com.stromwise.skilltree.utils.TestDataFactory.prepareQuestions;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class GetQuestionServiceIntegrationTest extends IntegrationTest {
 
@@ -44,24 +41,22 @@ public class GetQuestionServiceIntegrationTest extends IntegrationTest {
         prepareTestData(2, 11);
 
         // when
-        Set<Question> questions = getQuestionService.getQuestionsBelongToSpecificCategory("category 1");
+        Set<QuestionPayload> questions = getQuestionService.getQuestionByCategory("category 1");
 
         // then
-        assertFalse(areQuestionsSorted(questions));
         assertThat(questions.size()).isEqualTo(10);
     }
 
     @Transactional
     @Test
-    public void should_get_nine_questions_of_four_with_limit_of_ten() {
+    public void should_get_nine_questions_of_ten_with_limit_of_ten() {
         // given
         prepareTestData(1, 9);
 
         // when
-        Set<Question> questions = getQuestionService.getQuestionsBelongToSpecificCategory("category 1");
+        Set<QuestionPayload> questions = getQuestionService.getQuestionByCategory("category 1");
 
         // then
-        assertFalse(areQuestionsSorted(questions));
         assertThat(questions.size()).isEqualTo(9);
     }
 
@@ -72,7 +67,7 @@ public class GetQuestionServiceIntegrationTest extends IntegrationTest {
         prepareTestData(1, 0);
 
         // when
-        Set<Question> questions = getQuestionService.getQuestionsBelongToSpecificCategory("category 1");
+        Set<QuestionPayload> questions = getQuestionService.getQuestionByCategory("category 1");
 
         // then
         assertThat(questions.size()).isEqualTo(0);
@@ -85,14 +80,10 @@ public class GetQuestionServiceIntegrationTest extends IntegrationTest {
         prepareTestData(0, 1);
 
         // when
-        Set<Question> questions = getQuestionService.getQuestionsBelongToSpecificCategory("category 1");
+        Set<QuestionPayload> questions = getQuestionService.getQuestionByCategory("category 1");
 
         // then
         assertThat(questions.size()).isEqualTo(0);
-    }
-
-    private boolean areQuestionsSorted(Set<Question> questions) {
-        return Ordering.natural().isOrdered(questions.stream().map(Question::getId).collect(Collectors.toList()));
     }
 
     private void prepareTestData(int categoriesAmount, int questionsAmount) {

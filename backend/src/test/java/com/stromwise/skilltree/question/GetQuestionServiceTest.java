@@ -1,6 +1,7 @@
 package com.stromwise.skilltree.question;
 
 import com.stromwise.skilltree.UnitTest;
+import com.stromwise.skilltree.utils.QuestionConverter;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -10,8 +11,7 @@ import org.springframework.beans.factory.annotation.Value;
 import java.util.HashSet;
 import java.util.Set;
 
-import static com.stromwise.skilltree.utils.TestDataFactory.prepareCategories;
-import static com.stromwise.skilltree.utils.TestDataFactory.prepareQuestions;
+import static com.stromwise.skilltree.utils.TestDataFactory.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
@@ -19,6 +19,8 @@ public class GetQuestionServiceTest extends UnitTest {
 
     @Mock
     private QuestionRepository questionRepository;
+    @Mock
+    private QuestionConverter questionConverter;
 
     @InjectMocks
     private GetQuestionService getQuestionService;
@@ -37,14 +39,17 @@ public class GetQuestionServiceTest extends UnitTest {
         int questionSize = 5;
 
         Set<Question> questionSet = new HashSet<>(prepareQuestions(questionSize, prepareCategories(2)));
-        when(questionRepository.findRandomQuestionsBelongToSpecificCategory("programming", questionsResultLimit)).thenReturn(questionSet);
-        assertThat(questionRepository.findRandomQuestionsBelongToSpecificCategory("programming", questionsResultLimit).size()).isEqualTo(questionSet.size());
+        Set<QuestionPayload> questionPayloadSet = new HashSet<>(prepareQuestionsPayload(questionSize));
+
+        when(questionRepository.findRandomByCategoryName("programming", questionsResultLimit)).thenReturn(questionSet);
+        when(questionConverter.transform(questionSet)).thenReturn(questionPayloadSet);
 
         // when
-        Set<Question> foundQuestionsByCategoryName = getQuestionService.getQuestionsBelongToSpecificCategory("programming");
+        Set<QuestionPayload> foundQuestionsByCategoryName = getQuestionService.getQuestionByCategory("programming");
 
         // then
         assertThat(foundQuestionsByCategoryName.size()).isEqualTo(5);
-        verify(questionRepository, times(2)).findRandomQuestionsBelongToSpecificCategory("programming", questionsResultLimit);
+        verify(questionRepository, times(1)).findRandomByCategoryName("programming", questionsResultLimit);
+        verify(questionConverter, times(1)).transform(questionSet);
     }
 }

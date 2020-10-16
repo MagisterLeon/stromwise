@@ -1,5 +1,6 @@
 package com.stromwise.skilltree.question;
 
+import com.stromwise.skilltree.utils.QuestionConverter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,15 +14,18 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class GetQuestionService {
 
+    private final QuestionConverter questionConverter;
     private final QuestionRepository questionRepository;
 
     @Value("${questions.result.limit}")
     private String questionsResultLimit;
 
     @Transactional
-    Set<Question> getQuestionsBelongToSpecificCategory(String categoriesName) {
-        log.info("Searching questions by category name: {}", categoriesName);
+    Set<QuestionPayload> getQuestionByCategory(String categoryName) {
+        log.info("Searching questions by category name: {}", categoryName);
 
-        return questionRepository.findRandomQuestionsBelongToSpecificCategory(categoriesName, questionsResultLimit);
+        Set<Question> questionSet = questionRepository.findRandomByCategoryName(categoryName, questionsResultLimit);
+
+        return questionConverter.transform(questionSet);
     }
 }

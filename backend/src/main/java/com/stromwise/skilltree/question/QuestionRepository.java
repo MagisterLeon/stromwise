@@ -19,5 +19,5 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
             "order by random() " +
             "LIMIT ?2 ",
             nativeQuery = true)
-    Set<Question> findRandomQuestionsBelongToSpecificCategory(String categoryName, String questionsResultLimit);
+    Set<Question> findRandomByCategoryName(String categoryName, String questionsResultLimit);
 }

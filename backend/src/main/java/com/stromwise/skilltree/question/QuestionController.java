@@ -30,11 +30,11 @@ public class QuestionController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @ApiOperation(value = "Get max to ten random questions belong to specific category")
+    @ApiOperation(value = "Get random questions belonging to given category with limit defined by questionResultLimit property")
     @GetMapping("/{categoryName}")
-    public ResponseEntity<Set<Question>> getQuestionsSimplified(@PathVariable("categoryName") String categoryName) {
-        Set<Question> questionSet = getQuestionService.getQuestionsBelongToSpecificCategory(categoryName);
+    public ResponseEntity<Set<QuestionPayload>> getQuestionsSimplified(@PathVariable String categoryName) {
+        Set<QuestionPayload> questionPayloads = getQuestionService.getQuestionByCategory(categoryName);
 
-        return new ResponseEntity<>(questionSet, HttpStatus.OK);
+        return new ResponseEntity<>(questionPayloads, HttpStatus.OK);
     }
 }
