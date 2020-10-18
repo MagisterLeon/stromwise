@@ -1,4 +1,4 @@
-package com.stromwise.skilltree.utils;
+package com.stromwise.skilltree.question.utils;
 
 import com.stromwise.skilltree.category.Category;
 import com.stromwise.skilltree.question.Question;

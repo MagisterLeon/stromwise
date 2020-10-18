@@ -1,6 +1,6 @@
 package com.stromwise.skilltree.question;
 
-import com.stromwise.skilltree.utils.QuestionConverter;
+import com.stromwise.skilltree.question.utils.QuestionConverter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;

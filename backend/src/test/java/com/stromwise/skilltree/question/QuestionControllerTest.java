@@ -4,10 +4,9 @@ import com.stromwise.skilltree.UnitTest;
 import com.stromwise.skilltree.category.CategoryRepository;
 import com.stromwise.skilltree.configuration.SkilltreeProperties;
 import com.stromwise.skilltree.infastructure.rest.RestExceptionHandler;
-import com.stromwise.skilltree.utils.QuestionConverter;
+import com.stromwise.skilltree.question.utils.QuestionConverter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
@@ -19,8 +18,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static com.stromwise.skilltree.utils.TestDataFactory.prepareCategories;
-import static com.stromwise.skilltree.utils.TestDataFactory.prepareQuestions;
+import static com.stromwise.skilltree.question.utils.TestDataFactory.*;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
@@ -36,7 +34,7 @@ public class QuestionControllerTest extends UnitTest {
     private CategoryRepository categoryRepository;
     @Mock
     private SkilltreeProperties skilltreeProperties;
-    @InjectMocks
+    @Mock
     private QuestionConverter questionConverter;
 
     private final String URL = "/v1/questions";
@@ -125,10 +123,10 @@ public class QuestionControllerTest extends UnitTest {
         int questionSize = 5;
 
         Set<Question> questionSet = new HashSet<>(prepareQuestions(questionSize, prepareCategories(2)));
+        Set<QuestionPayload> questionPayloadSet = new HashSet<>(prepareQuestionsPayload(questionSize));
 
         when(questionRepository.findRandomByCategoryName("programming", questionsResultLimit)).thenReturn(questionSet);
-        Set<QuestionPayload> questionPayloadSet = questionConverter.transform(questionSet);
-
+        when(questionConverter.transform(questionSet)).thenReturn(questionPayloadSet);
 
         mockMvc.perform(
                 MockMvcRequestBuilders.get(URL + "/programming")

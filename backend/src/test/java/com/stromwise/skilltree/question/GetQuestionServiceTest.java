@@ -1,7 +1,7 @@
 package com.stromwise.skilltree.question;
 
 import com.stromwise.skilltree.UnitTest;
-import com.stromwise.skilltree.utils.QuestionConverter;
+import com.stromwise.skilltree.question.utils.QuestionConverter;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Value;
 import java.util.HashSet;
 import java.util.Set;
 
-import static com.stromwise.skilltree.utils.TestDataFactory.*;
+import static com.stromwise.skilltree.question.utils.TestDataFactory.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
@@ -49,7 +49,6 @@ public class GetQuestionServiceTest extends UnitTest {
 
         // then
         assertThat(foundQuestionsByCategoryName.size()).isEqualTo(5);
-        verify(questionRepository, times(1)).findRandomByCategoryName("programming", questionsResultLimit);
         verify(questionConverter, times(1)).transform(questionSet);
     }
 }

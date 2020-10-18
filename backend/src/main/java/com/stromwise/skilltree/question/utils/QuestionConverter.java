@@ -1,4 +1,4 @@
-package com.stromwise.skilltree.utils;
+package com.stromwise.skilltree.question.utils;
 
 import com.stromwise.skilltree.question.Question;
 import com.stromwise.skilltree.question.QuestionPayload;
@@ -16,7 +16,12 @@ public class QuestionConverter {
         log.info("Convert Question object from DB to payload: {}", questionEntity);
         return questionEntity
                 .stream()
-                .map(questionPojo -> new QuestionPayload(questionPojo.getPublicId(), questionPojo.getAnswer(), questionPojo.getQuestion()))
+                .map(questions -> QuestionPayload
+                        .builder()
+                        .publicId(questions.getPublicId())
+                        .answer(questions.getAnswer())
+                        .question(questions.getQuestion())
+                        .build())
                 .collect(Collectors.toSet());
     }
 }

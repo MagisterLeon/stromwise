@@ -3,7 +3,7 @@ package com.stromwise.skilltree.question;
 import com.stromwise.skilltree.IntegrationTest;
 import com.stromwise.skilltree.category.Category;
 import com.stromwise.skilltree.category.CategoryRepository;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -11,10 +11,11 @@ import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Set;
 
-import static com.stromwise.skilltree.utils.TestDataFactory.prepareCategories;
-import static com.stromwise.skilltree.utils.TestDataFactory.prepareQuestions;
+import static com.stromwise.skilltree.question.utils.TestDataFactory.prepareCategories;
+import static com.stromwise.skilltree.question.utils.TestDataFactory.prepareQuestions;
 import static org.assertj.core.api.Assertions.assertThat;
 
+@Transactional
 public class GetQuestionServiceIntegrationTest extends IntegrationTest {
 
     @Autowired
@@ -25,16 +26,12 @@ public class GetQuestionServiceIntegrationTest extends IntegrationTest {
     @Autowired
     private GetQuestionService getQuestionService;
 
-    @BeforeEach
-    public void clearData() {
+    @AfterEach
+    public void setup() {
         questionRepository.deleteAll();
         categoryRepository.deleteAll();
-
-        assertThat(questionRepository.findAll()).hasSize(0);
-        assertThat(categoryRepository.findAll()).hasSize(0);
     }
 
-    @Transactional
     @Test
     public void should_get_ten_questions_of_eleven_with_limit_of_ten() {
         // given
@@ -47,7 +44,6 @@ public class GetQuestionServiceIntegrationTest extends IntegrationTest {
         assertThat(questions.size()).isEqualTo(10);
     }
 
-    @Transactional
     @Test
     public void should_get_nine_questions_of_ten_with_limit_of_ten() {
         // given
@@ -60,7 +56,6 @@ public class GetQuestionServiceIntegrationTest extends IntegrationTest {
         assertThat(questions.size()).isEqualTo(9);
     }
 
-    @Transactional
     @Test
     public void should_get_zero_questions_if_questions_not_exists() {
         // given
@@ -73,7 +68,6 @@ public class GetQuestionServiceIntegrationTest extends IntegrationTest {
         assertThat(questions.size()).isEqualTo(0);
     }
 
-    @Transactional
     @Test
     public void should_get_zero_questions_if_category_not_exists() {
         // given

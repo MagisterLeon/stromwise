@@ -1,12 +1,12 @@
 package com.stromwise.skilltree.question;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Builder;
 import lombok.Value;
 
 @AllArgsConstructor
+@Builder
 @Value
-@Data
 public class QuestionPayload {
 
     String publicId;
