@@ -28,7 +28,7 @@ public class SwaggerConfig {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("Stormwise")
+                .title("Strommwise")
                 .description("Skill tree")
                 .contact(new Contact(
                         "Lukasz Kujawski",

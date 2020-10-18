@@ -1,5 +1,6 @@
 package com.stromwise.skilltree.category;
 
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,7 @@ class CategoryController {
 
     private final CategoryService categoryService;
 
+    @ApiOperation(value = "Get all categories names")
     @GetMapping("/names")
     public ResponseEntity<GetCategoriesResponse> getAllNames() {
         Set<String> names = categoryService.getAllNames();
