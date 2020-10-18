@@ -37,7 +37,10 @@ public class QuestionControllerTest extends UnitTest {
     @Mock
     private QuestionConverter questionConverter;
 
-    private final String URL = "/v1/questions";
+    private final String QUESTIONS_URL = "/v1/questions";
+
+    private final String BAD_REQUEST_ERROR_CODE = "01002";
+    private final String BAD_REQUEST_ERROR_MESSAGE = "Bad request";
 
     @Value("${questions.result.limit}")
     private String questionsResultLimit;
@@ -59,7 +62,7 @@ public class QuestionControllerTest extends UnitTest {
     @Test
     void should_save_question() throws Exception {
         mockMvc.perform(
-                MockMvcRequestBuilders.post(URL)
+                MockMvcRequestBuilders.post(QUESTIONS_URL)
                         .content(asJsonString(AddQuestionRequest.builder()
                                 .question("question")
                                 .answer("answer")
@@ -72,14 +75,14 @@ public class QuestionControllerTest extends UnitTest {
     @Test
     void should_throw_bad_request_on_invalid_content_when_add_question() throws Exception {
         mockMvc.perform(
-                MockMvcRequestBuilders.post(URL)
+                MockMvcRequestBuilders.post(QUESTIONS_URL)
                         .content(asJsonString(AddQuestionRequest.builder()
                                 .categories(List.of())
                                 .build()))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.code", is("01002")))
-                .andExpect(jsonPath("$.message", is("Bad request")))
+                .andExpect(jsonPath("$.code", is(BAD_REQUEST_ERROR_CODE)))
+                .andExpect(jsonPath("$.message", is(BAD_REQUEST_ERROR_MESSAGE)))
                 .andExpect(jsonPath("$.details", containsString("categories: categories cannot be empty")))
                 .andExpect(jsonPath("$.details", containsString("question: question cannot be blank")));
     }
@@ -87,7 +90,7 @@ public class QuestionControllerTest extends UnitTest {
     @Test
     void should_update_question_weights() throws Exception {
         mockMvc.perform(
-                MockMvcRequestBuilders.patch(URL + "/weights")
+                MockMvcRequestBuilders.patch(QUESTIONS_URL + "/weights")
                         .content(asJsonString(new UpdateQuestionWeightsRequest(List.of("id"))))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
@@ -96,7 +99,7 @@ public class QuestionControllerTest extends UnitTest {
     @Test
     void should_throw_bad_request_on_invalid_content_when_update_weights() throws Exception {
         mockMvc.perform(
-                MockMvcRequestBuilders.patch(URL + "/weights")
+                MockMvcRequestBuilders.patch(QUESTIONS_URL + "/weights")
                         .content(asJsonString(new UpdateQuestionWeightsRequest(
                                 (List.of(
                                         "id1",
@@ -113,8 +116,8 @@ public class QuestionControllerTest extends UnitTest {
                                 )))))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.code", is("01002")))
-                .andExpect(jsonPath("$.message", is("Bad request")))
+                .andExpect(jsonPath("$.code", is(BAD_REQUEST_ERROR_CODE)))
+                .andExpect(jsonPath("$.message", is(BAD_REQUEST_ERROR_MESSAGE)))
                 .andExpect(jsonPath("$.details", is("[questionPublicIds: question ids cannot be more than ten]")));
     }
 
@@ -129,7 +132,7 @@ public class QuestionControllerTest extends UnitTest {
         when(questionConverter.transform(questionSet)).thenReturn(questionPayloadSet);
 
         mockMvc.perform(
-                MockMvcRequestBuilders.get(URL + "/programming")
+                MockMvcRequestBuilders.get(QUESTIONS_URL + "/programming")
                         .accept("application/json")
                         .content((asJsonString(
                                 (List.of(
