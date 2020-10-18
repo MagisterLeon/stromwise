@@ -23,8 +23,8 @@ public class GetQuestionService {
     List<QuestionPayload> getQuestionByCategory(String categoryName) {
         log.info("Searching questions by category name: {}", categoryName);
 
-        List<Question> questionSet = questionRepository.findRandomByCategoryName(categoryName, questionsResultLimit);
+        List<Question> questionList = questionRepository.findRandomByCategoryName(categoryName, questionsResultLimit);
 
-        return questionConverter.transform(questionSet);
+        return questionConverter.transformQuestions(questionList);
     }
 }

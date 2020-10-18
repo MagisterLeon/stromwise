@@ -10,8 +10,8 @@ import java.util.stream.Collectors;
 @Slf4j
 public class QuestionConverter {
 
-    public List<QuestionPayload> transform(List<Question> questionEntity) {
-        log.info("Convert Question object from DB to payload: {}", questionEntity);
+    public List<QuestionPayload> transformQuestions(List<Question> questionEntity) {
+        log.info("Convert Question objects from DB to payloads: {}", questionEntity);
         return questionEntity
                 .stream()
                 .map(questions -> QuestionPayload
@@ -19,6 +19,19 @@ public class QuestionConverter {
                         .publicId(questions.getPublicId())
                         .answer(questions.getAnswer())
                         .question(questions.getQuestion())
+                        .build())
+                .collect(Collectors.toList());
+    }
+
+    public List<QuestionResponseRatePayload> transformQuestionsResponsesRates(List<QuestionResponseRate> questionsResponseRatesEntity) {
+        log.info("Convert Question Responses Rates objects from DB to payloads: {}", questionsResponseRatesEntity);
+        return questionsResponseRatesEntity
+                .stream()
+                .map(questionsResponse -> QuestionResponseRatePayload
+                        .builder()
+                        .know(questionsResponse.getKnow())
+                        .notSure(questionsResponse.getNotSure())
+                        .notKnow(questionsResponse.getNotKnow())
                         .build())
                 .collect(Collectors.toList());
     }

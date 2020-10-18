@@ -1,0 +1,26 @@
+package com.stromwise.skilltree.question;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
+import java.util.List;
+
+@Slf4j
+@Service
+@RequiredArgsConstructor
+public class GetQuestionResponseRateService {
+
+    private final QuestionConverter questionConverter;
+    private final QuestionRepository questionRepository;
+
+    @Transactional
+    List<QuestionResponseRatePayload> getQuestionByPublicId(List<String> publicId) {
+        log.info("Searching questions by publicId: {}", publicId);
+
+        List<QuestionResponseRate> questionResponseRates = questionRepository.findUserByPublicId(publicId);
+
+        return questionConverter.transformQuestionsResponsesRates(questionResponseRates);
+    }
+}

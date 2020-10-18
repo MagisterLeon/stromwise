@@ -41,14 +41,14 @@ public class GetQuestionServiceTest extends UnitTest {
         List<QuestionPayload> questionPayloadSet = new ArrayList<>(prepareQuestionsPayload(questionSize));
 
         when(questionRepository.findRandomByCategoryName("programming", questionsResultLimit)).thenReturn(questionSet);
-        when(questionConverter.transform(questionSet)).thenReturn(questionPayloadSet);
+        when(questionConverter.transformQuestions(questionSet)).thenReturn(questionPayloadSet);
 
         // when
         List<QuestionPayload> foundQuestionsByCategoryName = getQuestionService.getQuestionByCategory("programming");
 
         // then
         assertThat(foundQuestionsByCategoryName.size()).isEqualTo(5);
-        verify(questionConverter).transform(questionSet);
+        verify(questionConverter).transformQuestions(questionSet);
         verify(questionRepository).findRandomByCategoryName("programming", questionsResultLimit);
     }
 }

@@ -20,4 +20,5 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
             "LIMIT ?2 ",
             nativeQuery = true)
     List<Question> findRandomByCategoryName(String categoryName, String questionsResultLimit);
+    List<QuestionResponseRate> findUserByPublicId(List<String> publicId);
 }

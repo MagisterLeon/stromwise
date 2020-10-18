@@ -22,7 +22,7 @@ class QuestionConverterTest extends UnitTest {
         List<Question> questionList = new ArrayList<>(prepareQuestions(10, prepareCategories(2)));
 
         // when
-        List<QuestionPayload> questionPayloadList = questionConverter.transform(questionList);
+        List<QuestionPayload> questionPayloadList = questionConverter.transformQuestions(questionList);
 
         // then
         assertThat(questionPayloadList.size()).isEqualTo(10);
@@ -34,7 +34,7 @@ class QuestionConverterTest extends UnitTest {
         List<Question> questionList = new ArrayList<>(prepareQuestions(10, prepareCategories(2)));
 
         // when
-        List<QuestionPayload> questionPayloadList = questionConverter.transform(questionList);
+        List<QuestionPayload> questionPayloadList = questionConverter.transformQuestions(questionList);
 
         // then
         assertThat(questionPayloadList).usingElementComparatorOnFields("publicId", "question", "answer").isEqualTo(questionList);

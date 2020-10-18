@@ -128,7 +128,7 @@ public class QuestionControllerTest extends UnitTest {
         List<QuestionPayload> questionPayloadSet = new ArrayList<>(prepareQuestionsPayload(questionSize));
 
         when(questionRepository.findRandomByCategoryName("programming", questionsResultLimit)).thenReturn(questionSet);
-        when(questionConverter.transform(questionSet)).thenReturn(questionPayloadSet);
+        when(questionConverter.transformQuestions(questionSet)).thenReturn(questionPayloadSet);
 
         mockMvc.perform(
                 MockMvcRequestBuilders.get(QUESTIONS_URL + "/programming")
@@ -141,7 +141,7 @@ public class QuestionControllerTest extends UnitTest {
                 .andExpect(jsonPath("$", hasSize(questionSize)))
                 .andExpect(status().isOk());
 
-        verify(questionConverter).transform(questionSet);
+        verify(questionConverter).transformQuestions(questionSet);
         verify(questionRepository).findRandomByCategoryName("programming", questionsResultLimit);
     }
 }

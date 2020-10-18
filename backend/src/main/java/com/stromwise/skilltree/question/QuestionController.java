@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Set;
 
 @RestController
 @RequestMapping("/api/v1/questions")
@@ -18,6 +17,7 @@ public class QuestionController {
     private final AddQuestionService addQuestionService;
     private final UpdateQuestionService updateQuestionService;
     private final GetQuestionService getQuestionService;
+    private final GetQuestionResponseRateService getQuestionResponseRateService;
 
     @ApiOperation(value = "Add question to DB")
     @PostMapping
@@ -39,5 +39,13 @@ public class QuestionController {
         List<QuestionPayload> questionPayloads = getQuestionService.getQuestionByCategory(categoryName);
 
         return new ResponseEntity<>(questionPayloads, HttpStatus.OK);
+    }
+
+    @ApiOperation(value = "Get question response rate how other people voted")
+    @GetMapping("/{publicId}")
+    public ResponseEntity<List<QuestionPayload>> getQuestionResponseRate(@RequestParam List<String> publicId) {
+        List<QuestionResponseRatePayload> questionResponseRatePayloadList = getQuestionResponseRateService.getQuestionByPublicId(publicId);
+
+        return new ResponseEntity<>(null, HttpStatus.OK);
     }
 }
