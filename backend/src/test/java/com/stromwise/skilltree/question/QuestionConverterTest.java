@@ -29,15 +29,14 @@ class QuestionConverterTest extends UnitTest {
     }
 
     @Test
-    public void should_fail_if_payload_field_has_different_value() {
+    public void should_converted_payload_be_equal_to_entity() {
         // given
         List<Question> questionList = new ArrayList<>(prepareQuestions(10, prepareCategories(2)));
 
         // when
         List<QuestionPayload> questionPayloadList = questionConverter.transform(questionList);
-        questionPayloadList.set(0, new QuestionPayload("new value", "new value", "new value"));
 
         // then
-        assertThat(questionPayloadList).usingElementComparatorOnFields("publicId", "question", "answer").isNotEqualTo(questionList);
+        assertThat(questionPayloadList).usingElementComparatorOnFields("publicId", "question", "answer").isEqualTo(questionList);
     }
 }
