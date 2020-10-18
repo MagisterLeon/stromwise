@@ -26,7 +26,6 @@ class QuestionConverterTest extends UnitTest {
 
         // then
         assertThat(questionPayloadList.size()).isEqualTo(10);
-        assertThat(questionPayloadList).usingElementComparatorOnFields("publicId", "question", "answer").isEqualTo(questionList);
     }
 
     @Test
