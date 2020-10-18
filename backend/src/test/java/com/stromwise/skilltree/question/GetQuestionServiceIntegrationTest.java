@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Set;
 
 import static com.stromwise.skilltree.question.utils.TestDataFactory.prepareCategories;
 import static com.stromwise.skilltree.question.utils.TestDataFactory.prepareQuestions;
@@ -38,7 +37,7 @@ public class GetQuestionServiceIntegrationTest extends IntegrationTest {
         prepareTestData(2, 11);
 
         // when
-        Set<QuestionPayload> questions = getQuestionService.getQuestionByCategory("category 1");
+        List<QuestionPayload> questions = getQuestionService.getQuestionByCategory("category 1");
 
         // then
         assertThat(questions.size()).isEqualTo(10);
@@ -50,7 +49,7 @@ public class GetQuestionServiceIntegrationTest extends IntegrationTest {
         prepareTestData(1, 9);
 
         // when
-        Set<QuestionPayload> questions = getQuestionService.getQuestionByCategory("category 1");
+        List<QuestionPayload> questions = getQuestionService.getQuestionByCategory("category 1");
 
         // then
         assertThat(questions.size()).isEqualTo(9);
@@ -62,7 +61,7 @@ public class GetQuestionServiceIntegrationTest extends IntegrationTest {
         prepareTestData(1, 0);
 
         // when
-        Set<QuestionPayload> questions = getQuestionService.getQuestionByCategory("category 1");
+        List<QuestionPayload> questions = getQuestionService.getQuestionByCategory("category 1");
 
         // then
         assertThat(questions.size()).isEqualTo(0);
@@ -74,7 +73,7 @@ public class GetQuestionServiceIntegrationTest extends IntegrationTest {
         prepareTestData(0, 1);
 
         // when
-        Set<QuestionPayload> questions = getQuestionService.getQuestionByCategory("category 1");
+        List<QuestionPayload> questions = getQuestionService.getQuestionByCategory("category 1");
 
         // then
         assertThat(questions.size()).isEqualTo(0);

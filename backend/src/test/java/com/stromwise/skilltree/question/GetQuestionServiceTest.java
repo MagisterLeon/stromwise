@@ -1,15 +1,14 @@
 package com.stromwise.skilltree.question;
 
 import com.stromwise.skilltree.UnitTest;
-import com.stromwise.skilltree.question.utils.QuestionConverter;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Value;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.stromwise.skilltree.question.utils.TestDataFactory.*;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -38,17 +37,18 @@ public class GetQuestionServiceTest extends UnitTest {
         // given
         int questionSize = 5;
 
-        Set<Question> questionSet = new HashSet<>(prepareQuestions(questionSize, prepareCategories(2)));
-        Set<QuestionPayload> questionPayloadSet = new HashSet<>(prepareQuestionsPayload(questionSize));
+        List<Question> questionSet = new ArrayList<>(prepareQuestions(questionSize, prepareCategories(2)));
+        List<QuestionPayload> questionPayloadSet = new ArrayList<>(prepareQuestionsPayload(questionSize));
 
         when(questionRepository.findRandomByCategoryName("programming", questionsResultLimit)).thenReturn(questionSet);
         when(questionConverter.transform(questionSet)).thenReturn(questionPayloadSet);
 
         // when
-        Set<QuestionPayload> foundQuestionsByCategoryName = getQuestionService.getQuestionByCategory("programming");
+        List<QuestionPayload> foundQuestionsByCategoryName = getQuestionService.getQuestionByCategory("programming");
 
         // then
         assertThat(foundQuestionsByCategoryName.size()).isEqualTo(5);
-        verify(questionConverter, times(1)).transform(questionSet);
+        verify(questionConverter).transform(questionSet);
+        verify(questionRepository).findRandomByCategoryName("programming", questionsResultLimit);
     }
 }

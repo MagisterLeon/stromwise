@@ -3,8 +3,8 @@ package com.stromwise.skilltree.question;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 public interface QuestionRepository extends JpaRepository<Question, Long> {
 
@@ -19,5 +19,5 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
             "order by random() " +
             "LIMIT ?2 ",
             nativeQuery = true)
-    Set<Question> findRandomByCategoryName(String categoryName, String questionsResultLimit);
+    List<Question> findRandomByCategoryName(String categoryName, String questionsResultLimit);
 }

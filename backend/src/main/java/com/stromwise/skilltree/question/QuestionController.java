@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Set;
 
 @RestController
@@ -18,12 +19,14 @@ public class QuestionController {
     private final UpdateQuestionService updateQuestionService;
     private final GetQuestionService getQuestionService;
 
+    @ApiOperation(value = "Add question to DB")
     @PostMapping
     public ResponseEntity<Void> add(@RequestBody @Valid AddQuestionRequest request) {
         addQuestionService.add(request);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
+    @ApiOperation(value = "Update weights one of questions")
     @PatchMapping("/weights")
     public ResponseEntity<Void> updateQuestionWeights(@RequestBody @Valid UpdateQuestionWeightsRequest request) {
         updateQuestionService.updateWeights(request);
@@ -32,8 +35,8 @@ public class QuestionController {
 
     @ApiOperation(value = "Get random questions belonging to given category with limit defined by questionResultLimit property")
     @GetMapping("/{categoryName}")
-    public ResponseEntity<Set<QuestionPayload>> getQuestionsSimplified(@PathVariable String categoryName) {
-        Set<QuestionPayload> questionPayloads = getQuestionService.getQuestionByCategory(categoryName);
+    public ResponseEntity<List<QuestionPayload>> getQuestionsSimplified(@PathVariable String categoryName) {
+        List<QuestionPayload> questionPayloads = getQuestionService.getQuestionByCategory(categoryName);
 
         return new ResponseEntity<>(questionPayloads, HttpStatus.OK);
     }

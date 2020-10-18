@@ -1,13 +1,12 @@
 package com.stromwise.skilltree.question;
 
-import com.stromwise.skilltree.question.utils.QuestionConverter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.Set;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -21,10 +20,10 @@ public class GetQuestionService {
     private String questionsResultLimit;
 
     @Transactional
-    Set<QuestionPayload> getQuestionByCategory(String categoryName) {
+    List<QuestionPayload> getQuestionByCategory(String categoryName) {
         log.info("Searching questions by category name: {}", categoryName);
 
-        Set<Question> questionSet = questionRepository.findRandomByCategoryName(categoryName, questionsResultLimit);
+        List<Question> questionSet = questionRepository.findRandomByCategoryName(categoryName, questionsResultLimit);
 
         return questionConverter.transform(questionSet);
     }

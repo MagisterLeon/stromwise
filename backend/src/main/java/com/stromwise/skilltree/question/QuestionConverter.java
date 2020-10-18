@@ -1,18 +1,16 @@
-package com.stromwise.skilltree.question.utils;
+package com.stromwise.skilltree.question;
 
-import com.stromwise.skilltree.question.Question;
-import com.stromwise.skilltree.question.QuestionPayload;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-import java.util.Set;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
 @Slf4j
 public class QuestionConverter {
 
-    public Set<QuestionPayload> transform(Set<Question> questionEntity) {
+    public List<QuestionPayload> transform(List<Question> questionEntity) {
         log.info("Convert Question object from DB to payload: {}", questionEntity);
         return questionEntity
                 .stream()
@@ -22,6 +20,6 @@ public class QuestionConverter {
                         .answer(questions.getAnswer())
                         .question(questions.getQuestion())
                         .build())
-                .collect(Collectors.toSet());
+                .collect(Collectors.toList());
     }
 }

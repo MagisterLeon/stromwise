@@ -4,7 +4,6 @@ import com.stromwise.skilltree.UnitTest;
 import com.stromwise.skilltree.category.CategoryRepository;
 import com.stromwise.skilltree.configuration.SkilltreeProperties;
 import com.stromwise.skilltree.infastructure.rest.RestExceptionHandler;
-import com.stromwise.skilltree.question.utils.QuestionConverter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -14,14 +13,14 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import static com.stromwise.skilltree.question.utils.TestDataFactory.*;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -125,8 +124,8 @@ public class QuestionControllerTest extends UnitTest {
     void should_return_questions_belong_to_specific_category() throws Exception {
         int questionSize = 5;
 
-        Set<Question> questionSet = new HashSet<>(prepareQuestions(questionSize, prepareCategories(2)));
-        Set<QuestionPayload> questionPayloadSet = new HashSet<>(prepareQuestionsPayload(questionSize));
+        List<Question> questionSet = new ArrayList<>(prepareQuestions(questionSize, prepareCategories(2)));
+        List<QuestionPayload> questionPayloadSet = new ArrayList<>(prepareQuestionsPayload(questionSize));
 
         when(questionRepository.findRandomByCategoryName("programming", questionsResultLimit)).thenReturn(questionSet);
         when(questionConverter.transform(questionSet)).thenReturn(questionPayloadSet);
@@ -141,5 +140,8 @@ public class QuestionControllerTest extends UnitTest {
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$", hasSize(questionSize)))
                 .andExpect(status().isOk());
+
+        verify(questionConverter).transform(questionSet);
+        verify(questionRepository).findRandomByCategoryName("programming", questionsResultLimit);
     }
 }
