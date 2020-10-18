@@ -36,8 +36,9 @@ public class Question {
     )
     private Set<Category> categories = new HashSet<>();
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "question_response_rate_id", referencedColumnName = "id")
+    @OneToOne(mappedBy = "question",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY)
     private QuestionResponseRate questionResponseRate;
 
     public Question(String question, String answer) {

@@ -18,6 +18,7 @@ public class QuestionResponseRate {
     int notSure;
     int notKnow;
 
-    @OneToOne(mappedBy = "question_response_rate")
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "question_id")
     private Question question;
 }

@@ -51,9 +51,10 @@ public class QuestionControllerTest extends UnitTest {
         var addQuestionService = new AddQuestionService(questionRepository, categoryRepository);
         var updateQuestionService = new UpdateQuestionService(questionRepository, skilltreeProperties);
         var getQuestionService = new GetQuestionService(questionConverter, questionRepository);
+        var getQuestionResponseRateService = new GetQuestionResponseRateService(questionConverter, questionRepository);
 
         this.mockMvc = MockMvcBuilders
-                .standaloneSetup(new QuestionController(addQuestionService, updateQuestionService, getQuestionService))
+                .standaloneSetup(new QuestionController(addQuestionService, updateQuestionService, getQuestionService, getQuestionResponseRateService))
                 .setControllerAdvice(new RestExceptionHandler())
                 .build();
     }

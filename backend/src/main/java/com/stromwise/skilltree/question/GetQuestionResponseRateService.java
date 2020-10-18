@@ -16,11 +16,11 @@ public class GetQuestionResponseRateService {
     private final QuestionRepository questionRepository;
 
     @Transactional
-    List<QuestionResponseRatePayload> getQuestionByPublicId(List<String> publicId) {
+    List<QuestionResponseRatePayload> getQuestionsResponsesRates(List<String> publicId) {
         log.info("Searching questions by publicId: {}", publicId);
 
-        List<QuestionResponseRate> questionResponseRates = questionRepository.findUserByPublicId(publicId);
+        List<Question> questionList = questionRepository.findByPublicIdIn(publicId);
 
-        return questionConverter.transformQuestionsResponsesRates(questionResponseRates);
+        return questionConverter.transformQuestionsResponsesRates(questionList);
     }
 }

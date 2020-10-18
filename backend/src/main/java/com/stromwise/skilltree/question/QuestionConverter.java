@@ -23,15 +23,15 @@ public class QuestionConverter {
                 .collect(Collectors.toList());
     }
 
-    public List<QuestionResponseRatePayload> transformQuestionsResponsesRates(List<QuestionResponseRate> questionsResponseRatesEntity) {
-        log.info("Convert Question Responses Rates objects from DB to payloads: {}", questionsResponseRatesEntity);
-        return questionsResponseRatesEntity
+    public List<QuestionResponseRatePayload> transformQuestionsResponsesRates(List<Question> questionList) {
+        log.info("Convert Question Responses Rates objects from DB to payloads: {}", questionList);
+        return questionList
                 .stream()
-                .map(questionsResponse -> QuestionResponseRatePayload
+                .map(question -> QuestionResponseRatePayload
                         .builder()
-                        .know(questionsResponse.getKnow())
-                        .notSure(questionsResponse.getNotSure())
-                        .notKnow(questionsResponse.getNotKnow())
+                        .know(question.getQuestionResponseRate().getKnow())
+                        .notSure(question.getQuestionResponseRate().getNotSure())
+                        .notKnow(question.getQuestionResponseRate().getNotKnow())
                         .build())
                 .collect(Collectors.toList());
     }
