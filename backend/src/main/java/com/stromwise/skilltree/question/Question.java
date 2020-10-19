@@ -15,7 +15,7 @@ import java.util.UUID;
 @Data
 @Entity
 @NoArgsConstructor
-@EqualsAndHashCode(exclude="categories")
+@EqualsAndHashCode(exclude = "categories")
 @ToString(exclude = "categories")
 public class Question {
 
@@ -27,6 +27,9 @@ public class Question {
     private String question;
     private String answer;
     private long value;
+    private int know;
+    private int notSure;
+    private int notKnow;
 
     @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinTable(
@@ -35,11 +38,6 @@ public class Question {
             inverseJoinColumns = @JoinColumn(name = "category_id")
     )
     private Set<Category> categories = new HashSet<>();
-
-    @OneToOne(mappedBy = "question",
-            cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY)
-    private QuestionResponseRate questionResponseRate;
 
     public Question(String question, String answer) {
         this.publicId = UUID.randomUUID().toString();

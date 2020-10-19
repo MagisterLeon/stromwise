@@ -29,9 +29,9 @@ public class QuestionConverter {
                 .stream()
                 .map(question -> QuestionResponseRatePayload
                         .builder()
-                        .know(question.getQuestionResponseRate().getKnow())
-                        .notSure(question.getQuestionResponseRate().getNotSure())
-                        .notKnow(question.getQuestionResponseRate().getNotKnow())
+                        .know(question.getKnow())
+                        .notSure(question.getNotSure())
+                        .notKnow(question.getNotKnow())
                         .build())
                 .collect(Collectors.toList());
     }

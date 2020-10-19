@@ -36,7 +36,7 @@ public class QuestionControllerTest extends UnitTest {
     @Mock
     private QuestionConverter questionConverter;
 
-    private final String QUESTIONS_URL = "/v1/questions";
+    private final String QUESTIONS_URL = "/api/v1/questions";
 
     private final String BAD_REQUEST_ERROR_CODE = "01002";
     private final String BAD_REQUEST_ERROR_MESSAGE = "Bad request";
@@ -55,7 +55,7 @@ public class QuestionControllerTest extends UnitTest {
 
         this.mockMvc = MockMvcBuilders
                 .standaloneSetup(new QuestionController(addQuestionService, updateQuestionService, getQuestionService, getQuestionResponseRateService))
-                .setControllerAdvice(new RestExceptionHandler())
+       //         .setControllerAdvice(new RestExceptionHandler())
                 .build();
     }
 
@@ -125,24 +125,58 @@ public class QuestionControllerTest extends UnitTest {
     void should_return_questions_belong_to_specific_category() throws Exception {
         int questionSize = 5;
 
-        List<Question> questionSet = new ArrayList<>(prepareQuestions(questionSize, prepareCategories(2)));
-        List<QuestionPayload> questionPayloadSet = new ArrayList<>(prepareQuestionsPayload(questionSize));
+        List<Question> questionList = new ArrayList<>(prepareQuestions(questionSize, prepareCategories(2)));
+        List<QuestionPayload> questionPayloadList = new ArrayList<>(prepareQuestionsPayload(questionSize));
 
-        when(questionRepository.findRandomByCategoryName("programming", questionsResultLimit)).thenReturn(questionSet);
-        when(questionConverter.transformQuestions(questionSet)).thenReturn(questionPayloadSet);
+        when(questionRepository.findRandomByCategoryName("programming", questionsResultLimit)).thenReturn(questionList);
+        when(questionConverter.transformQuestions(questionList)).thenReturn(questionPayloadList);
 
         mockMvc.perform(
                 MockMvcRequestBuilders.get(QUESTIONS_URL + "/programming")
                         .accept("application/json")
                         .content((asJsonString(
                                 (List.of(
-                                        questionPayloadSet
+                                        questionPayloadList
                                 )))))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$", hasSize(questionSize)))
                 .andExpect(status().isOk());
 
-        verify(questionConverter).transformQuestions(questionSet);
+        verify(questionConverter).transformQuestions(questionList);
         verify(questionRepository).findRandomByCategoryName("programming", questionsResultLimit);
+    }
+
+    @Test
+    void should_return_questions_responses_Rates() throws Exception {
+        int questionSize = 2;
+        List<Question> questionSet = new ArrayList<>(prepareQuestions(questionSize, prepareCategories(2)));
+
+        QuestionResponseRatePayload questionResponseRatePayload1 = new QuestionResponseRatePayload(1, 2, 3);
+        QuestionResponseRatePayload questionResponseRatePayload2 = new QuestionResponseRatePayload(1, 2, 3);
+        List<QuestionResponseRatePayload> questionResponseRatePayloadList = new ArrayList<>();
+        questionResponseRatePayloadList.add(questionResponseRatePayload1);
+        questionResponseRatePayloadList.add(questionResponseRatePayload2);
+
+        List<String> publicIdList = new ArrayList<>();
+        publicIdList.add("publicId1");
+        publicIdList.add("publicId2");
+        publicIdList.add("publicId3");
+
+        when(questionRepository.findResponseRatesByPublicId(publicIdList)).thenReturn(questionSet);
+        when(questionConverter.transformQuestionsResponsesRates(questionSet)).thenReturn(questionResponseRatePayloadList);
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.get(QUESTIONS_URL + publicIdList)
+                        .accept("application/json")
+                        .content((asJsonString(
+                                (List.of(
+                                        questionResponseRatePayloadList
+                                )))))
+                        .contentType(MediaType.APPLICATION_JSON))
+//                .andExpect(jsonPath("$", hasSize(questionResponseRatePayloadList.size())))
+                .andExpect(status().isOk());
+
+//        verify(questionConverter).transformQuestions(questionSet);
+//        verify(questionRepository).findRandomByCategoryName("programming", questionsResultLimit);
     }
 }

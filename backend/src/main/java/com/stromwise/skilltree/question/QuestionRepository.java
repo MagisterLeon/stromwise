@@ -20,5 +20,11 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
             "LIMIT ?2 ",
             nativeQuery = true)
     List<Question> findRandomByCategoryName(String categoryName, String questionsResultLimit);
-    List<Question> findByPublicIdIn(List<String> publicId);
+
+    @Query(value = "" +
+            "SELECT q.know AS know, q.not_sure AS not_sure, q.not_know AS not_know " +
+            "FROM question q " +
+            "where c.public_id = ?1 ",
+            nativeQuery = true)
+    List<Question> findResponseRatesByPublicId(List<String> publicId);
 }

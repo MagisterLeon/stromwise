@@ -17,7 +17,7 @@ class QuestionConverterTest extends UnitTest {
     private QuestionConverter questionConverter;
 
     @Test
-    public void should_convert_entities_to_payloads() {
+    public void should_convert_question_entities_to_payloads() {
         // given
         List<Question> questionList = new ArrayList<>(prepareQuestions(10, prepareCategories(2)));
 
@@ -29,7 +29,7 @@ class QuestionConverterTest extends UnitTest {
     }
 
     @Test
-    public void should_converted_payload_be_equal_to_entity() {
+    public void should_converted_question_payload_be_equal_to_entity() {
         // given
         List<Question> questionList = new ArrayList<>(prepareQuestions(10, prepareCategories(2)));
 
@@ -38,5 +38,17 @@ class QuestionConverterTest extends UnitTest {
 
         // then
         assertThat(questionPayloadList).usingElementComparatorOnFields("publicId", "question", "answer").isEqualTo(questionList);
+    }
+
+    @Test
+    public void should_converted_responses_rates_payload_be_equal_to_entity() {
+        // given
+        List<Question> questionList = new ArrayList<>(prepareQuestions(10, prepareCategories(2)));
+
+        // when
+        List<QuestionResponseRatePayload> questionResponseRatePayloadList = questionConverter.transformQuestionsResponsesRates(questionList);
+
+        // then
+        assertThat(questionList).usingElementComparatorOnFields("know", "notSure", "notKnow").isEqualTo(questionResponseRatePayloadList);
     }
 }
