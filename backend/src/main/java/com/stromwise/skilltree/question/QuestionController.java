@@ -42,7 +42,7 @@ public class QuestionController {
     }
 
     @ApiOperation(value = "Get question response rate how other people voted")
-    @GetMapping("/{publicId}")
+    @GetMapping("")
     public ResponseEntity<List<QuestionResponseRatePayload>> getQuestionResponseRate(@RequestParam List<String> publicId) {
         List<QuestionResponseRatePayload> questionResponseRatePayloadList = getQuestionResponseRateService.getQuestionsResponsesRates(publicId);
 

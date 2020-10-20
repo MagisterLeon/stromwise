@@ -28,7 +28,7 @@ public class GetQuestionServiceTest extends UnitTest {
     private GetQuestionResponseRateService questionResponseRateService;
 
     @Value("${questions.result.limit}")
-    private String questionsResultLimit;
+    private int questionsResultLimit;
 
     @AfterEach
     public void tearDown() {
@@ -64,7 +64,7 @@ public class GetQuestionServiceTest extends UnitTest {
         List<QuestionResponseRatePayload> questionResponseRatePayloadList = new ArrayList<>(prepareQuestionResponseRatePayload(questionSize));
         List<String> publicIdList = questionList.stream().map(Question::getPublicId).collect(Collectors.toList());
 
-        when(questionRepository.findResponseRatesByPublicId(publicIdList)).thenReturn(questionList);
+        when(questionRepository.findByPublicIdIn(publicIdList)).thenReturn(questionList);
         when(questionConverter.transformQuestionsResponsesRates(questionList)).thenReturn(questionResponseRatePayloadList);
 
         // when
@@ -72,7 +72,7 @@ public class GetQuestionServiceTest extends UnitTest {
 
         // then
         assertThat(foundResponsesRates.size()).isEqualTo(5);
-        verify(questionRepository).findResponseRatesByPublicId(publicIdList);
+        verify(questionRepository).findByPublicIdIn(publicIdList);
         verify(questionConverter).transformQuestionsResponsesRates(questionList);
     }
 }

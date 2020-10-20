@@ -17,7 +17,7 @@ public class GetQuestionService {
     private final QuestionRepository questionRepository;
 
     @Value("${questions.result.limit}")
-    private String questionsResultLimit;
+    private int questionsResultLimit;
 
     @Transactional
     List<QuestionPayload> getQuestionByCategory(String categoryName) {

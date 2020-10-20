@@ -19,7 +19,7 @@ public class GetQuestionResponseRateService {
     List<QuestionResponseRatePayload> getQuestionsResponsesRates(List<String> publicId) {
         log.info("Searching questions by publicId: {}", publicId);
 
-        List<Question> questionList = questionRepository.findResponseRatesByPublicId(publicId);
+        List<Question> questionList = questionRepository.findByPublicIdIn(publicId);
 
         return questionConverter.transformQuestionsResponsesRates(questionList);
     }

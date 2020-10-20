@@ -14,6 +14,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static com.stromwise.skilltree.question.utils.TestDataFactory.*;
@@ -42,7 +43,7 @@ public class QuestionControllerTest extends UnitTest {
     private final String BAD_REQUEST_ERROR_MESSAGE = "Bad request";
 
     @Value("${questions.result.limit}")
-    private String questionsResultLimit;
+    private int questionsResultLimit;
 
     private MockMvc mockMvc;
 
@@ -55,7 +56,7 @@ public class QuestionControllerTest extends UnitTest {
 
         this.mockMvc = MockMvcBuilders
                 .standaloneSetup(new QuestionController(addQuestionService, updateQuestionService, getQuestionService, getQuestionResponseRateService))
-       //         .setControllerAdvice(new RestExceptionHandler())
+                .setControllerAdvice(new RestExceptionHandler())
                 .build();
     }
 
@@ -147,36 +148,39 @@ public class QuestionControllerTest extends UnitTest {
     }
 
     @Test
-    void should_return_questions_responses_Rates() throws Exception {
+    void should_return_questions_responses_rates() throws Exception {
         int questionSize = 2;
-        List<Question> questionSet = new ArrayList<>(prepareQuestions(questionSize, prepareCategories(2)));
 
-        QuestionResponseRatePayload questionResponseRatePayload1 = new QuestionResponseRatePayload(1, 2, 3);
-        QuestionResponseRatePayload questionResponseRatePayload2 = new QuestionResponseRatePayload(1, 2, 3);
-        List<QuestionResponseRatePayload> questionResponseRatePayloadList = new ArrayList<>();
-        questionResponseRatePayloadList.add(questionResponseRatePayload1);
-        questionResponseRatePayloadList.add(questionResponseRatePayload2);
+        List<Question> questionList = new ArrayList<>(prepareQuestions(questionSize, prepareCategories(2)));
+        String publicIdFirst = questionList.get(0).getPublicId();
+        String publicIdSecond = questionList.get(1).getPublicId();
 
         List<String> publicIdList = new ArrayList<>();
-        publicIdList.add("publicId1");
-        publicIdList.add("publicId2");
-        publicIdList.add("publicId3");
+        publicIdList.add(publicIdFirst);
+        publicIdList.add(publicIdSecond);
 
-        when(questionRepository.findResponseRatesByPublicId(publicIdList)).thenReturn(questionSet);
-        when(questionConverter.transformQuestionsResponsesRates(questionSet)).thenReturn(questionResponseRatePayloadList);
+//        QuestionResponseRatePayload questionResponseRatePayload1 = new QuestionResponseRatePayload(1, 2, 3);
+//        QuestionResponseRatePayload questionResponseRatePayload2 = new QuestionResponseRatePayload(1, 2, 3);
+//        List<QuestionResponseRatePayload> questionResponseRatePayloadList = new ArrayList<>();
+//        questionResponseRatePayloadList.add(questionResponseRatePayload1);
+//        questionResponseRatePayloadList.add(questionResponseRatePayload2);
+
+        when(questionRepository.findByPublicIdIn( Arrays.asList(publicIdFirst, publicIdSecond))).thenReturn(questionList);
+//        when(questionConverter.transformQuestionsResponsesRates(questionList)).thenReturn(questionResponseRatePayloadList);
 
         mockMvc.perform(
-                MockMvcRequestBuilders.get(QUESTIONS_URL + publicIdList)
+                MockMvcRequestBuilders.get(QUESTIONS_URL)
                         .accept("application/json")
+                        .param("publicId", String.valueOf(publicIdList))
                         .content((asJsonString(
                                 (List.of(
-                                        questionResponseRatePayloadList
+//                                        questionResponseRatePayloadList
                                 )))))
                         .contentType(MediaType.APPLICATION_JSON))
-//                .andExpect(jsonPath("$", hasSize(questionResponseRatePayloadList.size())))
+       //         .andExpect(jsonPath("$", hasSize(publicIdList.size())))
                 .andExpect(status().isOk());
 
-//        verify(questionConverter).transformQuestions(questionSet);
+//        verify(questionConverter).transformQuestionsResponsesRates(questionSet);
 //        verify(questionRepository).findRandomByCategoryName("programming", questionsResultLimit);
     }
 }
