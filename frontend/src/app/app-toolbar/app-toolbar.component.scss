@@ -2,93 +2,14 @@
 
 mat-toolbar {
   display: flex;
-  justify-content: space-between;
-  position: fixed;
-  top: 0;
-  z-index: map-get($z-indexes, header);
-  transition: 1s;
+  align-items: flex-start;
+  height: 50px;
+  padding: 0 24px;
+  background: #020211;
 
-  &.big {
-    height: 100px;
-    padding: 0 48px;
-    background: linear-gradient(#020211 10%, transparent);
-  }
-
-  &.compact {
-    height: 50px;
-    padding: 0 24px;
-    background: #020211;
-  }
-
-  .search-icon {
-    color: white;
-  }
-
-  .search-placeholder {
-    color: grey;
-  }
-
-  mat-form-field.mat-form-field {
-    width: 600px;
-    font-size: 14px;
-  }
-
-  ::ng-deep {
-    .mat-focused .mat-form-field-label {
-      color: grey !important;
-    }
-
-    input.mat-input-element {
-      color: white !important;
-    }
-
-    .mat-form-field-underline {
-      background-color: grey !important;
-    }
-
-    .mat-form-field-ripple {
-      background-color: grey !important;
-    }
-  }
-}
-
-.link {
-  font: 14px/20px "Abel Regular", sans-serif;
-  color: gray;
-  cursor: pointer;
-  outline: none;
-  transition: 0.3s;
-
-  &:hover {
-    color: white;
-  }
-}
-
-.logo {
-  width: 100px;
-  cursor: pointer;
-  outline: none;
-  -webkit-transition: -webkit-transform 10.8s ease-in-out;
-  transition: transform 10.8s ease-in-out;
-
-  &.compact {
+  .logo {
     width: 50px;
+    cursor: pointer;
+    outline: none;
   }
-}
-.logo:hover {
-  -webkit-transform: rotate(360deg);
-  transform: rotate(360deg);
-  position: relative;
-
-}
-
-.navigation {
-  display: flex;
-}
-
-.divider {
-  width: 2px;
-  height: 20px;
-  margin: 0 16px;
-  background-color: #ffffff;
 }
