@@ -33,6 +33,16 @@ databaseChangeLog:
                   type: BIGINT
                   constraints:
                     nullable: false
+              - column:
+                  name: know
+                  type: BIGINT
+              - column:
+                  name: not_sure
+                  type: BIGINT
+              - column:
+                  name: not_know
+                  type: BIGINT
+
         - createTable:
             tableName: category
             columns:

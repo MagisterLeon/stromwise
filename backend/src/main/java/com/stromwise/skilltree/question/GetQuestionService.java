@@ -17,14 +17,14 @@ public class GetQuestionService {
     private final QuestionRepository questionRepository;
 
     @Value("${questions.result.limit}")
-    private String questionsResultLimit;
+    private int questionsResultLimit;
 
     @Transactional
     List<QuestionPayload> getQuestionByCategory(String categoryName) {
         log.info("Searching questions by category name: {}", categoryName);
 
-        List<Question> questionSet = questionRepository.findRandomByCategoryName(categoryName, questionsResultLimit);
+        List<Question> questionList = questionRepository.findRandomByCategoryName(categoryName, questionsResultLimit);
 
-        return questionConverter.transform(questionSet);
+        return questionConverter.transformQuestions(questionList);
     }
 }

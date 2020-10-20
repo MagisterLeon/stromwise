@@ -6,14 +6,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -22,7 +15,7 @@ import java.util.UUID;
 @Data
 @Entity
 @NoArgsConstructor
-@EqualsAndHashCode(exclude="categories")
+@EqualsAndHashCode(exclude = "categories")
 @ToString(exclude = "categories")
 public class Question {
 
@@ -34,6 +27,9 @@ public class Question {
     private String question;
     private String answer;
     private long value;
+    private int know;
+    private int notSure;
+    private int notKnow;
 
     @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinTable(
