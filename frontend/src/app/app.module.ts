@@ -26,7 +26,6 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatCardModule} from '@angular/material/card';
 import {GlobalErrorHandler} from './utils/errors/global-error-handler';
 import { AddCategoryComponent } from './add-category/add-category.component';
-import {MatStepperModule} from "@angular/material/stepper";
 
 @NgModule({
   declarations: [
@@ -59,7 +58,6 @@ import {MatStepperModule} from "@angular/material/stepper";
         MatButtonModule,
         MatSnackBarModule,
         MatCardModule,
-        MatStepperModule
     ],
   providers: [
     {provide: ErrorHandler, useClass: GlobalErrorHandler}

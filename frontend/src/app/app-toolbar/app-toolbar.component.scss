@@ -1,14 +1,13 @@
-@import 'src/z-indexes';
 
 mat-toolbar {
   display: flex;
   align-items: flex-start;
-  height: 50px;
-  padding: 0 24px;
+  height: 75px;
+  padding: 10px 10px;
   background: #020211;
 
   .logo {
-    width: 50px;
+    width: 60px;
     cursor: pointer;
     outline: none;
   }

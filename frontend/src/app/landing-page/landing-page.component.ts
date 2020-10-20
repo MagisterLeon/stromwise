@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {ToolbarApiService} from '../app-toolbar/toolbar-api.service';
 
 @Component({
   selector: 'st-landing-page.component.ts',
@@ -19,9 +20,10 @@ import {Component, OnInit} from '@angular/core';
 })
 export class LandingPageComponent implements OnInit {
 
-  constructor() {
+  constructor(private toolbarApiService: ToolbarApiService) {
   }
 
   ngOnInit(): void {
+    this.toolbarApiService.setIsVisible(false);
   }
 }

@@ -1,9 +1,10 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import {ToolbarApiService} from './toolbar-api.service';
 
 @Component({
   selector: 'st-toolbar',
   template: `
-    <mat-toolbar>
+    <mat-toolbar *ngIf="toolbarApiService.isVisible() | async">
       <img class="logo"
            src="assets/logo/StromWise.png"
            alt="image"
@@ -15,7 +16,7 @@ import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 })
 export class AppToolbarComponent implements OnInit {
 
-  constructor() {
+  constructor(public toolbarApiService: ToolbarApiService) {
   }
 
   ngOnInit(): void {
