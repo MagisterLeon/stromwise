@@ -2,8 +2,6 @@ package com.stromwise.skilltree.question.utils;
 
 import com.stromwise.skilltree.category.Category;
 import com.stromwise.skilltree.question.Question;
-import com.stromwise.skilltree.question.QuestionPayload;
-import com.stromwise.skilltree.question.QuestionResponseRatePayload;
 
 import java.util.ArrayList;
 import java.util.List;

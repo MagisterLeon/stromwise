@@ -3,15 +3,13 @@ package com.stromwise.skilltree.question;
 import com.stromwise.skilltree.UnitTest;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Value;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.stromwise.skilltree.question.utils.TestDataFactory.*;
+import static com.stromwise.skilltree.question.utils.TestDataFactory.prepareCategories;
+import static com.stromwise.skilltree.question.utils.TestDataFactory.prepareQuestions;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 

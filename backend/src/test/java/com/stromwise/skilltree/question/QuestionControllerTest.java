@@ -142,7 +142,6 @@ public class QuestionControllerTest extends UnitTest {
                 .andExpect(jsonPath("$[1].publicId", notNullValue()))
                 .andExpect(jsonPath("$[1].question", is("question 2")))
                 .andExpect(jsonPath("$[1].answer", is("answer 2")));
-        ;
 
         verify(questionRepository).findRandomByCategoryName("programming", questionsResultLimit);
     }
