@@ -13,13 +13,13 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-import static com.stromwise.skilltree.question.utils.TestDataFactory.*;
+import static com.stromwise.skilltree.question.utils.TestDataFactory.prepareCategories;
+import static com.stromwise.skilltree.question.utils.TestDataFactory.prepareQuestions;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -34,8 +34,8 @@ public class QuestionControllerTest extends UnitTest {
     private CategoryRepository categoryRepository;
     @Mock
     private SkilltreeProperties skilltreeProperties;
-    @Mock
-    private QuestionConverter questionConverter;
+
+    private final QuestionConverter questionConverter = new QuestionConverter();
 
     private final String QUESTIONS_URL = "/api/v1/questions";
 
@@ -126,61 +126,48 @@ public class QuestionControllerTest extends UnitTest {
     void should_return_questions_belong_to_specific_category() throws Exception {
         int questionSize = 5;
 
-        List<Question> questionList = new ArrayList<>(prepareQuestions(questionSize, prepareCategories(2)));
-        List<QuestionPayload> questionPayloadList = new ArrayList<>(prepareQuestionsPayload(questionSize));
+        List<Question> questions = prepareQuestions(questionSize, prepareCategories(2));
 
-        when(questionRepository.findRandomByCategoryName("programming", questionsResultLimit)).thenReturn(questionList);
-        when(questionConverter.transformQuestions(questionList)).thenReturn(questionPayloadList);
+        when(questionRepository.findRandomByCategoryName("programming", questionsResultLimit)).thenReturn(questions);
 
         mockMvc.perform(
                 MockMvcRequestBuilders.get(QUESTIONS_URL + "/programming")
                         .accept("application/json")
-                        .content((asJsonString(
-                                (List.of(
-                                        questionPayloadList
-                                )))))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$", hasSize(questionSize)))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].publicId", notNullValue()))
+                .andExpect(jsonPath("$[0].question", is("question 1")))
+                .andExpect(jsonPath("$[0].answer", is("answer 1")))
+                .andExpect(jsonPath("$[1].publicId", notNullValue()))
+                .andExpect(jsonPath("$[1].question", is("question 2")))
+                .andExpect(jsonPath("$[1].answer", is("answer 2")));
+        ;
 
-        verify(questionConverter).transformQuestions(questionList);
         verify(questionRepository).findRandomByCategoryName("programming", questionsResultLimit);
     }
 
     @Test
     void should_return_questions_responses_rates() throws Exception {
-        int questionSize = 2;
+        int questionListSize = 2;
 
-        List<Question> questionList = new ArrayList<>(prepareQuestions(questionSize, prepareCategories(2)));
-        String publicIdFirst = questionList.get(0).getPublicId();
-        String publicIdSecond = questionList.get(1).getPublicId();
+        List<Question> questions = prepareQuestions(questionListSize, prepareCategories(2));
+        String publicIdFirst = questions.get(0).getPublicId();
+        String publicIdSecond = questions.get(1).getPublicId();
 
-        List<String> publicIdList = new ArrayList<>();
-        publicIdList.add(publicIdFirst);
-        publicIdList.add(publicIdSecond);
-
-//        QuestionResponseRatePayload questionResponseRatePayload1 = new QuestionResponseRatePayload(1, 2, 3);
-//        QuestionResponseRatePayload questionResponseRatePayload2 = new QuestionResponseRatePayload(1, 2, 3);
-//        List<QuestionResponseRatePayload> questionResponseRatePayloadList = new ArrayList<>();
-//        questionResponseRatePayloadList.add(questionResponseRatePayload1);
-//        questionResponseRatePayloadList.add(questionResponseRatePayload2);
-
-        when(questionRepository.findByPublicIdIn( Arrays.asList(publicIdFirst, publicIdSecond))).thenReturn(questionList);
-//        when(questionConverter.transformQuestionsResponsesRates(questionList)).thenReturn(questionResponseRatePayloadList);
+        when(questionRepository.findByPublicIdIn(List.of(publicIdFirst, publicIdSecond))).thenReturn(questions);
 
         mockMvc.perform(
                 MockMvcRequestBuilders.get(QUESTIONS_URL)
                         .accept("application/json")
-                        .param("publicId", String.valueOf(publicIdList))
-                        .content((asJsonString(
-                                (List.of(
-//                                        questionResponseRatePayloadList
-                                )))))
+                        .param("publicIds", publicIdFirst, publicIdSecond)
                         .contentType(MediaType.APPLICATION_JSON))
-       //         .andExpect(jsonPath("$", hasSize(publicIdList.size())))
-                .andExpect(status().isOk());
-
-//        verify(questionConverter).transformQuestionsResponsesRates(questionSet);
-//        verify(questionRepository).findRandomByCategoryName("programming", questionsResultLimit);
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].know", is(1)))
+                .andExpect(jsonPath("$[0].notSure", is(1)))
+                .andExpect(jsonPath("$[0].notKnow", is(1)))
+                .andExpect(jsonPath("$[1].know", is(2)))
+                .andExpect(jsonPath("$[1].notSure", is(2)))
+                .andExpect(jsonPath("$[1].notKnow", is(2)));
     }
 }

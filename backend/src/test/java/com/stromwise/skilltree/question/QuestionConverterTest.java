@@ -46,7 +46,7 @@ class QuestionConverterTest extends UnitTest {
         List<Question> questionList = new ArrayList<>(prepareQuestions(10, prepareCategories(2)));
 
         // when
-        List<QuestionResponseRatePayload> questionResponseRatePayloadList = questionConverter.transformQuestionsResponsesRates(questionList);
+        List<QuestionResponseRatePayload> questionResponseRatePayloadList = questionConverter.transformQuestionResponseRates(questionList);
 
         // then
         assertThat(questionList).usingElementComparatorOnFields("know", "notSure", "notKnow").isEqualTo(questionResponseRatePayloadList);

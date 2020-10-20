@@ -33,38 +33,4 @@ public class TestDataFactory {
 
         return questionList;
     }
-
-    public static List<Question> prepareQuestionsWithoutResponsesRates(int questionsAmount, List<Category> categoryList) {
-        List<Question> questionList = new ArrayList<>();
-        for (int i = 1; i < questionsAmount + 1; i++) {
-            Question question = new Question("question " + i, "answer " + i);
-            question.addCategories(categoryList);
-
-            questionList.add(question);
-        }
-
-        return questionList;
-    }
-
-    public static List<QuestionPayload> prepareQuestionsPayload(int questionsAmount) {
-        List<QuestionPayload> questionList = new ArrayList<>();
-        for (int i = 1; i < questionsAmount + 1; i++) {
-            QuestionPayload question = new QuestionPayload("public id" + i, "question " + i, "answer " + i);
-
-            questionList.add(question);
-        }
-
-        return questionList;
-    }
-
-    public static List<QuestionResponseRatePayload> prepareQuestionResponseRatePayload(int questionsAmount) {
-        List<QuestionResponseRatePayload> questionResponseRatePayloadList = new ArrayList<>();
-        for (int i = 1; i < questionsAmount + 1; i++) {
-            QuestionResponseRatePayload questionResponseRatePayload = new QuestionResponseRatePayload(i, i, i);
-
-            questionResponseRatePayloadList.add(questionResponseRatePayload);
-        }
-
-        return questionResponseRatePayloadList;
-    }
 }

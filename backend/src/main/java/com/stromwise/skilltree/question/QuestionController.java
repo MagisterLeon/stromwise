@@ -4,7 +4,14 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -41,10 +48,11 @@ public class QuestionController {
         return new ResponseEntity<>(questionPayloads, HttpStatus.OK);
     }
 
-    @ApiOperation(value = "Get question response rate how other people voted")
-    @GetMapping("")
-    public ResponseEntity<List<QuestionResponseRatePayload>> getQuestionResponseRate(@RequestParam List<String> publicId) {
-        List<QuestionResponseRatePayload> questionResponseRatePayloadList = getQuestionResponseRateService.getQuestionsResponsesRates(publicId);
+    @ApiOperation(value = "Get question response rates (how other people voted)")
+    @GetMapping
+    public ResponseEntity<List<QuestionResponseRatePayload>> getQuestionResponseRates(@RequestParam List<String> publicIds) {
+        var questionResponseRatePayloadList =
+                getQuestionResponseRateService.getQuestionsResponsesRates(publicIds);
 
         return new ResponseEntity<>(questionResponseRatePayloadList, HttpStatus.OK);
     }

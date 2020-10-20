@@ -4,23 +4,21 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class GetQuestionResponseRateService {
+class GetQuestionResponseRateService {
 
     private final QuestionConverter questionConverter;
     private final QuestionRepository questionRepository;
 
-    @Transactional
-    List<QuestionResponseRatePayload> getQuestionsResponsesRates(List<String> publicId) {
-        log.info("Searching questions by publicId: {}", publicId);
+    List<QuestionResponseRatePayload> getQuestionsResponsesRates(List<String> publicIds) {
+        log.info("Searching questions by publicIds: {}", publicIds);
 
-        List<Question> questionList = questionRepository.findByPublicIdIn(publicId);
+        List<Question> questions = questionRepository.findByPublicIdIn(publicIds);
 
-        return questionConverter.transformQuestionsResponsesRates(questionList);
+        return questionConverter.transformQuestionResponseRates(questions);
     }
 }

@@ -17,15 +17,15 @@ import static org.mockito.Mockito.*;
 
 public class GetQuestionServiceTest extends UnitTest {
 
-    @Mock
-    private QuestionRepository questionRepository;
-    @Mock
-    private QuestionConverter questionConverter;
+    private final QuestionRepository questionRepository = mock(QuestionRepository.class);
 
-    @InjectMocks
-    private GetQuestionService getQuestionService;
-    @InjectMocks
-    private GetQuestionResponseRateService questionResponseRateService;
+    private final QuestionConverter questionConverter = new QuestionConverter();
+
+    private final GetQuestionService getQuestionService =
+            new GetQuestionService(questionConverter, questionRepository);
+
+    private final GetQuestionResponseRateService questionResponseRateService =
+            new GetQuestionResponseRateService(questionConverter, questionRepository);
 
     @Value("${questions.result.limit}")
     private int questionsResultLimit;
@@ -40,19 +40,18 @@ public class GetQuestionServiceTest extends UnitTest {
         // given
         int questionSize = 5;
 
-        List<Question> questionSet = new ArrayList<>(prepareQuestions(questionSize, prepareCategories(2)));
-        List<QuestionPayload> questionPayloadSet = new ArrayList<>(prepareQuestionsPayload(questionSize));
+        List<Question> questions = prepareQuestions(questionSize, prepareCategories(2));
 
-        when(questionRepository.findRandomByCategoryName("programming", questionsResultLimit)).thenReturn(questionSet);
-        when(questionConverter.transformQuestions(questionSet)).thenReturn(questionPayloadSet);
+        when(questionRepository.findRandomByCategoryName("programming", questionsResultLimit))
+                .thenReturn(questions);
 
         // when
-        List<QuestionPayload> foundQuestionsByCategoryName = getQuestionService.getQuestionByCategory("programming");
+        List<QuestionPayload> foundQuestionsByCategoryName = getQuestionService
+                .getQuestionByCategory("programming");
 
         // then
         assertThat(foundQuestionsByCategoryName.size()).isEqualTo(5);
         verify(questionRepository).findRandomByCategoryName("programming", questionsResultLimit);
-        verify(questionConverter).transformQuestions(questionSet);
     }
 
     @Test
@@ -60,19 +59,16 @@ public class GetQuestionServiceTest extends UnitTest {
         // given
         int questionSize = 5;
 
-        List<Question> questionList = new ArrayList<>(prepareQuestions(questionSize, prepareCategories(2)));
-        List<QuestionResponseRatePayload> questionResponseRatePayloadList = new ArrayList<>(prepareQuestionResponseRatePayload(questionSize));
-        List<String> publicIdList = questionList.stream().map(Question::getPublicId).collect(Collectors.toList());
+        List<Question> questions = prepareQuestions(questionSize, prepareCategories(2));
+        List<String> publicIds = questions.stream().map(Question::getPublicId).collect(Collectors.toList());
 
-        when(questionRepository.findByPublicIdIn(publicIdList)).thenReturn(questionList);
-        when(questionConverter.transformQuestionsResponsesRates(questionList)).thenReturn(questionResponseRatePayloadList);
+        when(questionRepository.findByPublicIdIn(publicIds)).thenReturn(questions);
 
         // when
-        List<QuestionResponseRatePayload> foundResponsesRates = questionResponseRateService.getQuestionsResponsesRates(publicIdList);
+        List<QuestionResponseRatePayload> foundResponsesRates = questionResponseRateService.getQuestionsResponsesRates(publicIds);
 
         // then
         assertThat(foundResponsesRates.size()).isEqualTo(5);
-        verify(questionRepository).findByPublicIdIn(publicIdList);
-        verify(questionConverter).transformQuestionsResponsesRates(questionList);
+        verify(questionRepository).findByPublicIdIn(publicIds);
     }
 }
