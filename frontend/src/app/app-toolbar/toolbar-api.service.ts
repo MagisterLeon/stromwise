@@ -1,22 +1,17 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable} from 'rxjs';
-import {ToolbarSize} from './toolbar-size.enum';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ToolbarApiService {
-  private $toolbarSize: BehaviorSubject<ToolbarSize> = new BehaviorSubject<ToolbarSize>(ToolbarSize.BIG);
+  private $isVisible: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
-  setToolbarSize(size: ToolbarSize): void {
-    this.$toolbarSize.next(size);
+  setIsVisible(isVisible: boolean): void {
+    this.$isVisible.next(isVisible);
   }
 
-  getToolbarSize(): Observable<ToolbarSize> {
-    return this.$toolbarSize.asObservable();
-  }
-
-  scrollToContactForm() {
-    document.querySelector('st-contact-form').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  isVisible(): Observable<boolean> {
+    return this.$isVisible.asObservable();
   }
 }

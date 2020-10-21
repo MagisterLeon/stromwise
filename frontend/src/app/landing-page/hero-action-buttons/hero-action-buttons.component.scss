@@ -1,11 +1,5 @@
 @import "src/mixins";
 
-.hero-actions-buttons-description {
-  margin-right: 16px;
-  @include font(14, $font-weight: bold);
-  color: grey;
-}
-
 .hero-action-button {
   font-size: small;
   margin: 4px;
