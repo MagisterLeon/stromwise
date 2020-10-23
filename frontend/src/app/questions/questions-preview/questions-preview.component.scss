@@ -1,0 +1,58 @@
+@import 'src/stromwise-palette';
+@import "src/mixins";
+
+:host {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+  background-color: #041C2C;
+
+  .question-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 200px;
+  }
+}
+
+mat-button-toggle-group {
+  box-shadow: none;
+  align-self: stretch;
+}
+
+mat-button-toggle {
+  border: 1px rgba(0,0,0,0) solid !important;
+  margin-top: 5px !important;
+  padding: 0 5px !important;
+  z-index: 3 !important;
+}
+
+mat-button-toggle:hover {
+  border: 1px #000 solid !important;
+  border-radius: 5px !important;
+}
+
+.mat-button-toggle-checked {
+  box-shadow: 0 0 30px #000 !important;
+  border: 1px #000 solid !important;
+  border-radius: 5px !important;
+
+  &.know {
+    background-color: map-get($md-primary, 900) !important;
+  }
+
+  &.not-sure {
+    background-color: map-get($md-secondary, 200);
+  }
+
+  &.not-know {
+    background-color: red;
+  }
+}
+
+.mat-button-toggle-input {
+  background-color: none !important;
+  padding-left: 32px !important;
+}

@@ -1,14 +1,28 @@
 
 mat-toolbar {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
+  justify-content: flex-start;
   height: 75px;
   padding: 10px 10px;
-  background: #020211;
+  background: rgb(2,2,17);
+  background: linear-gradient(139deg, rgba(2,2,17,1) 45%, rgba(4,28,44,1) 45%);
 
   .logo {
     width: 60px;
     cursor: pointer;
     outline: none;
+    margin-right: auto;
+  }
+
+  .category-name {
+    color: white;
+    justify-self: center;
+    margin: 0;
+  }
+
+  .fill {
+    width: 60px;
+    margin-left: auto;
   }
 }

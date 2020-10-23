@@ -25,7 +25,12 @@ import {ContactFormComponent} from './app-contact/contact-form/contact-form.comp
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatCardModule} from '@angular/material/card';
 import {GlobalErrorHandler} from './utils/errors/global-error-handler';
-import { AddCategoryComponent } from './add-category/add-category.component';
+import { AddCategoryComponent } from './categories/add-category/add-category.component';
+import { QuestionsPreviewComponent } from './questions/questions-preview/questions-preview.component';
+import {MatButtonToggleModule} from "@angular/material/button-toggle";
+import {MatBadgeIconDirective} from "./utils/badge/mat-badge-icon.directive";
+import {MatBadgeModule} from "@angular/material/badge";
+import { QuestionsPresenterComponent } from './questions/questions-presenter/questions-presenter.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +47,9 @@ import { AddCategoryComponent } from './add-category/add-category.component';
     ContactMapComponent,
     ContactFormComponent,
     AddCategoryComponent,
+    QuestionsPreviewComponent,
+    MatBadgeIconDirective,
+    QuestionsPresenterComponent
   ],
     imports: [
         BrowserModule,
@@ -58,6 +66,8 @@ import { AddCategoryComponent } from './add-category/add-category.component';
         MatButtonModule,
         MatSnackBarModule,
         MatCardModule,
+        MatButtonToggleModule,
+        MatBadgeModule,
     ],
   providers: [
     {provide: ErrorHandler, useClass: GlobalErrorHandler}

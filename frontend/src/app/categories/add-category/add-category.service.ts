@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {HttpClient} from '@angular/common/http';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import {NotificationService} from '../utils/notification/notification.service';
+import {NotificationService} from '../../utils/notification/notification.service';
 
 @Injectable({
   providedIn: 'root'
