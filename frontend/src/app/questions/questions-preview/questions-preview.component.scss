@@ -4,16 +4,16 @@
 :host {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
   height: 100%;
   background-color: #041C2C;
 
-  .question-header {
+  .question {
+    flex: 1 1 auto;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    width: 200px;
+    justify-content: center;
   }
 }
 
