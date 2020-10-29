@@ -4,6 +4,7 @@ import {GetQuestionsService} from '../get-questions.service';
 import {ToolbarApiService} from '../../app-toolbar/toolbar-api.service';
 import {Observable} from 'rxjs';
 import {Question} from '../question';
+import {ActivatedRoute} from '@angular/router';
 
 
 @Component({
@@ -33,15 +34,18 @@ import {Question} from '../question';
 export class QuestionsPresenterComponent implements OnInit {
   @ViewChild('carousel') carousel: CarouselComponent;
 
-  questions$: Observable<Question[]> = this.getQuestionsService.get('Programming');
+  questions$: Observable<Question[]>;
 
   constructor(private getQuestionsService: GetQuestionsService,
-              private toolbarApiService: ToolbarApiService) {
+              private toolbarApiService: ToolbarApiService,
+              private route: ActivatedRoute) {
   }
 
   ngOnInit(): void {
+    const category = this.route.snapshot.paramMap.get('category');
+    this.questions$ = this.getQuestionsService.get(category);
     this.toolbarApiService.setIsVisible(true);
-    this.toolbarApiService.setCategory('Programming');
+    this.toolbarApiService.setCategory(category);
   }
 }
 

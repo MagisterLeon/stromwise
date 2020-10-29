@@ -22,8 +22,5 @@ export class AppToolbarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
-
-    this.toolbarApiService.getCategory().subscribe(c => console.log(c))
   }
 }
