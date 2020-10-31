@@ -25,7 +25,14 @@ import {ContactFormComponent} from './app-contact/contact-form/contact-form.comp
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatCardModule} from '@angular/material/card';
 import {GlobalErrorHandler} from './utils/errors/global-error-handler';
-import { AddCategoryComponent } from './add-category/add-category.component';
+import {AddCategoryComponent} from './categories/add-category/add-category.component';
+import {QuestionsPreviewComponent} from './questions/questions-preview/questions-preview.component';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import {MatBadgeIconDirective} from './utils/badge/mat-badge-icon.directive';
+import {MatBadgeModule} from '@angular/material/badge';
+import {QuestionsPresenterComponent} from './questions/questions-presenter/questions-presenter.component';
+import {CarouselComponent, CarouselItemElementDirective} from './components/carousel/carousel.component';
+import {CarouselItemDirective} from './components/carousel/carousel-item.directive';
 
 @NgModule({
   declarations: [
@@ -42,23 +49,31 @@ import { AddCategoryComponent } from './add-category/add-category.component';
     ContactMapComponent,
     ContactFormComponent,
     AddCategoryComponent,
+    QuestionsPreviewComponent,
+    MatBadgeIconDirective,
+    QuestionsPresenterComponent,
+    CarouselComponent,
+    CarouselItemDirective,
+    CarouselItemElementDirective
   ],
-    imports: [
-        BrowserModule,
-        HttpClientModule,
-        AppRoutingModule,
-        BrowserAnimationsModule,
-        MatToolbarModule,
-        MatListModule,
-        MatInputModule,
-        MatAutocompleteModule,
-        FormsModule,
-        ReactiveFormsModule,
-        MatIconModule,
-        MatButtonModule,
-        MatSnackBarModule,
-        MatCardModule,
-    ],
+  imports: [
+    BrowserModule,
+    HttpClientModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    MatToolbarModule,
+    MatListModule,
+    MatInputModule,
+    MatAutocompleteModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatIconModule,
+    MatButtonModule,
+    MatSnackBarModule,
+    MatCardModule,
+    MatButtonToggleModule,
+    MatBadgeModule
+  ],
   providers: [
     {provide: ErrorHandler, useClass: GlobalErrorHandler}
   ],

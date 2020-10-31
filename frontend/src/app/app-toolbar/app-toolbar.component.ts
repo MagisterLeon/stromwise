@@ -9,6 +9,8 @@ import {ToolbarApiService} from './toolbar-api.service';
            src="assets/logo/StromWise.png"
            alt="image"
            routerLink="/">
+      <span class="category-name mat-h1">{{toolbarApiService.getCategory() | async}}</span>
+      <span class="fill"></span>
     </mat-toolbar>
   `,
   styleUrls: ['./app-toolbar.component.scss'],

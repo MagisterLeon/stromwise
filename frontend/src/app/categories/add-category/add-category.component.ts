@@ -1,12 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {AddCategoryService} from './add-category.service';
 import {Router} from '@angular/router';
-import {ToolbarApiService} from "../app-toolbar/toolbar-api.service";
+import {ToolbarApiService} from "../../app-toolbar/toolbar-api.service";
 
 @Component({
   selector: 'st-add-category',
   template: `
-    <h1>Add category</h1>
     <form class="add-category-form" [formGroup]="addCategoryService.form"
           (ngSubmit)="addCategoryService.onSubmit()">
       <mat-form-field appearance="outline">
@@ -56,6 +55,7 @@ export class AddCategoryComponent implements OnInit {
 
   ngOnInit(): void {
     this.toolbarApiService.setIsVisible(true);
+    this.toolbarApiService.setCategory('Add category');
   }
 
   onCancel(): void {
