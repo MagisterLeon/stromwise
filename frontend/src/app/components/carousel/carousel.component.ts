@@ -50,16 +50,22 @@ export class CarouselComponent implements AfterViewInit {
               private renderer: Renderer2) {
   }
 
+  ngAfterViewInit(): void {
+    setTimeout(() => {
+      this.itemWidth = (100 / this.itemsElements.length);
+
+      this.updateCarouselStyleWidth();
+      this.updateItemStyleWidth();
+    }, 0);
+  }
+
   next(): void {
     if (this.currentSlide + 1 === this.items.length) {
       return;
     }
     this.currentSlide = (this.currentSlide + 1) % this.items.length;
-    const offset = this.currentSlide * this.itemWidth;
-    const myAnimation: AnimationFactory = this.buildAnimation(offset);
 
-    this.player = myAnimation.create(this.carousel.nativeElement);
-    this.player.play();
+    this.playAnimation();
   }
 
   prev(): void {
@@ -67,35 +73,39 @@ export class CarouselComponent implements AfterViewInit {
       return;
     }
     this.currentSlide = ((this.currentSlide - 1) + this.items.length) % this.items.length;
-    const offset = this.currentSlide * this.itemWidth;
 
-    const myAnimation: AnimationFactory = this.buildAnimation(offset);
-    this.player = myAnimation.create(this.carousel.nativeElement);
-    this.player.play();
+    this.playAnimation();
   }
 
   getCurrentSlide(): number {
     return this.currentSlide;
   }
 
-  ngAfterViewInit(): void {
-    setTimeout(() => {
-      const w: string = (this.itemsElements.length * 100) + '%';
-      this.renderer.setStyle(this.carousel.nativeElement, 'width', w);
-      const slideWidthInContainer: string = (100 / this.itemsElements.length) + '%';
-      this.itemWidth = (100 / this.itemsElements.length);
-      this.itemsElements.forEach(el => {
-        this.renderer.setStyle(el.nativeElement, 'width', slideWidthInContainer);
-      });
-      this.carouselWrapperStyle = {
-        width: `100%`
-      };
-    }, 0);
-  }
-
   private buildAnimation(offset): AnimationFactory {
     return this.builder.build([
       animate(this.timing, style({transform: `translateX(-${offset}%)`}))
     ]);
+  }
+
+  private playAnimation(): void {
+    const offset = this.currentSlide * this.itemWidth;
+    const myAnimation: AnimationFactory = this.buildAnimation(offset);
+    this.player = myAnimation.create(this.carousel.nativeElement);
+    this.player.play();
+  }
+
+  private updateCarouselStyleWidth(): void {
+    const width: string = (this.itemsElements.length * 100) + '%';
+    this.renderer.setStyle(this.carousel.nativeElement, 'width', width);
+  }
+
+  private updateItemStyleWidth(): void {
+    const slideWidthInContainer: string = (100 / this.itemsElements.length) + '%';
+    this.itemsElements.forEach(el => {
+      this.renderer.setStyle(el.nativeElement, 'width', slideWidthInContainer);
+    });
+    this.carouselWrapperStyle = {
+      width: `100%`
+    };
   }
 }

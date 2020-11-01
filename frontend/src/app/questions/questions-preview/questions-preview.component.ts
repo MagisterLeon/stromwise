@@ -1,5 +1,6 @@
-import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@angular/core';
 import {Question} from '../question';
+import {OuterSubscriber} from "rxjs/internal-compatibility";
 
 @Component({
   selector: 'st-questions-preview',
@@ -22,4 +23,5 @@ import {Question} from '../question';
 export class QuestionsPreviewComponent {
 
   @Input() questionModel: Question;
+  @Output() questionAnswer: EventEmitter<string> = new EventEmitter<string>();
 }

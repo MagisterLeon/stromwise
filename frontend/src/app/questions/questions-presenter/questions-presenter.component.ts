@@ -5,6 +5,7 @@ import {ToolbarApiService} from '../../app-toolbar/toolbar-api.service';
 import {Observable} from 'rxjs';
 import {Question} from '../question';
 import {ActivatedRoute} from '@angular/router';
+import {NotificationService} from '../../utils/notification/notification.service';
 
 
 @Component({
@@ -16,7 +17,7 @@ import {ActivatedRoute} from '@angular/router';
           <mat-icon>keyboard_arrow_left</mat-icon>
         </button>
         <span class="mat-body-strong">{{carousel.getCurrentSlide() + 1}} / {{questions.length}}</span>
-        <button mat-icon-button (click)="carousel.next()">
+        <button mat-icon-button (click)="onRightClick()">
           <mat-icon>keyboard_arrow_right</mat-icon>
         </button>
       </div>
@@ -38,7 +39,8 @@ export class QuestionsPresenterComponent implements OnInit {
 
   constructor(private getQuestionsService: GetQuestionsService,
               private toolbarApiService: ToolbarApiService,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private notificationService: NotificationService) {
   }
 
   ngOnInit(): void {
@@ -46,6 +48,15 @@ export class QuestionsPresenterComponent implements OnInit {
     this.questions$ = this.getQuestionsService.get(category);
     this.toolbarApiService.setIsVisible(true);
     this.toolbarApiService.setCategory(category);
+  }
+
+  onRightClick(): void {
+    if (true) {
+      this.notificationService.showError('You need to select an option from toggle below before ' +
+        'going further', 3_000);
+    } else {
+      this.carousel.next();
+    }
   }
 }
 
