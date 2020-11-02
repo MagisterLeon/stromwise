@@ -1,5 +1,7 @@
-import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@angular/core';
 import {Question} from '../question';
+import {MatButtonToggleChange} from '@angular/material/button-toggle';
+import {QuestionResponse} from '../question-response';
 
 @Component({
   selector: 'st-questions-preview',
@@ -10,10 +12,10 @@ import {Question} from '../question';
              matBadgeOverlap="false"
              matBadgeIcon="help">{{questionModel.question}}</span>
     </div>
-    <mat-button-toggle-group name="answer" vertical>
-      <mat-button-toggle class="know mat-body-2" value="know">Know</mat-button-toggle>
-      <mat-button-toggle class="not-sure mat-body-2" value="notSure">Not sure</mat-button-toggle>
-      <mat-button-toggle class="not-know mat-body-2" value="notKnow">Don't know</mat-button-toggle>
+    <mat-button-toggle-group name="answer" vertical (change)="onQuestionPreviewResponseChange($event)">
+      <mat-button-toggle class="know mat-body-2" value="KNOW">Know</mat-button-toggle>
+      <mat-button-toggle class="not-sure mat-body-2" value="NOT_SURE">Not sure</mat-button-toggle>
+      <mat-button-toggle class="not-know mat-body-2" value="DONT_KNOW">Don't know</mat-button-toggle>
     </mat-button-toggle-group>
   `,
   styleUrls: ['./questions-preview.component.scss'],
@@ -22,4 +24,12 @@ import {Question} from '../question';
 export class QuestionsPreviewComponent {
 
   @Input() questionModel: Question;
+  @Output() questionPreviewResponse: EventEmitter<QuestionResponse> = new EventEmitter<QuestionResponse>();
+
+  onQuestionPreviewResponseChange(event: MatButtonToggleChange): void {
+    this.questionPreviewResponse.emit({
+      publicId: this.questionModel.publicId,
+      questionResponseType: event.value
+    });
+  }
 }

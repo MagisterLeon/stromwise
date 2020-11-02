@@ -18,4 +18,11 @@
     width: 100%;
     min-width: 320px;
   }
+
+  .done-button {
+    position: absolute;
+    bottom: 200px;
+    right: 10%;
+    z-index: 100;
+  }
 }

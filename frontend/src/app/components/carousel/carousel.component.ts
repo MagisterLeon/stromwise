@@ -60,7 +60,7 @@ export class CarouselComponent implements AfterViewInit {
   }
 
   next(): void {
-    if (this.currentSlide + 1 === this.items.length) {
+    if (this.isLastSlide()) {
       return;
     }
     this.currentSlide = (this.currentSlide + 1) % this.items.length;
@@ -75,6 +75,10 @@ export class CarouselComponent implements AfterViewInit {
     this.currentSlide = ((this.currentSlide - 1) + this.items.length) % this.items.length;
 
     this.playAnimation();
+  }
+
+  isLastSlide(): boolean {
+    return this.currentSlide + 1 === this.items.length;
   }
 
   getCurrentSlide(): number {

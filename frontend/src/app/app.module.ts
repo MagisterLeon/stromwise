@@ -33,6 +33,9 @@ import {MatBadgeModule} from '@angular/material/badge';
 import {QuestionsPresenterComponent} from './questions/questions-presenter/questions-presenter.component';
 import {CarouselComponent, CarouselItemElementDirective} from './components/carousel/carousel.component';
 import {CarouselItemDirective} from './components/carousel/carousel-item.directive';
+import { QuestionsKnownSorterComponent } from './questions/questions-known-sorter/questions-known-sorter.component';
+import {QuestionsGuard} from './questions/questions.guard';
+import {DragDropModule} from "@angular/cdk/drag-drop";
 
 @NgModule({
   declarations: [
@@ -54,7 +57,8 @@ import {CarouselItemDirective} from './components/carousel/carousel-item.directi
     QuestionsPresenterComponent,
     CarouselComponent,
     CarouselItemDirective,
-    CarouselItemElementDirective
+    CarouselItemElementDirective,
+    QuestionsKnownSorterComponent
   ],
   imports: [
     BrowserModule,
@@ -72,10 +76,12 @@ import {CarouselItemDirective} from './components/carousel/carousel-item.directi
     MatSnackBarModule,
     MatCardModule,
     MatButtonToggleModule,
-    MatBadgeModule
+    MatBadgeModule,
+    DragDropModule
   ],
   providers: [
-    {provide: ErrorHandler, useClass: GlobalErrorHandler}
+    {provide: ErrorHandler, useClass: GlobalErrorHandler},
+    QuestionsGuard
   ],
   bootstrap: [AppComponent]
 })
