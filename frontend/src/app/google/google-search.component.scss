@@ -1,3 +1,15 @@
 :host {
   flex: 1 1 auto;
 }
+
+.google-search-tabs {
+  margin: 30px 0;
+
+  ::ng-deep .mat-tab-label  {
+    color: white;
+  }
+
+  ::ng-deep .mat-tab-header {
+    border-bottom-color: gray;
+  }
+}

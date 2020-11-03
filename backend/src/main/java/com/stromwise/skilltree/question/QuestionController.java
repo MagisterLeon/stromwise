@@ -23,8 +23,8 @@ public class QuestionController {
 
     private final AddQuestionService addQuestionService;
     private final UpdateQuestionService updateQuestionService;
-    private final GetQuestionService getQuestionService;
-    private final GetQuestionResponseRateService getQuestionResponseRateService;
+    private final GetRandomQuestionsService getRandomQuestionsService;
+    private final GetQuestionsService getQuestionsService;
 
     @ApiOperation(value = "Add question to DB")
     @PostMapping
@@ -41,19 +41,19 @@ public class QuestionController {
     }
 
     @ApiOperation(value = "Get random questions belonging to given category with limit defined by questionResultLimit property")
-    @GetMapping("/{categoryName}")
+    @GetMapping("/categories/{categoryName}")
     public ResponseEntity<List<QuestionPayload>> getQuestionsSimplified(@PathVariable String categoryName) {
-        List<QuestionPayload> questionPayloads = getQuestionService.getQuestionByCategory(categoryName);
+        List<QuestionPayload> questionPayloads = getRandomQuestionsService.getRandomByCategory(categoryName);
 
         return new ResponseEntity<>(questionPayloads, HttpStatus.OK);
     }
 
     @ApiOperation(value = "Get question response rates (how other people voted)")
     @GetMapping
-    public ResponseEntity<List<QuestionResponseRatePayload>> getQuestionResponseRates(@RequestParam List<String> publicIds) {
-        var questionResponseRatePayloadList =
-                getQuestionResponseRateService.getQuestionsResponsesRates(publicIds);
+    public ResponseEntity<List<QuestionWithRatesPayload>> getQuestions(@RequestParam List<String> publicIds) {
+        var questions =
+                getQuestionsService.getQuestions(publicIds);
 
-        return new ResponseEntity<>(questionResponseRatePayloadList, HttpStatus.OK);
+        return new ResponseEntity<>(questions, HttpStatus.OK);
     }
 }

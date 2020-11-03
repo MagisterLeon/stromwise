@@ -3,6 +3,7 @@ import {QuestionsStore} from '../questions-store.service';
 import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 import {Question} from '../question';
 import {UpdateQuestionWeightsService} from '../update-question-weights.service';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'st-questions-known-sorter',
@@ -10,7 +11,7 @@ import {UpdateQuestionWeightsService} from '../update-question-weights.service';
     <div class="mat-h4">Sort the questions in order of importance</div>
     <div cdkDropList class="questions-list" (cdkDropListDropped)="drop($event)">
       <div class="questions-item"
-           *ngFor="let question of questionsStore.getKnownQuestions(); let i = index" cdkDrag>
+           *ngFor="let question of knownQuestions; let i = index" cdkDrag>
         {{i + 1}}. {{question.question}}
       </div>
     </div>
@@ -22,11 +23,15 @@ import {UpdateQuestionWeightsService} from '../update-question-weights.service';
 })
 export class QuestionsKnownSorterComponent implements OnInit {
 
+  knownQuestions: Question[];
+
   constructor(public questionsStore: QuestionsStore,
-              private updateQuestionWeightsService: UpdateQuestionWeightsService) {
+              private updateQuestionWeightsService: UpdateQuestionWeightsService,
+              private router: Router) {
   }
 
   ngOnInit(): void {
+    this.knownQuestions = this.questionsStore.getKnownQuestions();
   }
 
   drop(event: CdkDragDrop<Question[]>): void {
@@ -34,8 +39,8 @@ export class QuestionsKnownSorterComponent implements OnInit {
   }
 
   onConfirmClick(): void {
-    const questionPublicIds = this.questionsStore.questions.map(q => q.publicId);
+    const questionPublicIds = this.knownQuestions.map(q => q.publicId);
     this.updateQuestionWeightsService.update(questionPublicIds)
-      .subscribe(() => console.log('weights updated'));
+      .subscribe(() => this.router.navigateByUrl('unknown-preview'));
   }
 }

@@ -6,6 +6,7 @@ import {LandingPageComponent} from './landing-page/landing-page.component';
 import {QuestionsPresenterComponent} from './questions/questions-presenter/questions-presenter.component';
 import {QuestionsKnownSorterComponent} from './questions/questions-known-sorter/questions-known-sorter.component';
 import {QuestionsGuard} from './questions/questions.guard';
+import {QuestionsUnknownPresenterComponent} from './questions/questions-unknown-presenter/questions-unknown-presenter.component';
 
 
 const routes: Routes = [
@@ -13,6 +14,7 @@ const routes: Routes = [
   {path: 'add/category', component: AddCategoryComponent},
   {path: 'questions/:category', component: QuestionsPresenterComponent},
   {path: 'known-sort', component: QuestionsKnownSorterComponent, canActivate: [QuestionsGuard]},
+  {path: 'unknown-preview', component: QuestionsUnknownPresenterComponent},
   {path: '**', component: AppPageNotFoundComponent},
 ];
 

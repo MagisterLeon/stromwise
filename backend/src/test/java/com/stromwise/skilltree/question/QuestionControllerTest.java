@@ -51,8 +51,8 @@ public class QuestionControllerTest extends UnitTest {
     public void setup() {
         var addQuestionService = new AddQuestionService(questionRepository, categoryRepository);
         var updateQuestionService = new UpdateQuestionService(questionRepository, skilltreeProperties);
-        var getQuestionService = new GetQuestionService(questionConverter, questionRepository);
-        var getQuestionResponseRateService = new GetQuestionResponseRateService(questionConverter, questionRepository);
+        var getQuestionService = new GetRandomQuestionsService(questionConverter, questionRepository);
+        var getQuestionResponseRateService = new GetQuestionsService(questionConverter, questionRepository);
 
         this.mockMvc = MockMvcBuilders
                 .standaloneSetup(new QuestionController(addQuestionService, updateQuestionService, getQuestionService, getQuestionResponseRateService))
@@ -131,7 +131,7 @@ public class QuestionControllerTest extends UnitTest {
         when(questionRepository.findRandomByCategoryName("programming", questionsResultLimit)).thenReturn(questions);
 
         mockMvc.perform(
-                MockMvcRequestBuilders.get(QUESTIONS_URL + "/programming")
+                MockMvcRequestBuilders.get(QUESTIONS_URL + "/categories/programming")
                         .accept("application/json")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$", hasSize(questionSize)))

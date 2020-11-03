@@ -36,6 +36,11 @@ import {CarouselItemDirective} from './components/carousel/carousel-item.directi
 import { QuestionsKnownSorterComponent } from './questions/questions-known-sorter/questions-known-sorter.component';
 import {QuestionsGuard} from './questions/questions.guard';
 import {DragDropModule} from "@angular/cdk/drag-drop";
+import { QuestionsUnknownPresenterComponent } from './questions/questions-unknown-presenter/questions-unknown-presenter.component';
+import { QuestionsUnknownPreviewComponent } from './questions/questions-unknown-preview/questions-unknown-preview.component';
+import {GoogleChartsModule} from "angular-google-charts";
+import {MatTabsModule} from "@angular/material/tabs";
+import {MatGridListModule} from "@angular/material/grid-list";
 
 @NgModule({
   declarations: [
@@ -58,7 +63,9 @@ import {DragDropModule} from "@angular/cdk/drag-drop";
     CarouselComponent,
     CarouselItemDirective,
     CarouselItemElementDirective,
-    QuestionsKnownSorterComponent
+    QuestionsKnownSorterComponent,
+    QuestionsUnknownPresenterComponent,
+    QuestionsUnknownPreviewComponent
   ],
   imports: [
     BrowserModule,
@@ -77,7 +84,10 @@ import {DragDropModule} from "@angular/cdk/drag-drop";
     MatCardModule,
     MatButtonToggleModule,
     MatBadgeModule,
-    DragDropModule
+    DragDropModule,
+    GoogleChartsModule,
+    MatTabsModule,
+    MatGridListModule
   ],
   providers: [
     {provide: ErrorHandler, useClass: GlobalErrorHandler},
