@@ -5,16 +5,16 @@ import {ChartType} from 'angular-google-charts';
 @Component({
   selector: 'st-questions-unknown-preview',
   template: `
-  <ng-container *ngIf="questionModel">
-    <div>{{questionModel.question}}</div>
-    <div>{{questionModel.answer}}</div>
-    <google-chart #chart
-                  [type]="type"
-                  [data]="data"
-                  [options]="options">
-    </google-chart>
-    <st-google-search></st-google-search>
-  </ng-container>
+    <ng-container *ngIf="questionModel">
+      <div>{{questionModel.question}}</div>
+      <div>{{questionModel.answer}}</div>
+      <google-chart #chart
+                    [type]="type"
+                    [data]="data"
+                    [options]="options">
+      </google-chart>
+      <st-google-search [question]="questionModel.question"></st-google-search>
+    </ng-container>
   `,
   styleUrls: ['./questions-unknown-preview.component.scss']
 })

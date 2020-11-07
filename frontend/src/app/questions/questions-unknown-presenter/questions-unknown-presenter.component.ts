@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnDestroy, OnInit, Renderer2, ViewChild} from '@angular/core';
 import {CarouselComponent} from '../../components/carousel/carousel.component';
 import {ToolbarApiService} from '../../app-toolbar/toolbar-api.service';
 import {Observable} from 'rxjs';
@@ -29,22 +29,31 @@ import {GetQuestionsWithResponseRatesService} from '../get-questions-with-respon
       </carousel>
     </ng-container>
   `,
-  styleUrls: ['./questions-unknown-presenter.component.scss']
+  styleUrls: ['./questions-unknown-presenter.component.scss'],
 })
-export class QuestionsUnknownPresenterComponent implements OnInit {
+export class QuestionsUnknownPresenterComponent implements OnInit, OnDestroy {
   @ViewChild('carousel') carousel: CarouselComponent;
 
   questions$: Observable<Question[]>;
 
   constructor(private getQuestionsService: GetQuestionsWithResponseRatesService,
               private toolbarApiService: ToolbarApiService,
-              private questionResponseStore: QuestionsStore) {
+              private questionResponseStore: QuestionsStore,
+              private renderer: Renderer2) {
   }
 
   ngOnInit(): void {
     const publicIds = this.questionResponseStore.getUnknownQuestions().map(q => q.publicId);
     this.questions$ = this.getQuestionsService.get(publicIds);
     this.toolbarApiService.setIsVisible(true);
+
+    this.renderer.setStyle(document.body.parentElement, 'height', 'auto');
+    this.renderer.setStyle(document.body, 'height', 'auto');
+  }
+
+  ngOnDestroy(): void {
+    this.renderer.setStyle(document.body.parentElement, 'height', '100%');
+    this.renderer.setStyle(document.body, 'height', '100%');
   }
 }
 

@@ -1,4 +1,4 @@
-import {BrowserModule} from '@angular/platform-browser';
+import {BrowserModule, DomSanitizer} from '@angular/platform-browser';
 import {ErrorHandler, NgModule} from '@angular/core';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
@@ -13,7 +13,7 @@ import {GoogleSearchComponent} from './google/google-search.component';
 import {MatInputModule} from '@angular/material/input';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {MatIconModule} from '@angular/material/icon';
+import {MatIconModule, MatIconRegistry} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import {HeroActionsAutocompleteComponent} from './landing-page/hero-actions-autocomplete/hero-actions-autocomplete.component';
 import {LandingPageComponent} from './landing-page/landing-page.component';
@@ -96,4 +96,11 @@ import {MatGridListModule} from "@angular/material/grid-list";
   bootstrap: [AppComponent]
 })
 export class AppModule {
+  constructor(private matIconRegistry: MatIconRegistry,
+              private domSanitizer: DomSanitizer) {
+    this.matIconRegistry.addSvgIcon(
+      'google',
+      this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/social-media/google.svg')
+    );
+  }
 }
