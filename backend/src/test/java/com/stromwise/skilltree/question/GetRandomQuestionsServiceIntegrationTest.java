@@ -6,6 +6,7 @@ import com.stromwise.skilltree.category.CategoryRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.DirtiesContext;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -15,7 +16,7 @@ import static com.stromwise.skilltree.question.utils.TestDataFactory.prepareQues
 import static org.assertj.core.api.Assertions.assertThat;
 
 @Transactional
-public class GetQuestionServiceIntegrationTest extends IntegrationTest {
+public class GetRandomQuestionsServiceIntegrationTest extends IntegrationTest {
 
     @Autowired
     private CategoryRepository categoryRepository;
@@ -23,7 +24,7 @@ public class GetQuestionServiceIntegrationTest extends IntegrationTest {
     private QuestionRepository questionRepository;
 
     @Autowired
-    private GetQuestionService getQuestionService;
+    private GetRandomQuestionsService getRandomQuestionsService;
 
     @AfterEach
     public void setup() {
@@ -37,7 +38,7 @@ public class GetQuestionServiceIntegrationTest extends IntegrationTest {
         prepareTestData(2, 11);
 
         // when
-        List<QuestionPayload> questions = getQuestionService.getQuestionByCategory("category 1");
+        List<QuestionPayload> questions = getRandomQuestionsService.getRandomByCategory("category 1");
 
         // then
         assertThat(questions.size()).isEqualTo(10);
@@ -49,7 +50,7 @@ public class GetQuestionServiceIntegrationTest extends IntegrationTest {
         prepareTestData(1, 9);
 
         // when
-        List<QuestionPayload> questions = getQuestionService.getQuestionByCategory("category 1");
+        List<QuestionPayload> questions = getRandomQuestionsService.getRandomByCategory("category 1");
 
         // then
         assertThat(questions.size()).isEqualTo(9);
@@ -61,7 +62,7 @@ public class GetQuestionServiceIntegrationTest extends IntegrationTest {
         prepareTestData(1, 0);
 
         // when
-        List<QuestionPayload> questions = getQuestionService.getQuestionByCategory("category 1");
+        List<QuestionPayload> questions = getRandomQuestionsService.getRandomByCategory("category 1");
 
         // then
         assertThat(questions.size()).isEqualTo(0);
@@ -73,7 +74,7 @@ public class GetQuestionServiceIntegrationTest extends IntegrationTest {
         prepareTestData(0, 1);
 
         // when
-        List<QuestionPayload> questions = getQuestionService.getQuestionByCategory("category 1");
+        List<QuestionPayload> questions = getRandomQuestionsService.getRandomByCategory("category 1");
 
         // then
         assertThat(questions.size()).isEqualTo(0);

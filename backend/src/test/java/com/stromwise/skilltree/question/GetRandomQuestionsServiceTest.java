@@ -13,17 +13,17 @@ import static com.stromwise.skilltree.question.utils.TestDataFactory.prepareQues
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
-public class GetQuestionServiceTest extends UnitTest {
+public class GetRandomQuestionsServiceTest extends UnitTest {
 
     private final QuestionRepository questionRepository = mock(QuestionRepository.class);
 
     private final QuestionConverter questionConverter = new QuestionConverter();
 
-    private final GetQuestionService getQuestionService =
-            new GetQuestionService(questionConverter, questionRepository);
+    private final GetRandomQuestionsService getRandomQuestionsService =
+            new GetRandomQuestionsService(questionConverter, questionRepository);
 
-    private final GetQuestionResponseRateService questionResponseRateService =
-            new GetQuestionResponseRateService(questionConverter, questionRepository);
+    private final GetQuestionsService questionResponseRateService =
+            new GetQuestionsService(questionConverter, questionRepository);
 
     @Value("${questions.result.limit}")
     private int questionsResultLimit;
@@ -44,8 +44,8 @@ public class GetQuestionServiceTest extends UnitTest {
                 .thenReturn(questions);
 
         // when
-        List<QuestionPayload> foundQuestionsByCategoryName = getQuestionService
-                .getQuestionByCategory("programming");
+        List<QuestionPayload> foundQuestionsByCategoryName = getRandomQuestionsService
+                .getRandomByCategory("programming");
 
         // then
         assertThat(foundQuestionsByCategoryName.size()).isEqualTo(5);
@@ -63,7 +63,7 @@ public class GetQuestionServiceTest extends UnitTest {
         when(questionRepository.findByPublicIdIn(publicIds)).thenReturn(questions);
 
         // when
-        List<QuestionResponseRatePayload> foundResponsesRates = questionResponseRateService.getQuestionsResponsesRates(publicIds);
+        List<QuestionWithRatesPayload> foundResponsesRates = questionResponseRateService.getQuestions(publicIds);
 
         // then
         assertThat(foundResponsesRates.size()).isEqualTo(5);

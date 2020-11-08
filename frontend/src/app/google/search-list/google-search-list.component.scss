@@ -2,25 +2,43 @@
 @import 'src/stromwise-palette';
 
 .search-result {
-  mat-list-item {
+  margin: 0 10px 10px;
+
+  mat-grid-tile {
+    background-color: #222;
     margin-top: 12px;
   }
 
-  .header {
-    color: white;
-    font-size: 40px;
+  .tile-icon {
+    margin-right: 16px;
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+  }
+
+  .tile-header {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
   }
 
   .url {
     color: white;
     font-size: 13px;
     font-style: italic;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .title {
-    color: map-get($md-secondary, 200);
-    @include font(24, 37);
+    color: #ffba0e;
+    @include font(22, 26);
     text-decoration: none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 
     &:hover {
       text-decoration: underline;
@@ -28,6 +46,7 @@
   }
 
   .description {
+    margin: 50px 0 0 10px;
     color: grey;
     font-size: 16px;
   }

@@ -7,9 +7,12 @@ import lombok.Value;
 @AllArgsConstructor
 @Builder
 @Value
-public class QuestionResponseRatePayload {
+public class QuestionWithRatesPayload {
 
+    String publicId;
+    String question;
+    String answer;
     int know;
     int notSure;
-    int notKnow;
+    int dontKnow;
 }

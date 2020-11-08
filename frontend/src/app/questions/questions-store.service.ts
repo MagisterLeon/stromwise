@@ -29,4 +29,9 @@ export class QuestionsStore {
     return this.questions
       .filter(q => QuestionResponseType.KNOW === this.questionResponseByPublicId.get(q.publicId));
   }
+
+  getUnknownQuestions(): Question[] {
+    return this.questions
+      .filter(q => QuestionResponseType.KNOW !== this.questionResponseByPublicId.get(q.publicId));
+  }
 }

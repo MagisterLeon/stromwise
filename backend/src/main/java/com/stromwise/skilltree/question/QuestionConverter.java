@@ -23,15 +23,18 @@ class QuestionConverter {
                 .collect(Collectors.toList());
     }
 
-    List<QuestionResponseRatePayload> transformQuestionResponseRates(List<Question> questions) {
+    List<QuestionWithRatesPayload> transformQuestionsWithResponseRates(List<Question> questions) {
         log.info("Convert Question objects from DB to ResponseRatePayloads: {}", questions);
         return questions
                 .stream()
-                .map(question -> QuestionResponseRatePayload
+                .map(question -> QuestionWithRatesPayload
                         .builder()
+                        .publicId(question.getPublicId())
+                        .answer(question.getAnswer())
+                        .question(question.getQuestion())
                         .know(question.getKnow())
                         .notSure(question.getNotSure())
-                        .notKnow(question.getNotKnow())
+                        .dontKnow(question.getNotKnow())
                         .build())
                 .collect(Collectors.toList());
     }

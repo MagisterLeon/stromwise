@@ -1,4 +1,4 @@
-import {BrowserModule} from '@angular/platform-browser';
+import {BrowserModule, DomSanitizer} from '@angular/platform-browser';
 import {ErrorHandler, NgModule} from '@angular/core';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
@@ -13,7 +13,7 @@ import {GoogleSearchComponent} from './google/google-search.component';
 import {MatInputModule} from '@angular/material/input';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {MatIconModule} from '@angular/material/icon';
+import {MatIconModule, MatIconRegistry} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import {HeroActionsAutocompleteComponent} from './landing-page/hero-actions-autocomplete/hero-actions-autocomplete.component';
 import {LandingPageComponent} from './landing-page/landing-page.component';
@@ -36,6 +36,11 @@ import {CarouselItemDirective} from './components/carousel/carousel-item.directi
 import { QuestionsKnownSorterComponent } from './questions/questions-known-sorter/questions-known-sorter.component';
 import {QuestionsGuard} from './questions/questions.guard';
 import {DragDropModule} from "@angular/cdk/drag-drop";
+import { QuestionsUnknownPresenterComponent } from './questions/questions-unknown-presenter/questions-unknown-presenter.component';
+import { QuestionsUnknownPreviewComponent } from './questions/questions-unknown-preview/questions-unknown-preview.component';
+import {GoogleChartsModule} from "angular-google-charts";
+import {MatTabsModule} from "@angular/material/tabs";
+import {MatGridListModule} from "@angular/material/grid-list";
 
 @NgModule({
   declarations: [
@@ -58,7 +63,9 @@ import {DragDropModule} from "@angular/cdk/drag-drop";
     CarouselComponent,
     CarouselItemDirective,
     CarouselItemElementDirective,
-    QuestionsKnownSorterComponent
+    QuestionsKnownSorterComponent,
+    QuestionsUnknownPresenterComponent,
+    QuestionsUnknownPreviewComponent
   ],
   imports: [
     BrowserModule,
@@ -77,7 +84,10 @@ import {DragDropModule} from "@angular/cdk/drag-drop";
     MatCardModule,
     MatButtonToggleModule,
     MatBadgeModule,
-    DragDropModule
+    DragDropModule,
+    GoogleChartsModule,
+    MatTabsModule,
+    MatGridListModule
   ],
   providers: [
     {provide: ErrorHandler, useClass: GlobalErrorHandler},
@@ -86,4 +96,11 @@ import {DragDropModule} from "@angular/cdk/drag-drop";
   bootstrap: [AppComponent]
 })
 export class AppModule {
+  constructor(private matIconRegistry: MatIconRegistry,
+              private domSanitizer: DomSanitizer) {
+    this.matIconRegistry.addSvgIcon(
+      'google',
+      this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/social-media/google.svg')
+    );
+  }
 }

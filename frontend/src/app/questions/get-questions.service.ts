@@ -12,6 +12,6 @@ export class GetQuestionsService {
   }
 
   get(categoryName: string): Observable<Question[]> {
-    return this.httpClient.get<Question[]>(`/api/v1/questions/${categoryName}`);
+    return this.httpClient.get<Question[]>(`/api/v1/questions/categories/${categoryName}`);
   }
 }

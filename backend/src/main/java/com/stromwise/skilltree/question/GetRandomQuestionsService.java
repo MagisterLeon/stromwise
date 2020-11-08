@@ -11,7 +11,7 @@ import java.util.List;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class GetQuestionService {
+public class GetRandomQuestionsService {
 
     private final QuestionConverter questionConverter;
     private final QuestionRepository questionRepository;
@@ -20,7 +20,7 @@ public class GetQuestionService {
     private int questionsResultLimit;
 
     @Transactional
-    List<QuestionPayload> getQuestionByCategory(String categoryName) {
+    List<QuestionPayload> getRandomByCategory(String categoryName) {
         log.info("Searching questions by category name: {}", categoryName);
 
         List<Question> questionList = questionRepository.findRandomByCategoryName(categoryName, questionsResultLimit);
