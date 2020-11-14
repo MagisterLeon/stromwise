@@ -3,7 +3,7 @@ import {QuestionsStore} from '../questions-store.service';
 import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 import {Question} from '../question';
 import {UpdateQuestionWeightsService} from '../update-question-weights.service';
-import {Router} from "@angular/router";
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'st-questions-known-sorter',
@@ -36,6 +36,7 @@ export class QuestionsKnownSorterComponent implements OnInit {
 
   drop(event: CdkDragDrop<Question[]>): void {
     moveItemInArray(this.questionsStore.questions, event.previousIndex, event.currentIndex);
+    this.knownQuestions = this.questionsStore.getKnownQuestions();
   }
 
   onConfirmClick(): void {

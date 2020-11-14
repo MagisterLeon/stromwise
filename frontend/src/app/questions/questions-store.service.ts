@@ -7,8 +7,9 @@ import {Question} from './question';
 })
 export class QuestionsStore {
 
-  private questionResponseByPublicId: Map<string, QuestionResponseType> = new Map<string, QuestionResponseType>();
+  category: string;
   questions: Question[];
+  private questionResponseByPublicId: Map<string, QuestionResponseType> = new Map<string, QuestionResponseType>();
 
   constructor() {
   }
@@ -33,5 +34,11 @@ export class QuestionsStore {
   getUnknownQuestions(): Question[] {
     return this.questions
       .filter(q => QuestionResponseType.KNOW !== this.questionResponseByPublicId.get(q.publicId));
+  }
+
+  clear(): void {
+    this.category = '';
+    this.questions = undefined;
+    this.questionResponseByPublicId.clear();
   }
 }
