@@ -23,7 +23,7 @@ class UpdateQuestionService {
         List<Question> updatedQuestions = Stream.of(
                 updateKnownQuestions(request.getKnownQuestionPublicIds()),
                 updateNotSureQuestions(request.getNotSureQuestionPublicIds()),
-                updateDonKnowQuestions(request.getDontKnowQuestionPublicIds())
+                updateDontKnowQuestions(request.getNotKnowQuestionPublicIds())
         ).flatMap(Collection::stream)
                 .collect(Collectors.toList());
 
@@ -34,7 +34,7 @@ class UpdateQuestionService {
         return knownQuestionsUpdater.update(publicIds);
     }
 
-    private List<Question> updateDonKnowQuestions(List<String> publicIds) {
+    private List<Question> updateDontKnowQuestions(List<String> publicIds) {
         List<Question> questions = questionRepository.findByPublicIdIn(publicIds);
         questions.forEach(question -> {
             question.setNotKnow(question.getNotKnow() + 1);

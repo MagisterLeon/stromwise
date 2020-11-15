@@ -38,7 +38,7 @@ export class QuestionsUnknownPreviewComponent implements OnInit {
 
   ngOnInit(): void {
     this.data = [
-      ['don`t know', this.questionModel.dontKnow],
+      ['don`t know', this.questionModel.notKnow],
       ['not sure', this.questionModel.notSure],
       ['know', this.questionModel.know],
     ];

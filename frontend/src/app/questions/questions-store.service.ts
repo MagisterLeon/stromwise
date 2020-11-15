@@ -31,9 +31,18 @@ export class QuestionsStore {
       .filter(q => QuestionResponseType.KNOW === this.questionResponseByPublicId.get(q.publicId));
   }
 
-  getUnknownQuestions(): Question[] {
+  getNotSureQuestions(): Question[] {
     return this.questions
-      .filter(q => QuestionResponseType.KNOW !== this.questionResponseByPublicId.get(q.publicId));
+      .filter(q => QuestionResponseType.NOT_SURE === this.questionResponseByPublicId.get(q.publicId));
+  }
+
+  getNotKnowQuestions(): Question[] {
+    return this.questions
+      .filter(q => QuestionResponseType.DONT_KNOW === this.questionResponseByPublicId.get(q.publicId));
+  }
+
+  getUnknownQuestions(): Question[] {
+    return [...this.getNotSureQuestions(), ...this.getNotKnowQuestions()];
   }
 
   clear(): void {

@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {QuestionsStore} from '../questions-store.service';
 import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 import {Question} from '../question';
-import {UpdateQuestionWeightsService} from '../update-question-weights.service';
+import {UpdateQuestionWeightsAndRatesService} from '../update-question-weights-and-rates.service';
 import {Router} from '@angular/router';
 
 @Component({
@@ -25,8 +25,8 @@ export class QuestionsKnownSorterComponent implements OnInit {
 
   knownQuestions: Question[];
 
-  constructor(public questionsStore: QuestionsStore,
-              private updateQuestionWeightsService: UpdateQuestionWeightsService,
+  constructor(private questionsStore: QuestionsStore,
+              private updateQuestionWeightsService: UpdateQuestionWeightsAndRatesService,
               private router: Router) {
   }
 
@@ -40,8 +40,13 @@ export class QuestionsKnownSorterComponent implements OnInit {
   }
 
   onConfirmClick(): void {
-    const questionPublicIds = this.knownQuestions.map(q => q.publicId);
-    this.updateQuestionWeightsService.update(questionPublicIds)
+    const request = {
+      knownQuestionPublicIds: this.knownQuestions.map(q => q.publicId),
+      notSureQuestionPublicIds: this.questionsStore.getNotSureQuestions().map(q => q.publicId),
+      notKnowQuestionPublicIds: this.questionsStore.getNotKnowQuestions().map(q => q.publicId),
+    };
+
+    this.updateQuestionWeightsService.update(request)
       .subscribe(() => this.router.navigateByUrl('unknown-preview'));
   }
 }

@@ -17,5 +17,5 @@ public class UpdateQuestionWeightAndRatesRequest {
     @Size(max = 10, message = "not sure question ids cannot be more than ten")
     private List<String> notSureQuestionPublicIds;
     @Size(max = 10, message = "don't know question ids cannot be more than ten")
-    private List<String> dontKnowQuestionPublicIds;
+    private List<String> notKnowQuestionPublicIds;
 }
