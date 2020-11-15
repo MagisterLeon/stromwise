@@ -31,11 +31,11 @@ public class UpdateQuestionServiceIntegrationTest extends IntegrationTest {
     @Test
     public void should_update_question_weights() {
         // given
-        UpdateQuestionWeightsRequest request = new UpdateQuestionWeightsRequest(
-                List.of(question1.getPublicId(), question2.getPublicId()));
+        UpdateQuestionWeightAndRatesRequest request = new UpdateQuestionWeightAndRatesRequest(
+                List.of(question1.getPublicId(), question2.getPublicId()), List.of(), List.of());
 
         // when
-        updateQuestionService.updateWeights(request);
+        updateQuestionService.updateWeightsAndRates(request);
 
         // then
         var question1FromDb = questionRepository.findByPublicId(question1.getPublicId()).get();

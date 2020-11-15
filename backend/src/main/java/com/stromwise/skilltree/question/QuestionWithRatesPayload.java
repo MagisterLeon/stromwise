@@ -14,5 +14,5 @@ public class QuestionWithRatesPayload {
     String answer;
     int know;
     int notSure;
-    int dontKnow;
+    int notKnow;
 }

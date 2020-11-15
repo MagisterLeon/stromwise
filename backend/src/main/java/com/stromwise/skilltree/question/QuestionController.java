@@ -33,10 +33,10 @@ public class QuestionController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @ApiOperation(value = "Update weights one of questions")
-    @PatchMapping("/weights")
-    public ResponseEntity<Void> updateQuestionWeights(@RequestBody @Valid UpdateQuestionWeightsRequest request) {
-        updateQuestionService.updateWeights(request);
+    @ApiOperation(value = "Update questions weights and rates")
+    @PatchMapping("/weights-and-rates")
+    public ResponseEntity<Void> updateQuestionWeightsAndRates(@RequestBody @Valid UpdateQuestionWeightAndRatesRequest request) {
+        updateQuestionService.updateWeightsAndRates(request);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
