@@ -56,7 +56,9 @@ export class QuestionsPresenterComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.questionResponseStore.clear();
     const category = this.route.snapshot.paramMap.get('category');
+    this.questionResponseStore.category = category;
     this.questions$ = this.getQuestionsService.get(category)
       .pipe(
         tap(questions => this.questionResponseStore.questions = questions)

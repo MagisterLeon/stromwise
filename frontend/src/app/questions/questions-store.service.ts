@@ -7,8 +7,9 @@ import {Question} from './question';
 })
 export class QuestionsStore {
 
-  private questionResponseByPublicId: Map<string, QuestionResponseType> = new Map<string, QuestionResponseType>();
+  category: string;
   questions: Question[];
+  private questionResponseByPublicId: Map<string, QuestionResponseType> = new Map<string, QuestionResponseType>();
 
   constructor() {
   }
@@ -30,8 +31,23 @@ export class QuestionsStore {
       .filter(q => QuestionResponseType.KNOW === this.questionResponseByPublicId.get(q.publicId));
   }
 
-  getUnknownQuestions(): Question[] {
+  getNotSureQuestions(): Question[] {
     return this.questions
-      .filter(q => QuestionResponseType.KNOW !== this.questionResponseByPublicId.get(q.publicId));
+      .filter(q => QuestionResponseType.NOT_SURE === this.questionResponseByPublicId.get(q.publicId));
+  }
+
+  getNotKnowQuestions(): Question[] {
+    return this.questions
+      .filter(q => QuestionResponseType.DONT_KNOW === this.questionResponseByPublicId.get(q.publicId));
+  }
+
+  getUnknownQuestions(): Question[] {
+    return [...this.getNotSureQuestions(), ...this.getNotKnowQuestions()];
+  }
+
+  clear(): void {
+    this.category = '';
+    this.questions = undefined;
+    this.questionResponseByPublicId.clear();
   }
 }

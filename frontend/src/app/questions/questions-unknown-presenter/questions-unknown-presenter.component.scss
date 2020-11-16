@@ -1,3 +1,5 @@
+@import 'src/z-indexes';
+
 :host {
   display: flex;
   flex-direction: column;
@@ -16,5 +18,12 @@
     align-items: center;
     justify-content: space-between;
     width: 200px;
+  }
+
+  .done-button {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: map-get($z-indexes, 'done-button');
   }
 }

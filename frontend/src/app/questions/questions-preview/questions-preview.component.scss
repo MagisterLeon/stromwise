@@ -1,5 +1,6 @@
-@import 'src/stromwise-palette';
 @import "src/mixins";
+@import 'src/stromwise-palette';
+@import 'src/z-indexes';
 
 :host {
   display: flex;
@@ -26,7 +27,7 @@ mat-button-toggle {
   border: 1px rgba(0,0,0,0) solid !important;
   margin-top: 5px !important;
   padding: 0 5px !important;
-  z-index: 3 !important;
+  z-index: map-get($z-indexes, 'mat-button-toggle') !important;
 }
 
 mat-button-toggle:hover {

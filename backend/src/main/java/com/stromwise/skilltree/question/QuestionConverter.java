@@ -34,7 +34,7 @@ class QuestionConverter {
                         .question(question.getQuestion())
                         .know(question.getKnow())
                         .notSure(question.getNotSure())
-                        .dontKnow(question.getNotKnow())
+                        .notKnow(question.getNotKnow())
                         .build())
                 .collect(Collectors.toList());
     }

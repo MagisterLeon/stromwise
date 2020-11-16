@@ -1,13 +1,13 @@
 package com.stromwise.skilltree.question;
 
-import com.stromwise.skilltree.configuration.SkilltreeProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
-import java.util.stream.IntStream;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Slf4j
 @Service
@@ -15,44 +15,38 @@ import java.util.stream.IntStream;
 class UpdateQuestionService {
 
     private final QuestionRepository questionRepository;
-    private final SkilltreeProperties skilltreeProperties;
+    private final KnownQuestionsUpdater knownQuestionsUpdater;
 
-    void updateWeights(UpdateQuestionWeightsRequest request) {
-        log.info("Updating question weights");
+    void updateWeightsAndRates(UpdateQuestionWeightAndRatesRequest request) {
+        log.info("Updating question weights and rates");
 
-        List<Question> updatedQuestions = new ArrayList<>();
-
-        List<String> questionPublicIds = request.getQuestionPublicIds();
-
-        long minimumValueToDistribute = countMinimumValueToDistribute(skilltreeProperties.getPointsToDistribute(),
-                questionPublicIds.size());
-
-        IntStream.range(0, questionPublicIds.size()).forEach(i -> {
-            String publicId = questionPublicIds.get(i);
-            questionRepository.findByPublicId(publicId)
-                    .ifPresent(question -> {
-                        updateQuestionValue(question, minimumValueToDistribute, i);
-                        updatedQuestions.add(question);
-                    });
-        });
+        List<Question> updatedQuestions = Stream.of(
+                updateKnownQuestions(request.getKnownQuestionPublicIds()),
+                updateNotSureQuestions(request.getNotSureQuestionPublicIds()),
+                updateNotKnowQuestions(request.getNotKnowQuestionPublicIds())
+        ).flatMap(Collection::stream)
+                .collect(Collectors.toList());
 
         questionRepository.saveAll(updatedQuestions);
     }
 
-    private long countMinimumValueToDistribute(double pointsToDistribute, int idsListSize) {
-        int summedIdsOrdinalNumbers = IntStream.iterate(idsListSize, i -> i > 0, i -> i - 1)
-                .sum();
-
-        double minimumValueToDistribute = pointsToDistribute / summedIdsOrdinalNumbers;
-        return Math.round(minimumValueToDistribute);
+    private List<Question> updateKnownQuestions(List<String> publicIds) {
+        return knownQuestionsUpdater.update(publicIds);
     }
 
-    private void updateQuestionValue(Question question, long minimumValueToDistribute, int ordinal) {
-        long updatedValue = countNewValue(question.getValue(), minimumValueToDistribute, ordinal);
-        question.setValue(updatedValue);
+    private List<Question> updateNotKnowQuestions(List<String> publicIds) {
+        List<Question> questions = questionRepository.findByPublicIdIn(publicIds);
+        questions.forEach(question -> {
+            question.setNotKnow(question.getNotKnow() + 1);
+        });
+        return questions;
     }
 
-    private long countNewValue(long oldValue, long minimumValueToDistribute, int ordinal) {
-        return oldValue + minimumValueToDistribute * (ordinal + 1);
+    private List<Question> updateNotSureQuestions(List<String> publicIds) {
+        List<Question> questions = questionRepository.findByPublicIdIn(publicIds);
+        questions.forEach(question -> {
+            question.setNotSure(question.getNotSure() + 1);
+        });
+        return questions;
     }
 }

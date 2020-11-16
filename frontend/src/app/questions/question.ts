@@ -4,5 +4,5 @@ export interface Question {
   answer?: string;
   know?: number;
   notSure?: number;
-  dontKnow?: number;
+  notKnow?: number;
 }

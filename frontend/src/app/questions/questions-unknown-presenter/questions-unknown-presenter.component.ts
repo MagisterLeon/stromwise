@@ -5,6 +5,7 @@ import {Observable} from 'rxjs';
 import {Question} from '../question';
 import {QuestionsStore} from '../questions-store.service';
 import {GetQuestionsWithResponseRatesService} from '../get-questions-with-response-rates.service';
+import {Router} from '@angular/router';
 
 
 @Component({
@@ -27,6 +28,10 @@ import {GetQuestionsWithResponseRatesService} from '../get-questions-with-respon
           </ng-container>
         </ng-container>
       </carousel>
+      <button (click)="onDoneClick()"
+              class="done-button" mat-fab color="accent">
+        <mat-icon>done</mat-icon>
+      </button>
     </ng-container>
   `,
   styleUrls: ['./questions-unknown-presenter.component.scss'],
@@ -36,15 +41,20 @@ export class QuestionsUnknownPresenterComponent implements OnInit, OnDestroy {
 
   questions$: Observable<Question[]>;
 
+  private category: string;
+
   constructor(private getQuestionsService: GetQuestionsWithResponseRatesService,
               private toolbarApiService: ToolbarApiService,
               private questionResponseStore: QuestionsStore,
+              private router: Router,
               private renderer: Renderer2) {
   }
 
   ngOnInit(): void {
     const publicIds = this.questionResponseStore.getUnknownQuestions().map(q => q.publicId);
     this.questions$ = this.getQuestionsService.get(publicIds);
+    this.category = this.questionResponseStore.category;
+    this.questionResponseStore.clear();
     this.toolbarApiService.setIsVisible(true);
 
     this.renderer.setStyle(document.body.parentElement, 'height', 'auto');
@@ -54,6 +64,10 @@ export class QuestionsUnknownPresenterComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.renderer.setStyle(document.body.parentElement, 'height', '100%');
     this.renderer.setStyle(document.body, 'height', '100%');
+  }
+
+  onDoneClick(): void {
+    this.router.navigateByUrl(`questions/${this.category}`);
   }
 }
 

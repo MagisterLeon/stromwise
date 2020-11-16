@@ -2,7 +2,6 @@ package com.stromwise.skilltree.question;
 
 import com.stromwise.skilltree.UnitTest;
 import com.stromwise.skilltree.category.CategoryRepository;
-import com.stromwise.skilltree.configuration.SkilltreeProperties;
 import com.stromwise.skilltree.infastructure.rest.RestExceptionHandler;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -33,7 +32,7 @@ public class QuestionControllerTest extends UnitTest {
     @Mock
     private CategoryRepository categoryRepository;
     @Mock
-    private SkilltreeProperties skilltreeProperties;
+    private KnownQuestionsUpdater knownQuestionsUpdater;
 
     private final QuestionConverter questionConverter = new QuestionConverter();
 
@@ -50,7 +49,7 @@ public class QuestionControllerTest extends UnitTest {
     @BeforeEach
     public void setup() {
         var addQuestionService = new AddQuestionService(questionRepository, categoryRepository);
-        var updateQuestionService = new UpdateQuestionService(questionRepository, skilltreeProperties);
+        var updateQuestionService = new UpdateQuestionService(questionRepository, knownQuestionsUpdater);
         var getQuestionService = new GetRandomQuestionsService(questionConverter, questionRepository);
         var getQuestionResponseRateService = new GetQuestionsService(questionConverter, questionRepository);
 
@@ -90,36 +89,43 @@ public class QuestionControllerTest extends UnitTest {
 
     @Test
     void should_update_question_weights() throws Exception {
+        var request = new UpdateQuestionWeightAndRatesRequest(List.of("id"),
+                List.of(), List.of());
+
         mockMvc.perform(
-                MockMvcRequestBuilders.patch(QUESTIONS_URL + "/weights")
-                        .content(asJsonString(new UpdateQuestionWeightsRequest(List.of("id"))))
+                MockMvcRequestBuilders.patch(QUESTIONS_URL + "/weights-and-rates")
+                        .content(asJsonString(request))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
 
     @Test
     void should_throw_bad_request_on_invalid_content_when_update_weights() throws Exception {
+        var knownQuestions = List.of(
+                "id1",
+                "id2",
+                "id3",
+                "id4",
+                "id5",
+                "id6",
+                "id7",
+                "id8",
+                "id9",
+                "id10",
+                "id11"
+        );
+
+        var request = new UpdateQuestionWeightAndRatesRequest(knownQuestions,
+                List.of(), List.of());
+
         mockMvc.perform(
-                MockMvcRequestBuilders.patch(QUESTIONS_URL + "/weights")
-                        .content(asJsonString(new UpdateQuestionWeightsRequest(
-                                (List.of(
-                                        "id1",
-                                        "id2",
-                                        "id3",
-                                        "id4",
-                                        "id5",
-                                        "id6",
-                                        "id7",
-                                        "id8",
-                                        "id9",
-                                        "id10",
-                                        "id11"
-                                )))))
+                MockMvcRequestBuilders.patch(QUESTIONS_URL + "/weights-and-rates")
+                        .content(asJsonString(request))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.code", is(BAD_REQUEST_ERROR_CODE)))
                 .andExpect(jsonPath("$.message", is(BAD_REQUEST_ERROR_MESSAGE)))
-                .andExpect(jsonPath("$.details", is("[questionPublicIds: question ids cannot be more than ten]")));
+                .andExpect(jsonPath("$.details", is("[knownQuestionPublicIds: known question ids cannot be more than ten]")));
     }
 
     @Test
