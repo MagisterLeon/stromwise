@@ -5,7 +5,7 @@ import {AppComponent} from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {AppToolbarComponent} from './app-toolbar/app-toolbar.component';
 import {MatToolbarModule} from '@angular/material/toolbar';
-import {AppPageNotFoundComponent} from './app.page-not-found.component';
+import {AppPageNotFoundComponent} from './page-not-found/app.page-not-found.component';
 import {HttpClientModule} from '@angular/common/http';
 import {MatListModule} from '@angular/material/list';
 import {GoogleSearchListComponent} from './google/search-list/google-search-list.component';

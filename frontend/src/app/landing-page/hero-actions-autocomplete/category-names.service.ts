@@ -20,4 +20,12 @@ export class CategoryNamesService {
           .map(name => ({name, path: `questions/${name}`})))
       );
   }
+
+  getMostPopularCategories(): Observable<Category[]> {
+    return this.httpClient.get<CategoryNamesResponse>(`/api/v1/categories/names/most-popular`)
+      .pipe(
+        map(categoryNamesResponse => categoryNamesResponse.categoryNames
+          .map(name => ({name, path: `questions/${name}`})))
+      );
+  }
 }

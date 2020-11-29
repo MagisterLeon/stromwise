@@ -14,7 +14,7 @@ import {Component, OnInit} from '@angular/core';
            src="assets/social-media/twitter.png"
            alt="image">
     </div>
-    <div class="all-rights-reserved">ALL RIGHTS RESERVED - © 2020 STROMWISE</div>
+    <div class="all-rights-reserved">ALL RIGHTS RESERVED - © {{getActualYear()}} STROMWISE</div>
   `,
   styleUrls: ['./app-footer.component.scss']
 })
@@ -26,4 +26,7 @@ export class AppFooterComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  getActualYear(): number {
+    return new Date().getFullYear();
+  }
 }

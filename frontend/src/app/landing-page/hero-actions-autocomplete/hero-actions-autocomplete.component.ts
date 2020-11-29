@@ -41,12 +41,12 @@ export class HeroActionsAutocompleteComponent implements OnInit {
   filteredCategories: Observable<Category[]>;
 
   constructor(private router: Router,
-              private treeNodeNamesService: CategoryNamesService) {
+              private categoryNamesService: CategoryNamesService) {
   }
 
   ngOnInit(): void {
     this.filteredCategories = combineLatest([
-      this.treeNodeNamesService.getCategories(),
+      this.categoryNamesService.getCategories(),
       this.categoryControl.valueChanges.pipe(
         startWith('')
       )])
@@ -73,6 +73,6 @@ export class HeroActionsAutocompleteComponent implements OnInit {
   onCategorySelected(event: MatAutocompleteSelectedEvent, autocompleteInput: HTMLInputElement): void {
     autocompleteInput.value = '';
     autocompleteInput.blur();
-    this.router.navigateByUrl(event.option.value);
+    this.router.navigateByUrl(event.option.value.toLowerCase());
   }
 }

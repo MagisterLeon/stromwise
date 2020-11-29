@@ -17,10 +17,17 @@ class CategoryController {
 
     private final CategoryService categoryService;
 
-    @ApiOperation(value = "Get all categories names")
+    @ApiOperation(value = "Get all category names")
     @GetMapping("/names")
     public ResponseEntity<GetCategoriesResponse> getAllNames() {
         Set<String> names = categoryService.getAllNames();
+        return new ResponseEntity<>(new GetCategoriesResponse(names), HttpStatus.OK);
+    }
+
+    @ApiOperation(value = "Get most popular category names")
+    @GetMapping("/names/most-popular")
+    public ResponseEntity<GetCategoriesResponse> getMostPopularNames() {
+        Set<String> names = categoryService.getMostPopularNames();
         return new ResponseEntity<>(new GetCategoriesResponse(names), HttpStatus.OK);
     }
 }

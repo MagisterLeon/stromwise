@@ -1,17 +1,14 @@
 import {Component, OnInit} from '@angular/core';
+import {CategoryNamesService} from '../hero-actions-autocomplete/category-names.service';
+import {Observable} from 'rxjs';
+import {Category} from '../hero-actions-autocomplete/category';
 
 @Component({
   selector: 'st-hero-action-buttons',
   template: `
-    <div>
-      <a routerLink="/questions/programming">
-        <button class="hero-action-button" mat-stroked-button>Programming</button>
-      </a>
-      <a routerLink="/skilltree/Web design">
-        <button class="hero-action-button" mat-stroked-button>Web design</button>
-      </a>
-      <a routerLink="/skilltree/Guitar">
-        <button class="hero-action-button" mat-stroked-button>Guitar</button>
+    <div *ngIf="mostPopularCategories$ | async as categories">
+      <a *ngFor="let category of categories" [routerLink]=category.path.toLowerCase()>
+        <button class="hero-action-button" mat-stroked-button>{{category.name}}</button>
       </a>
     </div>
   `,
@@ -19,10 +16,13 @@ import {Component, OnInit} from '@angular/core';
 })
 export class HeroActionButtonsComponent implements OnInit {
 
-  constructor() {
+  mostPopularCategories$: Observable<Category[]>;
+
+  constructor(private categoryNamesService: CategoryNamesService) {
   }
 
   ngOnInit(): void {
+    this.mostPopularCategories$ = this.categoryNamesService.getMostPopularCategories();
   }
 
 }
