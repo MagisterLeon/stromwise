@@ -48,12 +48,12 @@ public class QuestionController {
         return new ResponseEntity<>(questionPayloads, HttpStatus.OK);
     }
 
-    @ApiOperation(value = "Get question response rates (how other people voted)")
-    @GetMapping
-    public ResponseEntity<List<QuestionWithRatesPayload>> getQuestions(@RequestParam List<String> publicIds) {
-        var questions =
-                getQuestionsService.getQuestions(publicIds);
+    @ApiOperation(value = "Get answers for question")
+    @GetMapping("/answers")
+    public ResponseEntity<GetAnswersPayload> getAnswers(@RequestParam String category,
+                                                                     @RequestParam List<String> questions) {
+        var answersPayload = getQuestionsService.getAnswers(category, questions);
 
-        return new ResponseEntity<>(questions, HttpStatus.OK);
+        return new ResponseEntity<>(answersPayload, HttpStatus.OK);
     }
 }

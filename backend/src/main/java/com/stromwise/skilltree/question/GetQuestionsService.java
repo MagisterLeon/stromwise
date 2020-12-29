@@ -1,9 +1,13 @@
 package com.stromwise.skilltree.question;
 
+import com.stromwise.skilltree.configuration.QuestionsGeneratorProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @Slf4j
@@ -11,14 +15,26 @@ import java.util.List;
 @RequiredArgsConstructor
 class GetQuestionsService {
 
-    private final QuestionConverter questionConverter;
-    private final QuestionRepository questionRepository;
+    private final RestTemplate restTemplate;
+    private final QuestionsGeneratorProperties questionsGeneratorProperties;
 
-    List<QuestionWithRatesPayload> getQuestions(List<String> publicIds) {
-        log.info("Searching questions by publicIds: {}", publicIds);
+    GetAnswersPayload getAnswers(String category, List<String> questions) {
+        log.info("Searching for questions: {}", questions);
 
-        List<Question> questions = questionRepository.findByPublicIdIn(publicIds);
+        String questionsJoined = String.join("|", questions);
 
-        return questionConverter.transformQuestionsWithResponseRates(questions);
+        URI targetUrl = UriComponentsBuilder.fromUriString(questionsGeneratorProperties.getAnswersUrl())
+                .queryParam("category", category)
+                .queryParam("questions", questionsJoined)
+                .build()
+                .encode()
+                .toUri();
+
+
+        var getAnswersPayload =
+                restTemplate.getForObject(targetUrl, GetAnswersPayload.class);
+
+
+        return getAnswersPayload;
     }
 }

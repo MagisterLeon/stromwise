@@ -27,4 +27,8 @@
     right: 10%;
     z-index: map-get($z-indexes, 'done-button');
   }
+
+  .spinner {
+    top: 30%;
+  }
 }

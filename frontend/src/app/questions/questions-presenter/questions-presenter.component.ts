@@ -14,13 +14,13 @@ import {tap} from 'rxjs/operators';
 @Component({
   selector: 'st-questions-presenter',
   template: `
-    <ng-container *ngIf="questions$ | async as questions">
+    <ng-container *ngIf="questions$ | async as questions; else spinner">
       <div class="question-header">
         <button mat-icon-button (click)="carousel.prev()">
           <mat-icon>keyboard_arrow_left</mat-icon>
         </button>
         <span class="mat-body-strong">{{carousel.getCurrentSlide() + 1}} / {{questions.length}}</span>
-        <button mat-icon-button (click)="onRightClick(questions[carousel.getCurrentSlide()].publicId)">
+        <button mat-icon-button (click)="onRightClick(questions[carousel.getCurrentSlide()].question)">
           <mat-icon>keyboard_arrow_right</mat-icon>
         </button>
       </div>
@@ -39,6 +39,9 @@ import {tap} from 'rxjs/operators';
         <mat-icon>done</mat-icon>
       </button>
     </ng-container>
+    <ng-template #spinner>
+      <mat-spinner class="spinner"></mat-spinner>
+    </ng-template>
   `,
   styleUrls: ['./questions-presenter.component.scss']
 })
@@ -67,8 +70,8 @@ export class QuestionsPresenterComponent implements OnInit {
     this.toolbarApiService.setCategory(category);
   }
 
-  onRightClick(publicId: string): void {
-    if (this.questionResponseStore.getResponse(publicId)) {
+  onRightClick(question: string): void {
+    if (this.questionResponseStore.getResponse(question)) {
       this.carousel.next();
     } else if (!this.carousel.isLastSlide()) {
       this.notificationService.showError('You need to select an option from toggle below before ' +
@@ -76,8 +79,8 @@ export class QuestionsPresenterComponent implements OnInit {
     }
   }
 
-  onQuestionResponse({publicId, questionResponseType}: QuestionResponse): void {
-    this.questionResponseStore.addResponse(publicId, questionResponseType);
+  onQuestionResponse({question, questionResponseType}: QuestionResponse): void {
+    this.questionResponseStore.addResponse(question, questionResponseType);
     this.carousel.next();
   }
 
@@ -86,7 +89,7 @@ export class QuestionsPresenterComponent implements OnInit {
   }
 
   onDoneClick(): void {
-    this.router.navigateByUrl('known-sort');
+    this.router.navigateByUrl('unknown-preview');
   }
 }
 

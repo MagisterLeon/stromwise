@@ -11,8 +11,8 @@ export class GetQuestionsWithResponseRatesService {
   constructor(private httpClient: HttpClient) {
   }
 
-  get(publicIds: string[]): Observable<Question[]> {
-    const params = new HttpParams().set('publicIds', publicIds.join(','));
-    return this.httpClient.get<Question[]>(`/api/v1/questions/`, {params});
+  get(questions: string[]): Observable<Question[]> {
+    const params = new HttpParams().set('questions', questions.join(','));
+    return this.httpClient.post<Question[]>(`/api/v1/questions/`, {params});
   }
 }

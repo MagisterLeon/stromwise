@@ -7,10 +7,7 @@ import {QuestionResponse} from '../question-response';
   selector: 'st-questions-preview',
   template: `
     <div class="question">
-       <span class="mat-body" matBadge
-             matBadgeColor="accent"
-             matBadgeOverlap="false"
-             matBadgeIcon="help">{{questionModel.question}}</span>
+       <span class="mat-body">{{questionModel.question}}</span>
     </div>
     <mat-button-toggle-group name="answer" vertical (change)="onQuestionPreviewResponseChange($event)">
       <mat-button-toggle class="know mat-body-2" value="KNOW">Know</mat-button-toggle>
@@ -28,7 +25,7 @@ export class QuestionsPreviewComponent {
 
   onQuestionPreviewResponseChange(event: MatButtonToggleChange): void {
     this.questionPreviewResponse.emit({
-      publicId: this.questionModel.publicId,
+      question: this.questionModel.question,
       questionResponseType: event.value
     });
   }

@@ -2,6 +2,7 @@ package com.stromwise.skilltree.question;
 
 import com.stromwise.skilltree.UnitTest;
 import com.stromwise.skilltree.category.CategoryRepository;
+import com.stromwise.skilltree.configuration.QuestionsGeneratorProperties;
 import com.stromwise.skilltree.infastructure.rest.RestExceptionHandler;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,6 +12,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
@@ -28,11 +30,15 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class QuestionControllerTest extends UnitTest {
 
     @Mock
+    private RestTemplate restTemplate;
+    @Mock
     private QuestionRepository questionRepository;
     @Mock
     private CategoryRepository categoryRepository;
     @Mock
     private KnownQuestionsUpdater knownQuestionsUpdater;
+    @Mock
+    private QuestionsGeneratorProperties questionsGeneratorProperties;
 
     private final QuestionConverter questionConverter = new QuestionConverter();
 
@@ -50,8 +56,8 @@ public class QuestionControllerTest extends UnitTest {
     public void setup() {
         var addQuestionService = new AddQuestionService(questionRepository, categoryRepository);
         var updateQuestionService = new UpdateQuestionService(questionRepository, knownQuestionsUpdater);
-        var getQuestionService = new GetRandomQuestionsService(questionConverter, questionRepository);
-        var getQuestionResponseRateService = new GetQuestionsService(questionConverter, questionRepository);
+        var getQuestionService = new GetRandomQuestionsService(questionConverter, restTemplate, questionsGeneratorProperties);
+        var getQuestionResponseRateService = new GetQuestionsService(restTemplate, questionsGeneratorProperties);
 
         this.mockMvc = MockMvcBuilders
                 .standaloneSetup(new QuestionController(addQuestionService, updateQuestionService, getQuestionService, getQuestionResponseRateService))

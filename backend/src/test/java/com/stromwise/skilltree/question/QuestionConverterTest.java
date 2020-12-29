@@ -16,29 +16,29 @@ class QuestionConverterTest extends UnitTest {
     @InjectMocks
     private QuestionConverter questionConverter;
 
-    @Test
-    public void should_convert_question_entities_to_payloads() {
-        // given
-        List<Question> questionList = new ArrayList<>(prepareQuestions(10, prepareCategories(2)));
-
-        // when
-        List<QuestionPayload> questionPayloadList = questionConverter.transformQuestions(questionList);
-
-        // then
-        assertThat(questionPayloadList.size()).isEqualTo(10);
-    }
-
-    @Test
-    public void should_converted_question_payload_be_equal_to_entity() {
-        // given
-        List<Question> questionList = new ArrayList<>(prepareQuestions(10, prepareCategories(2)));
-
-        // when
-        List<QuestionPayload> questionPayloadList = questionConverter.transformQuestions(questionList);
-
-        // then
-        assertThat(questionPayloadList).usingElementComparatorOnFields("publicId", "question", "answer").isEqualTo(questionList);
-    }
+//    @Test
+//    public void should_convert_question_entities_to_payloads() {
+//        // given
+//        List<Question> questionList = new ArrayList<>(prepareQuestions(10, prepareCategories(2)));
+//
+//        // when
+//        List<QuestionPayload> questionPayloadList = questionConverter.transformQuestions(questionList);
+//
+//        // then
+//        assertThat(questionPayloadList.size()).isEqualTo(10);
+//    }
+//
+//    @Test
+//    public void should_converted_question_payload_be_equal_to_entity() {
+//        // given
+//        List<Question> questionList = new ArrayList<>(prepareQuestions(10, prepareCategories(2)));
+//
+//        // when
+//        List<QuestionPayload> questionPayloadList = questionConverter.transformQuestions(questionList);
+//
+//        // then
+//        assertThat(questionPayloadList).usingElementComparatorOnFields("publicId", "question", "answer").isEqualTo(questionList);
+//    }
 
     @Test
     public void should_converted_responses_rates_payload_be_equal_to_entity() {

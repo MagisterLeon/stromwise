@@ -1,9 +1,10 @@
 package com.stromwise.skilltree.question;
 
+import com.stromwise.skilltree.configuration.QuestionsGeneratorProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -14,17 +15,17 @@ import java.util.List;
 public class GetRandomQuestionsService {
 
     private final QuestionConverter questionConverter;
-    private final QuestionRepository questionRepository;
+    private final RestTemplate restTemplate;
+    private final QuestionsGeneratorProperties questionsGeneratorProperties;
 
-    @Value("${questions.result.limit}")
-    private int questionsResultLimit;
 
     @Transactional
     List<QuestionPayload> getRandomByCategory(String categoryName) {
         log.info("Searching questions by category name: {}", categoryName);
 
-        List<Question> questionList = questionRepository.findRandomByCategoryName(categoryName, questionsResultLimit);
+        GetQuestionsPayload getQuestionsPayload = restTemplate
+                .getForObject(questionsGeneratorProperties.getQuestionsUrl() + categoryName, GetQuestionsPayload.class);
 
-        return questionConverter.transformQuestions(questionList);
+        return questionConverter.transformQuestions(getQuestionsPayload.getQuestions());
     }
 }

@@ -37,12 +37,4 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
         return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
     }
-
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<ApiErrorResponse> globalExceptionHandler(Exception ex) {
-        ApiErrorResponse message = ApiError.INTERNAL_ERROR
-                .toApiErrorResponse();
-
-        return new ResponseEntity<>(message, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
 }

@@ -9,36 +9,35 @@ export class QuestionsStore {
 
   category: string;
   questions: Question[];
-  private questionResponseByPublicId: Map<string, QuestionResponseType> = new Map<string, QuestionResponseType>();
+  private questionsToResponses: Map<string, QuestionResponseType> = new Map<string, QuestionResponseType>();
 
   constructor() {
   }
 
   hasAllResponses(): boolean {
-    return this.questions && this.questions.length === this.questionResponseByPublicId.size;
+    return this.questions && this.questions.length === this.questionsToResponses.size;
   }
 
-  getResponse(publicId: string): QuestionResponseType {
-    return this.questionResponseByPublicId.get(publicId);
+  getResponse(question: string): QuestionResponseType {
+    return this.questionsToResponses.get(question);
   }
 
-  addResponse(publicId: string, questionResponseType: QuestionResponseType): void {
-    this.questionResponseByPublicId.set(publicId, questionResponseType);
-  }
-
-  getKnownQuestions(): Question[] {
-    return this.questions
-      .filter(q => QuestionResponseType.KNOW === this.questionResponseByPublicId.get(q.publicId));
+  addResponse(question: string, questionResponseType: QuestionResponseType): void {
+    this.questionsToResponses.set(question, questionResponseType);
   }
 
   getNotSureQuestions(): Question[] {
-    return this.questions
-      .filter(q => QuestionResponseType.NOT_SURE === this.questionResponseByPublicId.get(q.publicId));
+    const notSureQuestions = this.questions
+      .filter(q => QuestionResponseType.NOT_SURE === this.questionsToResponses.get(q.question));
+    notSureQuestions.forEach(q => q.notSure != null ? q.notSure++ : q.notSure = 1);
+    return notSureQuestions;
   }
 
   getNotKnowQuestions(): Question[] {
-    return this.questions
-      .filter(q => QuestionResponseType.DONT_KNOW === this.questionResponseByPublicId.get(q.publicId));
+    const notKnowQuestions = this.questions
+      .filter(q => QuestionResponseType.DONT_KNOW === this.questionsToResponses.get(q.question));
+    notKnowQuestions.forEach(q => q.notKnow != null ? q.notKnow++ : q.notKnow = 1);
+    return notKnowQuestions;
   }
 
   getUnknownQuestions(): Question[] {
@@ -48,6 +47,6 @@ export class QuestionsStore {
   clear(): void {
     this.category = '';
     this.questions = undefined;
-    this.questionResponseByPublicId.clear();
+    this.questionsToResponses.clear();
   }
 }

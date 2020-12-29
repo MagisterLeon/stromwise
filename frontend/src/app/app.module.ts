@@ -33,14 +33,12 @@ import {MatBadgeModule} from '@angular/material/badge';
 import {QuestionsPresenterComponent} from './questions/questions-presenter/questions-presenter.component';
 import {CarouselComponent, CarouselItemElementDirective} from './components/carousel/carousel.component';
 import {CarouselItemDirective} from './components/carousel/carousel-item.directive';
-import { QuestionsKnownSorterComponent } from './questions/questions-known-sorter/questions-known-sorter.component';
-import {QuestionsGuard} from './questions/questions.guard';
-import {DragDropModule} from "@angular/cdk/drag-drop";
 import { QuestionsUnknownPresenterComponent } from './questions/questions-unknown-presenter/questions-unknown-presenter.component';
 import { QuestionsUnknownPreviewComponent } from './questions/questions-unknown-preview/questions-unknown-preview.component';
-import {GoogleChartsModule} from "angular-google-charts";
-import {MatTabsModule} from "@angular/material/tabs";
-import {MatGridListModule} from "@angular/material/grid-list";
+import {GoogleChartsModule} from 'angular-google-charts';
+import {MatTabsModule} from '@angular/material/tabs';
+import {MatGridListModule} from '@angular/material/grid-list';
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 
 @NgModule({
   declarations: [
@@ -63,7 +61,6 @@ import {MatGridListModule} from "@angular/material/grid-list";
     CarouselComponent,
     CarouselItemDirective,
     CarouselItemElementDirective,
-    QuestionsKnownSorterComponent,
     QuestionsUnknownPresenterComponent,
     QuestionsUnknownPreviewComponent
   ],
@@ -84,14 +81,13 @@ import {MatGridListModule} from "@angular/material/grid-list";
     MatCardModule,
     MatButtonToggleModule,
     MatBadgeModule,
-    DragDropModule,
     GoogleChartsModule,
     MatTabsModule,
-    MatGridListModule
+    MatGridListModule,
+    MatProgressSpinnerModule
   ],
   providers: [
     {provide: ErrorHandler, useClass: GlobalErrorHandler},
-    QuestionsGuard
   ],
   bootstrap: [AppComponent]
 })

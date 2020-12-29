@@ -4,21 +4,21 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Component
 @Slf4j
 class QuestionConverter {
 
-    List<QuestionPayload> transformQuestions(List<Question> questions) {
+    List<QuestionPayload> transformQuestions(List<String> questions) {
         log.info("Convert Question objects from DB to QuestionPayloads: {}", questions);
         return questions
                 .stream()
                 .map(question -> QuestionPayload
                         .builder()
-                        .publicId(question.getPublicId())
-                        .answer(question.getAnswer())
-                        .question(question.getQuestion())
+                        .publicId(UUID.randomUUID().toString())
+                        .question(question)
                         .build())
                 .collect(Collectors.toList());
     }

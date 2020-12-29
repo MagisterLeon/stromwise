@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ToolbarApiService} from '../app-toolbar/toolbar-api.service';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'st-landing-page.component.ts',
@@ -10,7 +11,16 @@ import {ToolbarApiService} from '../app-toolbar/toolbar-api.service';
            alt="image">
       <div class="hero-actions">
         <div class="hero-actions-autocomplete">
-          <st-hero-actions-autocomplete></st-hero-actions-autocomplete>
+          <mat-form-field class="search-input">
+            <input
+              #searchInput
+              matInput
+              type="search"
+              autocomplete="off"
+              (keyup.enter)="onHeroActionSearch(searchInput.value)"
+            >
+            <mat-icon matSuffix color="primary">search</mat-icon>
+          </mat-form-field>
         </div>
         <st-hero-action-buttons></st-hero-action-buttons>
       </div>
@@ -20,10 +30,17 @@ import {ToolbarApiService} from '../app-toolbar/toolbar-api.service';
 })
 export class LandingPageComponent implements OnInit {
 
-  constructor(private toolbarApiService: ToolbarApiService) {
+  constructor(private toolbarApiService: ToolbarApiService,
+              private router: Router) {
   }
 
   ngOnInit(): void {
     this.toolbarApiService.setIsVisible(false);
+  }
+
+  onHeroActionSearch(value: string): void {
+    if (value) {
+      this.router.navigateByUrl(`questions/${value.toLowerCase()}`);
+    }
   }
 }
