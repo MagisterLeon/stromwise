@@ -39,10 +39,14 @@ public class Question {
     )
     private Set<Category> categories = new HashSet<>();
 
-    public Question(String question, String answer) {
+    public Question(String question) {
         this.publicId = UUID.randomUUID().toString();
         this.question = question;
-        this.answer = answer;
+    }
+
+    public void addCategory(Category category) {
+        this.categories.add(category);
+        category.getQuestions().add(this);
     }
 
     public void addCategories(List<Category> categories) {

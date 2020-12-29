@@ -9,6 +9,7 @@ import {NotificationService} from '../../utils/notification/notification.service
 import {QuestionResponse} from '../question-response';
 import {QuestionsStore} from '../questions-store.service';
 import {tap} from 'rxjs/operators';
+import {UpdateQuestionResponsesService} from '../update-question-responses.service';
 
 
 @Component({
@@ -51,6 +52,7 @@ export class QuestionsPresenterComponent implements OnInit {
   questions$: Observable<Question[]>;
 
   constructor(private getQuestionsService: GetQuestionsService,
+              private updateQuestionResponsesService: UpdateQuestionResponsesService,
               private toolbarApiService: ToolbarApiService,
               private questionResponseStore: QuestionsStore,
               private router: Router,
@@ -89,6 +91,13 @@ export class QuestionsPresenterComponent implements OnInit {
   }
 
   onDoneClick(): void {
+    const request = {
+      category: this.questionResponseStore.category,
+      knownQuestions: this.questionResponseStore.getKnownQuestions().map(q => q.question),
+      notSureQuestions: this.questionResponseStore.getNotSureQuestions().map(q => q.question),
+      notKnowQuestions: this.questionResponseStore.getNotKnowQuestions().map(q => q.question)
+    };
+    this.updateQuestionResponsesService.update(request).subscribe();
     this.router.navigateByUrl('unknown-preview');
   }
 }

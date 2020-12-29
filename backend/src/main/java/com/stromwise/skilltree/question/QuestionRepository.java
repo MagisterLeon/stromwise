@@ -22,4 +22,6 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
     List<Question> findRandomByCategoryName(String categoryName, int questionsResultLimit);
 
     List<Question> findByPublicIdIn(List<String> publicId);
+
+    List<Question> findByQuestionInIgnoreCase(List<String> questions);
 }

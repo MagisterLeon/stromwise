@@ -18,7 +18,6 @@ import java.util.List;
 
 import static com.stromwise.skilltree.question.utils.TestDataFactory.prepareCategories;
 import static com.stromwise.skilltree.question.utils.TestDataFactory.prepareQuestions;
-import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
@@ -36,8 +35,6 @@ public class QuestionControllerTest extends UnitTest {
     @Mock
     private CategoryRepository categoryRepository;
     @Mock
-    private KnownQuestionsUpdater knownQuestionsUpdater;
-    @Mock
     private QuestionsGeneratorProperties questionsGeneratorProperties;
 
     private final QuestionConverter questionConverter = new QuestionConverter();
@@ -54,48 +51,19 @@ public class QuestionControllerTest extends UnitTest {
 
     @BeforeEach
     public void setup() {
-        var addQuestionService = new AddQuestionService(questionRepository, categoryRepository);
-        var updateQuestionService = new UpdateQuestionService(questionRepository, knownQuestionsUpdater);
+        var updateQuestionService = new UpdateQuestionService(questionRepository, categoryRepository);
         var getQuestionService = new GetRandomQuestionsService(questionConverter, restTemplate, questionsGeneratorProperties);
         var getQuestionResponseRateService = new GetQuestionsService(restTemplate, questionsGeneratorProperties);
 
         this.mockMvc = MockMvcBuilders
-                .standaloneSetup(new QuestionController(addQuestionService, updateQuestionService, getQuestionService, getQuestionResponseRateService))
+                .standaloneSetup(new QuestionController(updateQuestionService, getQuestionService, getQuestionResponseRateService))
                 .setControllerAdvice(new RestExceptionHandler())
                 .build();
     }
 
     @Test
-    void should_save_question() throws Exception {
-        mockMvc.perform(
-                MockMvcRequestBuilders.post(QUESTIONS_URL)
-                        .content(asJsonString(AddQuestionRequest.builder()
-                                .question("question")
-                                .answer("answer")
-                                .categories(List.of("category"))
-                                .build()))
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isCreated());
-    }
-
-    @Test
-    void should_throw_bad_request_on_invalid_content_when_add_question() throws Exception {
-        mockMvc.perform(
-                MockMvcRequestBuilders.post(QUESTIONS_URL)
-                        .content(asJsonString(AddQuestionRequest.builder()
-                                .categories(List.of())
-                                .build()))
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.code", is(BAD_REQUEST_ERROR_CODE)))
-                .andExpect(jsonPath("$.message", is(BAD_REQUEST_ERROR_MESSAGE)))
-                .andExpect(jsonPath("$.details", containsString("categories: categories cannot be empty")))
-                .andExpect(jsonPath("$.details", containsString("question: question cannot be blank")));
-    }
-
-    @Test
     void should_update_question_weights() throws Exception {
-        var request = new UpdateQuestionWeightAndRatesRequest(List.of("id"),
+        var request = new UpdateQuestionResponses("programming", List.of("id"),
                 List.of(), List.of());
 
         mockMvc.perform(
@@ -121,7 +89,7 @@ public class QuestionControllerTest extends UnitTest {
                 "id11"
         );
 
-        var request = new UpdateQuestionWeightAndRatesRequest(knownQuestions,
+        var request = new UpdateQuestionResponses("programming", knownQuestions,
                 List.of(), List.of());
 
         mockMvc.perform(

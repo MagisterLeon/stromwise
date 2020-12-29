@@ -26,6 +26,11 @@ export class QuestionsStore {
     this.questionsToResponses.set(question, questionResponseType);
   }
 
+  getKnownQuestions(): Question[] {
+    return this.questions
+      .filter(q => QuestionResponseType.KNOW === this.questionsToResponses.get(q.question));
+  }
+
   getNotSureQuestions(): Question[] {
     const notSureQuestions = this.questions
       .filter(q => QuestionResponseType.NOT_SURE === this.questionsToResponses.get(q.question));
